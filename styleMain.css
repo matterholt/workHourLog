@@ -1,0 +1,22 @@
+.day {
+  display: flex;
+  margin: 0.5em;
+  padding: 1em;
+  height: 5em;
+  border: 2px solid #bbcef1;
+  border-radius: 10px; }
+  .day__inTime {
+    margin: 0em 0.5em;
+    padding: 1em;
+    border: 2px solid pink;
+    border-radius: 10px; }
+  .day__outTime {
+    margin: 0em 0.5em;
+    padding: 1em;
+    border: 2px solid aqua;
+    border-radius: 10px; }
+  .day__results {
+    margin: 0em 0.5em;
+    padding: 1em;
+    border: 2px solid #fff8bd;
+    border-radius: 10px; }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Week Hour log</title>
+    <link rel="stylesheet" href="/css/styleMain.css">
+</head>
+
+<body>
+    <h1>Weekly Time Card</h1>
+    <button onclick="calculateTime()">Calculate</button>
+
+    <div class="day__results" id="hrTotal"></div>
+
+    <div class="day">
+        <h2>Monday Hours</h2>
+        <div class="day__inTime">
+            <label for="monIn">MON IN:</label> <br>
+            <input type="time" id="monIn" name="monIn" value="08:00">
+        </div>
+
+        <div class="day__outTime">
+            <label for="monOut">MON OUT:</label> <br>
+            <input type="time" name="monOut" id="monOut" value="16:30">
+        </div>
+
+        <div class="day__results">
+            <h3 id="monTotal"></h3>
+        </div>
+    </div>
+
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+$colorOne: #bbcef1;
+$colorTwo: #fff8bd;
+
+
+.day{
+    display: flex;
+    margin: 0.5em;
+    padding: 1em;
+    height: 5em;
+    border: 2px solid $colorOne;
+    border-radius: 10px;
+    &__inTime{
+        margin: 0em 0.5em;
+        padding: 1em;
+        border: 2px solid pink;
+        border-radius: 10px;
+    }
+    &__outTime{
+        margin: 0em 0.5em;
+        padding: 1em;
+        border: 2px solid aqua;
+        border-radius: 10px;
+    }
+    &__results{
+        margin: 0em 0.5em;
+        padding: 1em;
+        border: 2px solid $colorTwo;
+        border-radius: 10px;
+    }
+}
