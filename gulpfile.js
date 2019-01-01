@@ -10,15 +10,37 @@ const sass = require("gulp-sass"),
   mqpacker = require("css-mqpacker"),
   cssnano = require("cssnano"),
   sourcemaps = require("gulp-sourcemaps");
+//js
+const nunjucks = require("gulp-nunjucks"),
+    nunjucksRender = require('gulp-nunjucks-render');
+//handlebars = require('gulp-handlebars'),
 
 //src locations
 var paths = {
+  html: {
+    //pages used for storing file that will be complied in to html
+    pages: "app/pages/**/*.+(html|njk)",
+    // templates is used for storing all Nunjuck files
+    template: "app/templates",
+    partials: "app/templates/partials",
+    dest: "app"
+  },
   style: {
     src: "app/scss/**/*.scss",
-
     dest: "app/style"
   }
 };
+
+
+function htmlTemp() {
+  return gulp
+    .src('app/pages/**/*.+(html|njk)')
+    .pipe(nunjucksRender({
+      path: ['app/templates/']
+    }))
+    .pipe(gulp.dest('app'));
+}
+
 
 function style() {
   return gulp
@@ -32,8 +54,15 @@ function style() {
 }
 
 function watch() {
-  style();
+ // gulp.watch(paths.html.src, htmlTemp)
   gulp.watch(paths.style.src, style);
 }
 
 exports.watch = watch;
+exports.htmlTemp = htmlTemp;
+
+
+
+//var build = gulp.parallel(style, htmlTemp, watch)
+//gulp.task(build);
+//gulp.task
