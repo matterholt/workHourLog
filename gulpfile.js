@@ -12,6 +12,7 @@ const sass = require("gulp-sass"),
   sourcemaps = require("gulp-sourcemaps");
 //js
 const nunjucks = require("gulp-nunjucks"),
+    data = require("gulp-data"),
     nunjucksRender = require('gulp-nunjucks-render');
 //handlebars = require('gulp-handlebars'),
 
@@ -35,6 +36,9 @@ var paths = {
 function htmlTemp() {
   return gulp
     .src('app/pages/**/*.+(html|njk)')
+    .pipe(data(function(){
+      return require('./app/data.json')
+    }))
     .pipe(nunjucksRender({
       path: ['app/templates/']
     }))
