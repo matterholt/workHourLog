@@ -8,18 +8,136 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
+
     
-    <h1> This is the index page</h1>
-    <!-- navigation.nunjucks -->
-<nav>
-    <a href="index.html"> Time Log </a>
-    <a href="flexScale.html"> Flex Table</a>
-</nav>
-     
-        
-<nav>
-    <a href="index.html" class= " active "> Home </a>
-</nav>
+    <header>
+    <h1>Weekly hours</h1>
+    <div class="data">
+        <p class="wkyTotal">weekly total
+            <span class="total" id="weekly_total">40</span>
+        </p>
+    </div>
+    <button id="reset">Reset </br> week</button>
+</header>
+
+    
+    
+    
+         
+    <div class="day">
+        <h3>Monday</h3>
+        <div class="day__punchIn">
+            <label for="Monday_punchIn"> In time: </label> </br>
+            <input type="time" class="punchIn" id="Monday_punchIn" name= "MondayIn" value="08:00">
+        </div>
+        <div class="day__punchOut">
+            <label for="Monday_punchOut"> Out time: </label> </br>
+            <input type="time" class="punchOut" id="Monday_punchOut" name= "Monday_Out" value="16:30">
+        </div>
+        <div class="day__dailyTotal">
+            <p>
+                    <code>
+                    <span class="total" id="Monday_total">8</span>
+                    </code>
+                    hrs
+            </p>
+        </div>
+        <button class="addUp" id= "Monday_addUP"> Enter </button>
+    </div>
+
+    
+         
+    <div class="day">
+        <h3>Tuesday</h3>
+        <div class="day__punchIn">
+            <label for="Tuesday_punchIn"> In time: </label> </br>
+            <input type="time" class="punchIn" id="Tuesday_punchIn" name= "TuesdayIn" value="08:00">
+        </div>
+        <div class="day__punchOut">
+            <label for="Tuesday_punchOut"> Out time: </label> </br>
+            <input type="time" class="punchOut" id="Tuesday_punchOut" name= "Tuesday_Out" value="16:30">
+        </div>
+        <div class="day__dailyTotal">
+            <p>
+                    <code>
+                    <span class="total" id="Tuesday_total">8</span>
+                    </code>
+                    hrs
+            </p>
+        </div>
+        <button class="addUp" id= "Tuesday_addUP"> Enter </button>
+    </div>
+
+    
+         
+    <div class="day">
+        <h3>Wednesday</h3>
+        <div class="day__punchIn">
+            <label for="Wednesday_punchIn"> In time: </label> </br>
+            <input type="time" class="punchIn" id="Wednesday_punchIn" name= "WednesdayIn" value="08:00">
+        </div>
+        <div class="day__punchOut">
+            <label for="Wednesday_punchOut"> Out time: </label> </br>
+            <input type="time" class="punchOut" id="Wednesday_punchOut" name= "Wednesday_Out" value="16:30">
+        </div>
+        <div class="day__dailyTotal">
+            <p>
+                    <code>
+                    <span class="total" id="Wednesday_total">8</span>
+                    </code>
+                    hrs
+            </p>
+        </div>
+        <button class="addUp" id= "Wednesday_addUP"> Enter </button>
+    </div>
+
+    
+         
+    <div class="day">
+        <h3>Thursday</h3>
+        <div class="day__punchIn">
+            <label for="Thursday_punchIn"> In time: </label> </br>
+            <input type="time" class="punchIn" id="Thursday_punchIn" name= "ThursdayIn" value="08:00">
+        </div>
+        <div class="day__punchOut">
+            <label for="Thursday_punchOut"> Out time: </label> </br>
+            <input type="time" class="punchOut" id="Thursday_punchOut" name= "Thursday_Out" value="16:30">
+        </div>
+        <div class="day__dailyTotal">
+            <p>
+                    <code>
+                    <span class="total" id="Thursday_total">8</span>
+                    </code>
+                    hrs
+            </p>
+        </div>
+        <button class="addUp" id= "Thursday_addUP"> Enter </button>
+    </div>
+
+    
+         
+    <div class="day">
+        <h3>Friday</h3>
+        <div class="day__punchIn">
+            <label for="Friday_punchIn"> In time: </label> </br>
+            <input type="time" class="punchIn" id="Friday_punchIn" name= "FridayIn" value="08:00">
+        </div>
+        <div class="day__punchOut">
+            <label for="Friday_punchOut"> Out time: </label> </br>
+            <input type="time" class="punchOut" id="Friday_punchOut" name= "Friday_Out" value="16:30">
+        </div>
+        <div class="day__dailyTotal">
+            <p>
+                    <code>
+                    <span class="total" id="Friday_total">8</span>
+                    </code>
+                    hrs
+            </p>
+        </div>
+        <button class="addUp" id= "Friday_addUP"> Enter </button>
+    </div>
+
+    
 
 
 

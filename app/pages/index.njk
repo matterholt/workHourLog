@@ -1,8 +1,15 @@
+{% from "macros/dayTime.njk" import dayLog %}
 {% extends "layout.njk" %}
 
+    
+    
 {% block content %}
-    <h1> This is the index page</h1>
-    {% include "partials/nav.html" %}
-     {% import "macros/nav-macro.njk" as nav %}
-        {{nav.active('home')}}
+    {% include "../templates/partials/header.html" %}
+
+    {% set week = ["Monday","Tuesday","Wednesday","Thursday","Friday"] %}
+    
+    {% for day in week %}
+         {{ dayLog (day) }}
+    {% endfor %}
+
 {% endblock %}
