@@ -5,18 +5,103 @@ span,
 button {
   font-size: 20px;
   margin: 0;
+  padding: 0;
   border-radius: 10px;
 }
-.week {
-  border: 2px dashed salmon;
+
+
+
+.head{
+  &__work{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  &__wkyTotal {
+    width: 15%;
+    span{
+      font-size: 3em;
+    }
+  }
+  &__control {
+    display: flex;
+    flex-direction: column;
+  }
+  &__control-addUp {
+    padding: 0.2em 1em ;
+    margin: .5em;
+    outline: none;
+    -webkit-transition: box-shadow 500ms, background-color 500ms, -webkit-transform 200ms;
+    transition:box-shadow 500ms,  background-color 500ms, transform 200ms;
+    &:hover{
+      background-color: rgb(210, 247, 211);
+      box-shadow: 3px 5px 8px rgb(211, 211, 211);
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+    &:active{
+      background: rgb(153, 250, 157);
+      box-shadow: 3px 5px 8px rgb(80, 80, 80);
+    }
+  }
+  &__control-reset {
+    padding: 0.2em 1em ;
+    margin: .5em;
+    outline: none;
+    -webkit-transition: box-shadow 500ms, background-color 500ms, -webkit-transform 200ms;
+    transition:box-shadow 500ms,  background-color 500ms, transform 200ms;
+    &:hover{
+      background-color: rgb(247, 210, 210);
+      box-shadow: 3px 5px 8px rgb(211, 211, 211);
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+    &:active{
+      background: rgb(245, 173, 173);
+      box-shadow: 3px 5px 8px rgb(80, 80, 80);
+    }
+  }
+  &__data{
+    padding:0;
+    margin: 0;
+    background: linear-gradient(to right, rgb(245, 173, 173), rgb(153, 250, 157));
+    background: -webkit-linear-gradient(to right rgb(245, 173, 173), rgb(153, 250, 157));
+    height: 2em;
+    width: 100%;
+  }
 }
+
+
+.week {
+  display: flex;
+  flex-direction: column;
+  margin: .5em;
+  padding: 1em;
+}
+
+
+
 .day {
-  text-align: center;
-  border: 1px solid orange;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  
+  justify-content: center;
+  align-content: center;
+  padding: 0.5em 0em;
+  border-top: .3em solid black;
+  &__title {
+    padding: 0em 2em;
+    width: 15%;
+  }
+  &__timeLog {
+    display: flex;
+    flex-direction: column;
+    padding: 0em 3em;
+  }
+  &__dailyTotal {
+    width: 10%;
+    margin: 0em 2em;
+    span{
+      font-size: 3em;
+    }
+  }
 }
