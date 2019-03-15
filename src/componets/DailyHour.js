@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Today = (props) =>{
     return(
@@ -10,11 +10,24 @@ const Today = (props) =>{
 
 /*
 
+function getMin (time) {
+    const [hr, min] = time.split(":");
+    const hrToMin = Number(hr) * 60;
+    const totalMin = hrToMin + Number(min);
+    UpMin(totalMin)
+},
+function calHourPass(inTime, outTime) {
+totalTime = outTime - inTime;
+    todayHour = totalTime / 60;
+    console.log(`Today's hour are ${todayHour}`);
+    return todayHour;
+}
+
+*/
+
 const ConvertMin = (props) =>{
     const [convrtMin, UpMin] = useState("")
-
-
-*    return(
+    return(
         <>
         <p>
             If we convert <strong> {(props.time )} </strong>
@@ -25,40 +38,33 @@ const ConvertMin = (props) =>{
     )
     
 }
-*/
+
+
 const PunchIn = () =>{
-    const [inTime, upInTime] = useState("8:50")
-    const [convrtMin, UpMin] = useState("")
-
-    const getMin =(e)=>{
-        const time = e.target.value
-        upInTime(time)
-        const [hr, min] = time.split(":");
-        const hrToMin = Number(hr) * 60;
-        const totalMin = hrToMin + Number(min);
-        UpMin(totalMin)
-  };
-
-    return(
+    return (
         <>
         <label> Punch In: </label>
         <input
           id="punchIn"
           type="time"
-          value={inTime}
-          onChange={e => getMin(e)}
         />
-        <h1>{convrtMin} Mins </h1>
         </>
     )
 }
 
 function DailyHour (){
+    const [inTime, upInTime] = useState("8:50")
     
     return(
         <div className="dailyLog">
-            <Today day = "Monday" />
-            <PunchIn />
+            <Today 
+            day = "Monday" />
+            <PunchIn
+            value={inTime}
+            onChange={e => upInTime(e.target.value)}
+            />
+            <ConvertMin 
+            time= {inTime} />
         </div>
 
     )
