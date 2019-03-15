@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import HookConvert from './componets/HookConvert';
-import './App.css';
+import DailyHour from './componets/DailyHour';
+import './style/WkDay.css';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="week">
         <h1>Weekly Hours</h1>
-        <HookConvert />
+        <DailyHour />
       </div>
     );
   }
