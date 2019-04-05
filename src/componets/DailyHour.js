@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import styled from "@emotion/styled";
 
-const Today = (props) =>{
-    return(
-        <>
-            <h2> {props.day} </h2>
-        </>
-    )
-}
 
+const Inputs = styled.div`
+  display: grid;
+  grid-template-columns¡1: repeat(3, 3rem);
+  border: 0.1rem solid black;
+  border-radius: 5px;
+  grid-template-areas:
+  " button, LogIn, LogOut";
+`
+
+const ResultW = styled.div`
+  display: grid;
+  grid-column-template: repeat(3, 3rem);
+  border: 0.1rem solid black;
+  border-radius: 5px;
+`
 /*
 
 function getMin (time) {
@@ -25,46 +34,56 @@ totalTime = outTime - inTime;
 
 */
 
-const ConvertMin = (props) =>{
-    const [convrtMin, UpMin] = useState("")
+
+
+
+
+
+
+
+
+
+const Results = (props) =>{
     return(
-        <>
-        <p>
-            If we convert <strong> {(props.time )} </strong>
-            and convert to it to min we should have 
-            <strong> {convrtMin} </strong>
-        </p>
-        </>
-    )
-    
-}
+        <ResultW>
+         <div>
+            <p>{props.punchIn}</p>
+            <p>{props.punchOut}</p>
+        </div>
+        </ResultW>
 
 
-const PunchIn = () =>{
-    return (
-        <>
-        <label> Punch In: </label>
-        <input
-          id="punchIn"
-          type="time"
-        />
-        </>
     )
 }
+
 
 function DailyHour (){
-    const [inTime, upInTime] = useState("8:50")
-    
+    const [punchIn, setPunchIn] = useState("08:00")
+    const [punchOut, setPunchOut] = useState("16:00")
+    //const [hourWork, setHourWork] = useState("") // perform calculation on punchIn and punch out
+   // const [dailyHours, addDayHours] = useState("") // add all hours to here, limit array to 6
+
     return(
-        <div className="dailyLog">
-            <Today 
-            day = "Monday" />
-            <PunchIn
-            value={inTime}
-            onChange={e => upInTime(e.target.value)}
+        <div>
+        <Inputs>
+            <button>ADD</button>
+            <label> Punch In: </label>
+            <input
+            value = {punchIn} 
+            onChange = {e => setPunchIn(e.target.value)}
+            type="time"
             />
-            <ConvertMin 
-            time= {inTime} />
+            <label>Punch Out:</label>
+            <input
+            value = {punchOut}
+            onChange = {e => setPunchOut(e.target.value)}
+            type="time"
+            />
+        </Inputs>
+        <Results
+        punchIn = {punchIn}
+        punchOut = {punchOut}
+        />
         </div>
 
     )
