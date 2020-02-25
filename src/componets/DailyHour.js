@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import Modal from "./Modal";
 
-const Today = (props) =>{
-    return(
-        <>
-            <h2> {props.day} </h2>
-        </>
-    )
-}
+const InputModal = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 150px;
+`;
 
+const ResultW = styled.div`
+  display: grid;
+  grid-column-template: repeat(3, 3rem);
+  border: 0.1rem solid black;
+  border-radius: 5px;
+  width: 150px;
+`;
 /*
 
 function getMin (time) {
@@ -25,50 +32,31 @@ totalTime = outTime - inTime;
 
 */
 
-const ConvertMin = (props) =>{
-    const [convrtMin, UpMin] = useState("")
-    return(
-        <>
-        <p>
-            If we convert <strong> {(props.time )} </strong>
-            and convert to it to min we should have 
-            <strong> {convrtMin} </strong>
-        </p>
-        </>
-    )
-    
+const Results = props => {
+  return (
+    <ResultW>
+      <div>
+        <p>{props.punchIn}</p>
+        <p>{props.punchOut}</p>
+      </div>
+    </ResultW>
+  );
+};
+
+function DailyHour() {
+  const [punchIn, setPunchIn] = useState("08:00");
+  const [punchOut, setPunchOut] = useState("16:00");
+  //const [hourWork, setHourWork] = useState("") // perform calculation on punchIn and punch out
+  // const [dailyHours, addDayHours] = useState("") // add all hours to here, limit array to 6
+
+  return (
+    <div>
+      <InputModal>
+        <button>ADD</button>
+      </InputModal>
+      <Results punchIn={punchIn} punchOut={punchOut} />
+    </div>
+  );
 }
-
-
-const PunchIn = () =>{
-    return (
-        <>
-        <label> Punch In: </label>
-        <input
-          id="punchIn"
-          type="time"
-        />
-        </>
-    )
-}
-
-function DailyHour (){
-    const [inTime, upInTime] = useState("8:50")
-    
-    return(
-        <div className="dailyLog">
-            <Today 
-            day = "Monday" />
-            <PunchIn
-            value={inTime}
-            onChange={e => upInTime(e.target.value)}
-            />
-            <ConvertMin 
-            time= {inTime} />
-        </div>
-
-    )
-}
-
 
 export default DailyHour;
