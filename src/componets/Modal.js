@@ -10,6 +10,7 @@ const ModalDiv = styled.div`
   box-shadow: 5px 8px 15px black;
   border-radius: 5px;
   position: absolute;
+  z-index: 50;
 `;
 
 const Modal = props => {

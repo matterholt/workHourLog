@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import ToggleButton from "./ToggleButton";
+import ModalHeader from "./ModalHeader";
 import styled from "@emotion/styled";
 
 const HourLogInput = styled.div`
@@ -38,10 +38,7 @@ export default function AddHour(props) {
 
   return (
     <Modal>
-      <TitleBarDiv>
-        <H2title> Add Hours</H2title>
-        <ToggleButton toggle={props.toggle}>close</ToggleButton>
-      </TitleBarDiv>
+      <ModalHeader title="Add Hours" toggle={props.toggle} />
 
       <HourLogInput>
         <label> Punch In: </label>

@@ -1,49 +1,64 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import ModalHeader from "./ModalHeader";
+import styled from "@emotion/styled";
 
+const Settings = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
 const temp = {
   background: "gray"
 };
 
-function UserSettings(props) {
-  const [userProfile, setUserProfile] = useState({
-    userName: "",
-    startTime: "",
-    endTime: "",
-    lunchTime: ""
-  });
-  function setSettings(e) {
-    setUserProfile({
-      ...userProfile,
-      [e.target.name]: e.target.value
-    });
-  }
-  function approveSettings() {
-    props.updateSettings({ userProfile });
-  }
-  useEffect(() => {
-    console.log(props.userPref);
-    setUserProfile(props.userPref);
-  }, []);
-
+function UserSettings({ setSettings, userPref, toggle }) {
   return (
     <Modal>
-      <ModalHeader title=" User Settings" toggle={props.toggle} />
-      <div>
-        <h2>hello {userProfile.userName}</h2>
+      <ModalHeader title=" User Settings" toggle={toggle} />
+      <Settings>
+        <h2>hello {userPref.userName}</h2>
         <label>
           Name:
           <input
             style={temp}
             type="text"
-            name="userName"
-            value={userProfile.userName}
-            onChange={e => setSettings(e)}
+            name="username"
+            value={userPref.username}
+            onChange={setSettings}
           />
         </label>
-      </div>
-      <button onClick={approveSettings}>Approve</button>
+        <label>
+          Start Time:
+          <input
+            style={temp}
+            type="time"
+            name="startTime"
+            value={userPref.startTime}
+            onChange={setSettings}
+          />
+        </label>
+        <label>
+          Leave Time:
+          <input
+            style={temp}
+            type="time"
+            name="endTime"
+            value={userPref.endTime}
+            onChange={setSettings}
+          />
+        </label>
+        <label>
+          Lunch:
+          <input
+            style={temp}
+            type="number"
+            name="lunchTime"
+            value={userPref.lunchTime}
+            onChange={setSettings}
+          />
+        </label>
+      </Settings>
+      <button onClick={toggle}>Approve</button>
     </Modal>
   );
 }

@@ -19,7 +19,8 @@ const TableData = styled.td`
   padding: 10px;
   width: 100px;
 `;
-function DailyHourChart() {
+// should be array of object
+function DailyHourChart(pros) {
   const [fakeData, UpdateData] = useState({
     day: "Mon",
     punchIn: "08:00",

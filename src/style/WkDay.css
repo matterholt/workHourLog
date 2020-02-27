@@ -6,8 +6,6 @@ body {
 
 .week {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #124e78;
   min-height: 100vh;
   width: 100vw;
