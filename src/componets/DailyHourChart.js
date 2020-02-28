@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 const Table = styled.table`
   margin: 10px;
   text-align: center;
+  grid-column: 2;
+  grid-row: 2;
 `;
 const TableRow = styled.tr`
   background: whitesmoke;
@@ -19,6 +21,17 @@ const TableData = styled.td`
   padding: 10px;
   width: 100px;
 `;
+
+function RowData(props) {
+  return (
+    <TableRow>
+      <TableData>{props.day}</TableData>
+      <TableData>{props.fakeData.punchIn}</TableData>
+      <TableData>{props.fakeData.punchOut}</TableData>
+      <TableData>{props.fakeData.worked}</TableData>
+    </TableRow>
+  );
+}
 // should be array of object
 function DailyHourChart(pros) {
   const [fakeData, UpdateData] = useState({
@@ -35,12 +48,11 @@ function DailyHourChart(pros) {
         <TableHeader>Punch Out</TableHeader>
         <TableHeader>Hours Work</TableHeader>
       </TableRow>
-      <TableRow>
-        <TableData>{fakeData.day}</TableData>
-        <TableData>{fakeData.punchIn}</TableData>
-        <TableData>{fakeData.punchOut}</TableData>
-        <TableData>{fakeData.worked}</TableData>
-      </TableRow>
+      <RowData fakeData={fakeData} day="Mon" />
+      <RowData fakeData={fakeData} day="Tues" />
+      <RowData fakeData={fakeData} day="Wed" />
+      <RowData fakeData={fakeData} day="Thurs" />
+      <RowData fakeData={fakeData} day="Fri" />
     </Table>
   );
 }
