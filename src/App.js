@@ -1,95 +1,54 @@
 import React, { useState, useEffect } from "react";
-import AddHour from "./componets/AddHour";
-import ToggleButton from "./componets/ToggleButton";
-import DailyHourChart from "./componets/DailyHourChart";
-import SettingUser from "./componets/SettingUser";
+
+import UserSettings from "./componets/SettingUser";
 import Header from "./componets/Header";
-import styled from "@emotion/styled";
+import SideBar from "./componets/Nav";
 import "./style/WkDay.css";
 
-const AddNewHours = props => {
-  return <ToggleButton toggle={props.toggle}>Add Hours</ToggleButton>;
-};
-const ChangeSettings = props => {
-  return <ToggleButton toggle={props.toggle}>Change Settings</ToggleButton>;
-};
-const SideNav = styled.nav`
-  display: flex;
-  flex-flow: column;
-  align-content: center;
-  background-color: white;
-  padding: 25px;
-  grid-column: 1;
-  grid-row: 2/4;
-`;
-
-const SideBar = ({ userSettings }) => {
-  const [inputModal, switchInputModal] = useState(false);
-  const [settingModal, switchSettingModal] = useState(false);
-
-  function toggleSwitch2() {
-    // not good, need better
-    console.log(userSettings);
-    switchSettingModal(!settingModal);
-  }
-  function setSettings(e) {
-    switchSettingModal({
-      ...userSettings,
-      [e.target.name]: e.target.value
-    });
-  }
-
-  return (
-    <SideNav>
-      <UpdateHr />
-      {settingModal ? (
-        <SettingUser
-          toggle={toggleSwitch2}
-          setSettings={setSettings}
-          userPref={userSettings}
-        />
-      ) : (
-        <ChangeSettings toggle={toggleSwitch2} />
-      )}
-    </SideNav>
-  );
-};
-
-function UpdateHr() {
-  const [inputModal, switchInputModal] = useState(false);
-  function toggleSwitch() {
-    console.log("fire");
-    switchInputModal(!inputModal);
-  }
-
-  return (
-    <div>
-      {inputModal ? (
-        <>
-          <AddHour toggle={toggleSwitch} />
-          <AddNewHours toggle={toggleSwitch} />
-        </>
-      ) : (
-        <AddNewHours toggle={toggleSwitch} />
-      )}
-    </div>
-  );
-}
-
+// user Pref should be context,
 const App = () => {
   const [hourLog, upDateHourLog] = useState([]);
-  const [userSettings, setUserSettings] = useState({
+  const [userBaseValue, updateUserBaseValue] = useState({
     username: "",
     startTime: "",
     endTime: "",
     lunchTime: "0.5"
   });
 
+  const [isModalView, updateModalView] = useState({
+    dataTable: false,
+    settings: false,
+    addHours: false
+  });
+
+  function updateUserSettings(e) {
+    const settingsName = e.target.name;
+    const settingsValue = e.target.value;
+    updateUserBaseValue({ ...userBaseValue, [settingsName]: settingsValue });
+  }
+
+  function visualModalToggle(e) {
+    /*
+for (let modalType in isModalView) {
+      isModalView[modalType] = false;
+    }
+*/
+    const modalName = e.target.name;
+    const modalCurrentBool = isModalView[modalName];
+    updateModalView({ ...isModalView, [modalName]: !modalCurrentBool });
+  }
+
   return (
     <div className="week">
       <Header />
-
-      <DailyHourChart hourLogs={hourLog} />
+      <SideBar visualModal={visualModalToggle} statusModal={isModalView} />
+      <div className="info">
+        <UserSettings
+          modalView={isModalView.settings}
+          userPref={userBaseValue}
+          setSettings={updateUserSettings}
+        />
+      </div>
     </div>
   );
 };
