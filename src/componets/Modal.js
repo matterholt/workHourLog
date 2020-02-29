@@ -6,10 +6,11 @@ const ModalDiv = styled.div`
   flex-flow: column;
   background-color: #f3f4f7;
   width: 550px;
-  top: 50px;
   box-shadow: 5px 8px 15px black;
   border-radius: 5px;
-  position: absolute;
+  position: relative;
+  top: 25px;
+  left: 25px;
   z-index: 50;
 `;
 

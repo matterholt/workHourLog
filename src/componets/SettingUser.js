@@ -7,20 +7,16 @@ const Settings = styled.div`
   display: flex;
   flex-flow: column;
 `;
-const temp = {
-  background: "gray"
-};
 
-function UserSettings({ setSettings, userPref, toggle }) {
+const SettingForm = ({ setSettings, userPref, modalView }) => {
   return (
     <Modal>
-      <ModalHeader title=" User Settings" toggle={toggle} />
+      <ModalHeader title=" User Settings" toggle={modalView} />
       <Settings>
         <h2>hello {userPref.userName}</h2>
         <label>
           Name:
           <input
-            style={temp}
             type="text"
             name="username"
             value={userPref.username}
@@ -30,7 +26,6 @@ function UserSettings({ setSettings, userPref, toggle }) {
         <label>
           Start Time:
           <input
-            style={temp}
             type="time"
             name="startTime"
             value={userPref.startTime}
@@ -40,7 +35,6 @@ function UserSettings({ setSettings, userPref, toggle }) {
         <label>
           Leave Time:
           <input
-            style={temp}
             type="time"
             name="endTime"
             value={userPref.endTime}
@@ -50,7 +44,6 @@ function UserSettings({ setSettings, userPref, toggle }) {
         <label>
           Lunch:
           <input
-            style={temp}
             type="number"
             name="lunchTime"
             value={userPref.lunchTime}
@@ -58,9 +51,25 @@ function UserSettings({ setSettings, userPref, toggle }) {
           />
         </label>
       </Settings>
-      <button onClick={toggle}>Approve</button>
+      <button onClick={modalView}>Approve</button>
     </Modal>
   );
+};
+
+function UserSettings(props) {
+  const { setSettings, userPref, modalView } = props;
+
+  if (modalView === true) {
+    return (
+      <SettingForm
+        setSettings={setSettings}
+        userPref={userPref}
+        modalView={modalView}
+      />
+    );
+  } else {
+    return <h2>nope</h2>;
+  }
 }
 
 export default UserSettings;

@@ -12,3 +12,9 @@ body {
   min-height: 100vh;
   width: 100vw;
 }
+
+.info {
+  grid-column: 2;
+  grid-row: 2;
+
+}

@@ -22,10 +22,14 @@ There should be a default arrival time (the desired time user wishes to attend w
 
 ## Daily Successes
 
-- [] 02/25/2020 create a global state, to represent a user settings
-  want to make the modal update what the user settings,should there be a is loading hook that would delay the loading or rendering of the page, so that it has time to update the state? maybe should store in a global, or somewhere else.
+- [ ] The "nav" bar on the side have
+  1. add data
+  2. settings
+  3.
 
 ## Application break down
+
+-
 
 - [ ] Create default settings, Default Punch In, Lunch hours, Name,
 - [ ] create a table that has hours displayed
