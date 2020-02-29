@@ -9,6 +9,7 @@ const TitleBarDiv = styled.div`
   align-items: center;
   background: #829cbc;
   border-radius: 5px 5px 0 0;
+  margin: 0;
 `;
 const H2title = styled.h2`
   margin-bottom: 0px;

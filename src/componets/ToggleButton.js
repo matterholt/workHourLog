@@ -3,9 +3,8 @@ import styled from "@emotion/styled";
 // add more style to the the toggle button
 
 const ToggleStyle = styled.button`
-  width: 50px;
-  height: 35px;
   border-radius: 10px;
+  width: 100%;
 `;
 
 export default function ToggleButton(props) {

@@ -2,29 +2,27 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 
 const Table = styled.table`
-  margin: 10px;
   text-align: center;
   grid-column: 2;
   grid-row: 2;
 `;
 const TableRow = styled.tr`
   background: whitesmoke;
-  padding: 15px;
-  height: 50px;
 `;
-const TableHeader = styled.th`
-  padding: 10px;
+const TableHeader = styled.td`
   background: #829cbc;
   color: black;
 `;
 const TableData = styled.td`
-  padding: 10px;
   width: 100px;
 `;
 
 function RowData(props) {
   return (
     <TableRow>
+      <TableData>
+        <button>Update</button>
+      </TableData>
       <TableData>{props.day}</TableData>
       <TableData>{props.fakeData.punchIn}</TableData>
       <TableData>{props.fakeData.punchOut}</TableData>
@@ -43,6 +41,7 @@ function DailyHourChart(pros) {
   return (
     <Table>
       <TableRow>
+        <TableHeader>!</TableHeader>
         <TableHeader>Day</TableHeader>
         <TableHeader>Punch In </TableHeader>
         <TableHeader>Punch Out</TableHeader>
