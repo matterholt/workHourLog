@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import ToggleButton from "./ToggleButton";
+import ButtonComp from "./ButtonComp";
 
 const TitleBarDiv = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ function ModalHeader(props) {
   return (
     <TitleBarDiv>
       <H2title> {props.title}</H2title>
-      <ToggleButton toggle={props.toggle}>close</ToggleButton>
+      {props.children}
     </TitleBarDiv>
   );
 }

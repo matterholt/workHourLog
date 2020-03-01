@@ -57,6 +57,7 @@ for (let modalType in isModalView) {
           modalView={isModalView.settings}
           userPref={userBaseValue}
           setSettings={updateUserSettings}
+          visualModal={visualModalToggle}
         />
       </span>
       <OverTable>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import ToggleButton from "./ToggleButton";
+import ButtonComp from "./ButtonComp";
 
 const SideNav = styled.nav`
   display: flex;
@@ -19,13 +19,13 @@ const ToggleStyle = styled.button`
 const SideBar = props => {
   return (
     <SideNav>
-      <ToggleStyle name="settings" onClick={props.visualModal}>
+      <ButtonComp name="settings" action={props.visualModal}>
         Settings
-      </ToggleStyle>
-      <ToggleStyle name="addHours" onClick={props.visualModal}>
+      </ButtonComp>
+      <ButtonComp name="addHours" action={props.visualModal}>
         Add Hour
-      </ToggleStyle>
-      <ToggleStyle name="clear">Clear</ToggleStyle>
+      </ButtonComp>
+      <ButtonComp name="clear">Clear</ButtonComp>
     </SideNav>
   );
 };

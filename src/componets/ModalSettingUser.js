@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import ModalHeader from "./ModalHeader";
+import ButtonComp from "./ButtonComp";
 import styled from "@emotion/styled";
 
 const Settings = styled.div`
@@ -8,10 +9,14 @@ const Settings = styled.div`
   flex-flow: column;
 `;
 
-const SettingForm = ({ setSettings, userPref, modalView }) => {
+const SettingForm = ({ setSettings, userPref, visualModal }) => {
   return (
     <Modal>
-      <ModalHeader title=" User Settings" toggle={modalView} />
+      <ModalHeader title="Default Settings">
+        <ButtonComp name="settings" action={visualModal}>
+          Close
+        </ButtonComp>
+      </ModalHeader>
       <Settings>
         <h2>hello {userPref.userName}</h2>
         <label>
@@ -51,13 +56,12 @@ const SettingForm = ({ setSettings, userPref, modalView }) => {
           />
         </label>
       </Settings>
-      <button onClick={modalView}>Approve</button>
     </Modal>
   );
 };
 
 function UserSettings(props) {
-  const { setSettings, userPref, modalView } = props;
+  const { setSettings, userPref, modalView, visualModal } = props;
 
   if (modalView === true) {
     return (
@@ -65,6 +69,7 @@ function UserSettings(props) {
         setSettings={setSettings}
         userPref={userPref}
         modalView={modalView}
+        visualModal={visualModal}
       />
     );
   } else {
