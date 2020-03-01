@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-import UserSettings from "./componets/SettingUser";
+import ModalSettingUser from "./componets/ModalSettingUser";
 import Header from "./componets/Header";
 import SideBar from "./componets/Nav";
-import "./style/WkDay.css";
+import CardWeeklyOverview from "./componets/CardWeeklyOverview";
+import CardDailyHourChart from "./componets/CardDailyHourChart";
 
+import styled from "@emotion/styled";
+import "./style/WkDay.css";
+const OverTable = styled.div`
+  height: 75%;
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  padding: 5px;
+`;
 // user Pref should be context,
 const App = () => {
   const [hourLog, upDateHourLog] = useState([]);
@@ -42,13 +52,17 @@ for (let modalType in isModalView) {
     <div className="week">
       <Header />
       <SideBar visualModal={visualModalToggle} statusModal={isModalView} />
-      <div className="info">
-        <UserSettings
+      <span className="info">
+        <ModalSettingUser
           modalView={isModalView.settings}
           userPref={userBaseValue}
           setSettings={updateUserSettings}
         />
-      </div>
+      </span>
+      <OverTable>
+        <CardWeeklyOverview />
+        <CardDailyHourChart />
+      </OverTable>
     </div>
   );
 };

@@ -6,7 +6,8 @@ const HeaderDiv = styled.div`
   align-items: center;
   min-width: 550px;
   position: relative;
-  background: white;
+  background-color: #13293d;
+  color: white;
   grid-column: 1/3;
   grid-column: 1/4;
 `;

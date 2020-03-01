@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import CardData from "./CardData";
 
 const Table = styled.table`
   text-align: center;
@@ -7,7 +8,7 @@ const Table = styled.table`
   grid-row: 2;
 `;
 const TableRow = styled.tr`
-  background: whitesmoke;
+  height: 25px;
 `;
 const TableHeader = styled.td`
   background: #829cbc;
@@ -20,9 +21,6 @@ const TableData = styled.td`
 function RowData(props) {
   return (
     <TableRow>
-      <TableData>
-        <button>Update</button>
-      </TableData>
       <TableData>{props.day}</TableData>
       <TableData>{props.fakeData.punchIn}</TableData>
       <TableData>{props.fakeData.punchOut}</TableData>
@@ -31,7 +29,7 @@ function RowData(props) {
   );
 }
 // should be array of object
-function DailyHourChart(pros) {
+function HourChart(pros) {
   const [fakeData, UpdateData] = useState({
     day: "Mon",
     punchIn: "08:00",
@@ -41,7 +39,6 @@ function DailyHourChart(pros) {
   return (
     <Table>
       <TableRow>
-        <TableHeader>!</TableHeader>
         <TableHeader>Day</TableHeader>
         <TableHeader>Punch In </TableHeader>
         <TableHeader>Punch Out</TableHeader>
@@ -53,6 +50,15 @@ function DailyHourChart(pros) {
       <RowData fakeData={fakeData} day="Thurs" />
       <RowData fakeData={fakeData} day="Fri" />
     </Table>
+  );
+}
+
+function DailyHourChart() {
+  return (
+    <CardData>
+      <h2>Weekly Hours Log</h2>
+      <HourChart />
+    </CardData>
   );
 }
 

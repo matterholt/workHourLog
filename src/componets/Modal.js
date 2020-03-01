@@ -14,8 +14,8 @@ const ModalDiv = styled.div`
   z-index: 50;
 `;
 
-const Modal = props => {
+const CardModal = props => {
   return <ModalDiv>{props.children}</ModalDiv>;
 };
 
-export default Modal;
+export default CardModal;

@@ -68,7 +68,7 @@ function UserSettings(props) {
       />
     );
   } else {
-    return <h2>nope</h2>;
+    return null;
   }
 }
 
