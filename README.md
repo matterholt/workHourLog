@@ -22,23 +22,22 @@ There should be a default arrival time (the desired time user wishes to attend w
 
 ## Daily Successes
 
-- [ ] The "nav" bar on the side have
-  1. add data
-  2. settings
-  3.
-
 ## Application break down
 
--
-
-- [ ] Create default settings, Default Punch In, Lunch hours, Name,
-- [ ] create a table that has hours displayed
+- [ X ] Create default settings, Default Punch In, Lunch hours, Name,
+- [ ] create a reactive table that has hours displayed
 - [ ] Design component for time logger.
 - [ ] Total time worked at the top of page (data visual element)
 
 ## TODOs
 
-- [ ] improve toggle buttons on the models, duplicated code, should use object to determine whether model is open or close
+- [ ] Build a simple bar chart showing the weeks hours
+
+- [ ] Build style for the modal component
+
+- [ ] On the chart for the daily hours, have a button to edit the data
+
+- [x] improve toggle buttons on the models, duplicated code, should use object to determine whether model is open or close
 
 - [ ] Style for the header,
 
