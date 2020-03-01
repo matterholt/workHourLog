@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import ModalAddHour from "./componets/ModalAddHour";
 import ModalSettingUser from "./componets/ModalSettingUser";
 import Header from "./componets/Header";
 import SideBar from "./componets/Nav";
@@ -46,20 +47,28 @@ for (let modalType in isModalView) {
     const modalName = e.target.name;
     const modalCurrentBool = isModalView[modalName];
     updateModalView({ ...isModalView, [modalName]: !modalCurrentBool });
+
+    console.log(isModalView);
   }
 
   return (
     <div className="week">
       <Header />
-      <SideBar visualModal={visualModalToggle} statusModal={isModalView} />
+      <SideBar visualModal={visualModalToggle} />
+
       <span className="info">
         <ModalSettingUser
           modalView={isModalView.settings}
+          visualModal={visualModalToggle}
           userPref={userBaseValue}
           setSettings={updateUserSettings}
+        />
+        <ModalAddHour
+          modalView={isModalView.addHours}
           visualModal={visualModalToggle}
         />
       </span>
+
       <OverTable>
         <CardWeeklyOverview />
         <CardDailyHourChart />

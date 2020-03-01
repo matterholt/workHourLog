@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import ButtonComp from "./ButtonComp";
 
 const TitleBarDiv = styled.div`
   display: flex;
