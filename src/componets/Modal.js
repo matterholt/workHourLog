@@ -12,6 +12,10 @@ const ModalDiv = styled.div`
   top: 25px;
   left: 25px;
   z-index: 50;
+  opacity: 1;
+  transition-property: opacity, left;
+  transition-duration: 3s, 5s;
+  transition-timing-function: ease-in-out;
 `;
 
 const CardModal = props => {

@@ -6,6 +6,7 @@ const ToggleStyle = styled.button`
   margin: 0;
   padding: 2px;
   height: 50px;
+  margin: 5px;
 `;
 
 export default function ButtonComp(props) {

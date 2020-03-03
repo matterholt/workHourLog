@@ -20,9 +20,9 @@ const OverTable = styled.div`
 const App = () => {
   const [hourLog, upDateHourLog] = useState([]);
   const [userBaseValue, updateUserBaseValue] = useState({
-    username: "",
-    startTime: "",
-    endTime: "",
+    username: "testiner",
+    startTime: "08:00",
+    endTime: "16:30",
     lunchTime: "0.5"
   });
 
@@ -70,8 +70,11 @@ for (let modalType in isModalView) {
       </span>
 
       <OverTable>
+        <CardDailyHourChart
+          defaults={userBaseValue}
+          updateTotalHrs="should be a funciton"
+        />
         <CardWeeklyOverview />
-        <CardDailyHourChart />
       </OverTable>
     </div>
   );

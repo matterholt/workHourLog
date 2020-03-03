@@ -31,15 +31,17 @@ There should be a default arrival time (the desired time user wishes to attend w
 
 ## TODOs
 
+- [ ] Add transition to the modal, to allow better UX
+
 - [ ] Build a simple bar chart showing the weeks hours
 
 - [ ] Build style for the modal component
 
 - [ ] On the chart for the daily hours, have a button to edit the data
 
-- [x] improve toggle buttons on the models, duplicated code, should use object to determine whether model is open or close
-
 - [ ] Style for the header,
+
+- [x] improve toggle buttons on the models, duplicated code, should use object to determine whether model is open or close
 
 ## Extra features
 
