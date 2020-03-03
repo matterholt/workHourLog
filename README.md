@@ -25,7 +25,7 @@ There should be a default arrival time (the desired time user wishes to attend w
 ## Application break down
 
 - [ X ] Create default settings, Default Punch In, Lunch hours, Name,
-- [ ] create a reactive table that has hours displayed
+- [ ] create a reactive table that has hours displayed()
 - [ ] Design component for time logger.
 - [ ] Total time worked at the top of page (data visual element)
 
