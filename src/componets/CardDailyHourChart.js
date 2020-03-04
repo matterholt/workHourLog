@@ -17,6 +17,16 @@ const TableHeader = styled.td`
 const TableData = styled.td`
   width: 100px;
 `;
+function HeaderTable() {
+  return (
+    <TableRow>
+      <TableHeader>Day</TableHeader>
+      <TableHeader>Punch In </TableHeader>
+      <TableHeader>Punch Out</TableHeader>
+      <TableHeader>Hours Work</TableHeader>
+    </TableRow>
+  );
+}
 
 // build the table row for table
 function RowData(props) {
@@ -26,15 +36,9 @@ function RowData(props) {
 // should be array of object
 function HourChart(props) {
   return (
-    <Table>
-      <TableRow>
-        <TableHeader>Day</TableHeader>
-        <TableHeader>Punch In </TableHeader>
-        <TableHeader>Punch Out</TableHeader>
-        <TableHeader>Hours Work</TableHeader>
-      </TableRow>
-      <RowData dailyLog={props.hoursForWeek} />
-    </Table>
+    <table>
+      <HeaderTable />
+    </table>
   );
 }
 
@@ -70,7 +74,7 @@ function DailyHourChart(props) {
   return (
     <CardData>
       <h2>Weekly Hours Log</h2>
-      <HourChart hoursForWeek={wklyHours} />
+      <HourChart />
     </CardData>
   );
 }

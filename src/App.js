@@ -6,6 +6,7 @@ import Header from "./componets/Header";
 import SideBar from "./componets/Nav";
 import CardWeeklyOverview from "./componets/CardWeeklyOverview";
 import CardDailyHourChart from "./componets/CardDailyHourChart";
+import TableSimpleHr from "./componets/TableSimpleHr";
 
 import styled from "@emotion/styled";
 import "./style/WkDay.css";
@@ -14,6 +15,7 @@ const OverTable = styled.div`
   grid-column: 2;
   grid-row: 2;
   display: flex;
+  flex-flow: column;
   padding: 5px;
 `;
 // user Pref should be context,
@@ -70,10 +72,7 @@ for (let modalType in isModalView) {
       </span>
 
       <OverTable>
-        <CardDailyHourChart
-          defaults={userBaseValue}
-          updateTotalHrs="should be a funciton"
-        />
+        <TableSimpleHr />
         <CardWeeklyOverview />
       </OverTable>
     </div>
