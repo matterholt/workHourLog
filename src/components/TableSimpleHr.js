@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CardData from "./CardData";
 import "../style/tableChart.css";
+
 // Heading for the Hour log table
 function HourHeader(props) {
   return (
@@ -17,6 +18,7 @@ function HourHeader(props) {
 // Perform updates to the table via modal
 function ModalUpdate(props) {
   // UPDATE FUNCTION TO UPDATE HOURS
+  // Key up for escape and enter
   const [startTime, updateStartTime] = useState("");
   const [quitTime, updateQuitTime] = useState("");
 
@@ -26,33 +28,35 @@ function ModalUpdate(props) {
   }, []);
 
   return (
-    <div className="modal">
-      <h3>UPDATES TO {props.day}</h3>
-      <label>
-        <input
-          type="time"
-          value={startTime}
-          onChange={e => {
-            updateStartTime(e.target.value);
-          }}
-        />{" "}
-        <br />
-        Punch In
-      </label>
-      <label>
-        <input
-          type="time"
-          value={quitTime}
-          onChange={e => {
-            updateQuitTime(e.target.value);
-          }}
-        />
-        <br />
-        Punch Out
-      </label>
-      <div className="buttonContianer">
-        <button onClick={props.updateFunction}>Confirm</button>
-        <button onClick={props.visualUpdate}>close</button>
+    <div className="modelCard" onClick={props.visualUpdate}>
+      <div className="modal">
+        <h3>UPDATES TO {props.day}</h3>
+        <label>
+          <input
+            type="time"
+            value={startTime}
+            onChange={e => {
+              updateStartTime(e.target.value);
+            }}
+          />{" "}
+          <br />
+          Punch In
+        </label>
+        <label>
+          <input
+            type="time"
+            value={quitTime}
+            onChange={e => {
+              updateQuitTime(e.target.value);
+            }}
+          />
+          <br />
+          Punch Out
+        </label>
+        <div className="buttonContianer">
+          <button onClick={props.updateFunction}>Confirm</button>
+          <button onClick={props.visualUpdate}>close</button>
+        </div>
       </div>
     </div>
   );
@@ -65,6 +69,10 @@ function RowData(props) {
   const { day, start, quit } = props.rowData;
   function updateVisualShow() {
     updateShow(!isShow);
+  }
+  // update values Here!
+  function updateFunction() {
+    console.log(rowID);
   }
   return (
     <tr key={rowID}>
@@ -80,7 +88,7 @@ function RowData(props) {
             day={day}
             start={start}
             quit={quit}
-            updateFunction={props.updateFunction}
+            updateFunction={updateFunction}
           />
         ) : null}
       </td>
@@ -88,7 +96,8 @@ function RowData(props) {
   );
 }
 
-function TableSimpleHr() {
+function TableSimpleHr(props) {
+  const modalDisp = props.modalDisp;
   const [wklyHours, updateWklyHrs] = useState({
     1: { day: "Monday", start: "07:00", quit: "16:00" },
     2: { day: "Tuesday", start: "08:00", quit: "16:00" },
@@ -101,12 +110,6 @@ function TableSimpleHr() {
     7: { day: "Sunday", start: "8:00", quit: "16:00" }
   };
 
-  function getRowData() {
-    console.log("connect");
-    //let thisDaysHrs = wklyHours[rowID]
-    //console.log(thisDaysHrs)
-  }
-
   const rowDataLog = Object.values(wklyHours);
   return (
     <CardData>
@@ -114,9 +117,7 @@ function TableSimpleHr() {
       <table>
         <HourHeader dailyData={wklyHours} />
         {rowDataLog.map((x, keyId) => {
-          return (
-            <RowData rowData={x} keyId={keyId} updateFunction={getRowData} />
-          );
+          return <RowData rowData={x} keyId={keyId} />;
         })}
       </table>
     </CardData>

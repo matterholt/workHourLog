@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import ModalAddHour from "./componets/ModalAddHour";
-import ModalSettingUser from "./componets/ModalSettingUser";
-import Header from "./componets/Header";
-import SideBar from "./componets/Nav";
-import CardWeeklyOverview from "./componets/CardWeeklyOverview";
-import CardDailyHourChart from "./componets/CardDailyHourChart";
-import TableSimpleHr from "./componets/TableSimpleHr";
+import ModalAddHour from "./components/ModalAddHour";
+import ModalSettingUser from "./components/ModalSettingUser";
+import Header from "./components/Header";
+import SideBar from "./components/Nav";
+import CardWeeklyOverview from "./components/CardWeeklyOverview";
+import CardDailyHourChart from "./components/CardDailyHourChart";
+import TableSimpleHr from "./components/TableSimpleHr";
 
 import styled from "@emotion/styled";
 import "./style/WkDay.css";
@@ -18,6 +18,11 @@ const OverTable = styled.div`
   flex-flow: column;
   padding: 5px;
 `;
+
+const blurOut = {
+  filter: `blur(5px) grayscale(50%)`
+};
+
 // user Pref should be context,
 const App = () => {
   const [hourLog, upDateHourLog] = useState([]);
@@ -31,7 +36,8 @@ const App = () => {
   const [isModalView, updateModalView] = useState({
     dataTable: false,
     settings: false,
-    addHours: false
+    addHours: false,
+    modalTable: false // blur out the any of the modals,
   });
 
   function updateUserSettings(e) {
@@ -41,11 +47,6 @@ const App = () => {
   }
 
   function visualModalToggle(e) {
-    /*
-for (let modalType in isModalView) {
-      isModalView[modalType] = false;
-    }
-*/
     const modalName = e.target.name;
     const modalCurrentBool = isModalView[modalName];
     updateModalView({ ...isModalView, [modalName]: !modalCurrentBool });
@@ -54,7 +55,7 @@ for (let modalType in isModalView) {
   }
 
   return (
-    <div className="week">
+    <div className="week" style={isModalView.modalTable ? blurOut : null}>
       <Header />
       <SideBar visualModal={visualModalToggle} />
 
@@ -72,7 +73,7 @@ for (let modalType in isModalView) {
       </span>
 
       <OverTable>
-        <TableSimpleHr />
+        <TableSimpleHr modalDisp={isModalView.modalTable} />
         <CardWeeklyOverview />
       </OverTable>
     </div>
