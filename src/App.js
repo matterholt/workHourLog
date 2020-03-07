@@ -19,10 +19,6 @@ const OverTable = styled.div`
   padding: 5px;
 `;
 
-const blurOut = {
-  filter: `blur(5px) grayscale(50%)`
-};
-
 // user Pref should be context,
 const App = () => {
   const [hourLog, upDateHourLog] = useState([]);
@@ -35,6 +31,7 @@ const App = () => {
 
   const [isModalView, updateModalView] = useState({
     dataTable: false,
+    sideBar: false,
     settings: false,
     addHours: false,
     modalTable: false // blur out the any of the modals,
@@ -55,9 +52,9 @@ const App = () => {
   }
 
   return (
-    <div className="week" style={isModalView.modalTable ? blurOut : null}>
+    <div className="week">
       <Header />
-      <SideBar visualModal={visualModalToggle} />
+      {isModalView.sideBar ? <SideBar visualModal={visualModalToggle} /> : null}
 
       <span className="info">
         <ModalSettingUser
@@ -74,7 +71,6 @@ const App = () => {
 
       <OverTable>
         <TableSimpleHr modalDisp={isModalView.modalTable} />
-        <CardWeeklyOverview />
       </OverTable>
     </div>
   );

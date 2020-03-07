@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import CardData from "./CardData";
 import "../style/tableChart.css";
 
+import calculateDailyHours from "../hoursCal";
+
 // Heading for the Hour log table
 function HourHeader(props) {
   return (
@@ -67,6 +69,8 @@ function RowData(props) {
   const rowID = props.keyId + 1;
   const [isShow, updateShow] = useState(false);
   const { day, start, quit } = props.rowData;
+  const [dailyHr, updateDailyHrs] = useState("");
+
   function updateVisualShow() {
     updateShow(!isShow);
   }
@@ -74,12 +78,18 @@ function RowData(props) {
   function updateFunction() {
     console.log(rowID);
   }
+
+  useEffect(() => {
+    const dailyHoursWorked = calculateDailyHours(start, quit);
+    updateDailyHrs(dailyHoursWorked);
+  }, []);
+
   return (
     <tr key={rowID}>
       <td> {day}</td>
       <td> {start}</td>
       <td> {quit}</td>
-      <td> TDD </td>
+      <td> {dailyHr} </td>
       <td className="modalContainer">
         <button onClick={updateVisualShow}>Update</button>
         {isShow ? (

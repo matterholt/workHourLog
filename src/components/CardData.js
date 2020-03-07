@@ -4,8 +4,9 @@ import styled from "@emotion/styled";
 
 const DataCard = styled.div`
   margin: 5px;
-  background: #dba159;
+  background: #ddd;
   border-radius: 5px;
+  padding: 20px;
   display: flex;
   flex-flow: column;
   align-items: center;
