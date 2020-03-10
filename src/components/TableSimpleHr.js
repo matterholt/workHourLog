@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+
+import { Default } from "../data/temp_defaultHours";
+
 import CardData from "./CardData";
 import "../style/tableChart.css";
 
 import calculateDailyHours from "../hoursCal";
 
 // Heading for the Hour log table
-function HourHeader(props) {
+function HourHeader() {
   return (
     <tr>
       <th>Day</th>
@@ -19,26 +22,17 @@ function HourHeader(props) {
 
 // Perform updates to the table via modal
 function ModalUpdate(props) {
-  // UPDATE FUNCTION TO UPDATE HOURS
-  // Key up for escape and enter
-  const [startTime, updateStartTime] = useState("");
-  const [quitTime, updateQuitTime] = useState("");
-
-  useEffect(() => {
-    updateStartTime(props.start);
-    updateQuitTime(props.quit);
-  }, []);
-
   return (
-    <div className="modelCard" onClick={props.visualUpdate}>
+    <div className="modelCard">
       <div className="modal">
         <h3>UPDATES TO {props.day}</h3>
         <label>
           <input
             type="time"
-            value={startTime}
+            value={props.start}
+            name="punchIn"
             onChange={e => {
-              updateStartTime(e.target.value);
+              props.updateHrDay(e);
             }}
           />{" "}
           <br />
@@ -47,16 +41,17 @@ function ModalUpdate(props) {
         <label>
           <input
             type="time"
-            value={quitTime}
+            name="punchOut"
+            value={props.quit}
             onChange={e => {
-              updateQuitTime(e.target.value);
+              props.updateHrDay(e);
             }}
           />
           <br />
           Punch Out
         </label>
         <div className="buttonContianer">
-          <button onClick={props.updateFunction}>Confirm</button>
+          <button onClick={props.totalDailyHrs}> Confirm</button>
           <button onClick={props.visualUpdate}>close</button>
         </div>
       </div>
@@ -66,39 +61,53 @@ function ModalUpdate(props) {
 
 // Row data to process
 function RowData(props) {
-  const rowID = props.keyId + 1;
   const [isShow, updateShow] = useState(false);
-  const { day, start, quit } = props.rowData;
-  const [dailyHr, updateDailyHrs] = useState("");
+  const [dailyHour, updateDailyHr] = useState({
+    punchIn: "",
+    punchOut: "",
+    workingHrs: ""
+  });
 
   function updateVisualShow() {
     updateShow(!isShow);
   }
-  // update values Here!
-  function updateFunction() {
-    console.log(rowID);
+  function workHourThisDay(e) {
+    const inputName = e.target.name;
+    updateDailyHr({
+      ...dailyHour,
+      [inputName]: e.target.value
+    });
   }
-
+  function dailyWorkHrs() {
+    updateShow(!isShow);
+    const totalHrs = calculateDailyHours(dailyHour.punchIn, dailyHour.punchOut);
+    updateDailyHr({ ...dailyHour, ["workingHrs"]: totalHrs });
+  }
   useEffect(() => {
-    const dailyHoursWorked = calculateDailyHours(start, quit);
-    updateDailyHrs(dailyHoursWorked);
+    const totalHrs = calculateDailyHours(Default.start, Default.quit);
+    updateDailyHr({
+      ["punchIn"]: Default.start,
+      ["punchOut"]: Default.quit,
+      ["workingHrs"]: totalHrs
+    });
   }, []);
 
   return (
-    <tr key={rowID}>
-      <td> {day}</td>
-      <td> {start}</td>
-      <td> {quit}</td>
-      <td> {dailyHr} </td>
+    <tr key={props.idKey}>
+      <td> {props.dayOfwk}</td>
+      <td> {dailyHour.punchIn}</td>
+      <td> {dailyHour.punchOut}</td>
+      <td> {dailyHour.workingHrs} </td>
       <td className="modalContainer">
         <button onClick={updateVisualShow}>Update</button>
         {isShow ? (
           <ModalUpdate
             visualUpdate={updateVisualShow}
-            day={day}
-            start={start}
-            quit={quit}
-            updateFunction={updateFunction}
+            updateHrDay={workHourThisDay}
+            totalDailyHrs={dailyWorkHrs}
+            day={props.day}
+            start={dailyHour.punchIn}
+            quit={dailyHour.punchOut}
           />
         ) : null}
       </td>
@@ -106,28 +115,27 @@ function RowData(props) {
   );
 }
 
-function TableSimpleHr(props) {
-  const modalDisp = props.modalDisp;
-  const [wklyHours, updateWklyHrs] = useState({
-    1: { day: "Monday", start: "07:00", quit: "16:00" },
-    2: { day: "Tuesday", start: "08:00", quit: "16:00" },
-    3: { day: "Wednesday", start: "08:00", quit: "16:00" },
-    4: { day: "Thursday", start: "08:00", quit: "16:00" },
-    5: { day: "Friday", start: "08:00", quit: "16:00" }
-  });
-  const weekendWork = {
-    6: { day: "Saturday", start: "8:00", quit: "16:00" },
-    7: { day: "Sunday", start: "8:00", quit: "16:00" }
-  };
+function TableSimpleHr() {
+  const daysOfwk = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+  const [weeklyHrs, updateWeeklyHrs] = useState([]);
 
-  const rowDataLog = Object.values(wklyHours);
+  function updateHoursDb(idKey) {}
+
   return (
     <CardData>
       <h1> Weekly Data Table </h1>
       <table>
-        <HourHeader dailyData={wklyHours} />
-        {rowDataLog.map((x, keyId) => {
-          return <RowData rowData={x} keyId={keyId} />;
+        <HourHeader />
+        {daysOfwk.map((day, idKey) => {
+          return <RowData dayOfwk={day} idKey={idKey} />;
         })}
       </table>
     </CardData>

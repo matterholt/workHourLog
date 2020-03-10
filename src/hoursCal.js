@@ -8,7 +8,7 @@ function getMin(time) {
 function calHourPass(inTime, outTime) {
   let totalTime = outTime - inTime;
   let todayHour = totalTime / 60 - 0.5;
-  console.log(`Today's hour are ${todayHour}`);
+  //console.log(`Today's hour are ${todayHour}`);
   return todayHour;
 }
 
