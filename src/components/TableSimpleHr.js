@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { Default } from "../data/temp_defaultHours";
 
 import CardData from "./CardData";
@@ -52,7 +51,7 @@ function ModalUpdate(props) {
         </label>
         <div className="buttonContianer">
           <button onClick={props.totalDailyHrs}> Confirm</button>
-          <button onClick={props.visualUpdate}>close</button>
+          <button onClick={props.visualUpdate}>Close</button>
         </div>
       </div>
     </div>
@@ -67,7 +66,6 @@ function RowData(props) {
     punchOut: "",
     workingHrs: ""
   });
-
   function updateVisualShow() {
     updateShow(!isShow);
   }
@@ -116,25 +114,38 @@ function RowData(props) {
 }
 
 function TableSimpleHr() {
-  const daysOfwk = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
-  ];
+  const [days, updateDays] = useState([]);
+  const [numberOfDay, updateNumberOfDay] = useState(1);
+
   const [weeklyHrs, updateWeeklyHrs] = useState([]);
 
-  function updateHoursDb(idKey) {}
+  // Change the the list.
+  function ListOfDays() {
+    const daysOfweek = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ];
+    let daysToRecord = [];
+    updateNumberOfDay(numberOfDay + 1);
+    for (let i = 0; i < numberOfDay; i++) {
+      daysToRecord.push(daysOfweek[i]);
+    }
+    updateDays(daysToRecord);
+  }
 
   return (
     <CardData>
+      <button onClick={ListOfDays}>ADD IT</button>
+
       <h1> Weekly Data Table </h1>
       <table>
         <HourHeader />
-        {daysOfwk.map((day, idKey) => {
+        {days.map((day, idKey) => {
           return <RowData dayOfwk={day} idKey={idKey} />;
         })}
       </table>
@@ -143,3 +154,9 @@ function TableSimpleHr() {
 }
 
 export default TableSimpleHr;
+
+/*
+
+How to clear / reset the hours for the table
+
+*/
