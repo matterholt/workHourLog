@@ -6,14 +6,20 @@ const ModalDiv = styled.div`
   flex-flow: column;
   background-color: #f3f4f7;
   width: 550px;
-  top: 50px;
   box-shadow: 5px 8px 15px black;
   border-radius: 5px;
-  position: absolute;
+  position: relative;
+  top: 25px;
+  left: 25px;
+  z-index: 50;
+  opacity: 1;
+  transition-property: opacity, left;
+  transition-duration: 3s, 5s;
+  transition-timing-function: ease-in-out;
 `;
 
-const Modal = props => {
+const CardModal = props => {
   return <ModalDiv>{props.children}</ModalDiv>;
 };
 
-export default Modal;
+export default CardModal;
