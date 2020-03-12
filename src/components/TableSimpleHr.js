@@ -64,7 +64,7 @@ function RowData(props) {
   const [dailyHour, updateDailyHr] = useState({
     punchIn: "",
     punchOut: "",
-    workingHrs: ""
+    workingHrs: "0"
   });
   function updateVisualShow() {
     updateShow(!isShow);
@@ -89,6 +89,11 @@ function RowData(props) {
       ["workingHrs"]: totalHrs
     });
   }, []);
+  useEffect(() => {
+    if (dailyHour["workingHrs"] != null) {
+      props.hrFunc(props.dayOfwk, dailyHour["workingHrs"]);
+    }
+  }, [dailyHour]);
 
   return (
     <tr key={props.idKey}>
@@ -115,9 +120,10 @@ function RowData(props) {
 
 function TableSimpleHr() {
   const [days, updateDays] = useState([]);
+  const [isFull, switchIsFull] = useState(false);
   const [numberOfDay, updateNumberOfDay] = useState(1);
-
-  const [weeklyHrs, updateWeeklyHrs] = useState([]);
+  const [weeklyHrs, updateWeeklyHrs] = useState({});
+  const [totalhrs, updateTotalHRs] = useState(0);
 
   // Change the the list.
   function ListOfDays() {
@@ -132,21 +138,58 @@ function TableSimpleHr() {
     ];
     let daysToRecord = [];
     updateNumberOfDay(numberOfDay + 1);
-    for (let i = 0; i < numberOfDay; i++) {
-      daysToRecord.push(daysOfweek[i]);
+    if (numberOfDay <= 5) {
+      for (let i = 0; i < numberOfDay; i++) {
+        daysToRecord.push(daysOfweek[i]);
+      }
+      updateDays(daysToRecord);
+    } else {
+      switchIsFull(!isFull);
     }
-    updateDays(daysToRecord);
   }
+  function resetTable() {
+    updateDays([]);
+    switchIsFull(false);
+    updateNumberOfDay(1);
+    updateWeeklyHrs([]);
+    updateTotalHRs(0);
+  }
+  function weeklyWorkedHours(name, value) {
+    if (value != 0) {
+      updateWeeklyHrs({
+        ...weeklyHrs,
+        [name]: value
+      });
+    }
+  }
+
+  useEffect(() => {
+    //console.log(weeklyHrs);
+    const weeklyValues = Object.values(weeklyHrs);
+
+    if (weeklyValues != 0) {
+      const sum = (acc, curr) => acc + curr;
+      const reducHr = weeklyValues.reduce(sum);
+      updateTotalHRs(reducHr);
+    }
+  }, [weeklyHrs]);
 
   return (
     <CardData>
-      <button onClick={ListOfDays}>ADD IT</button>
-
+      {!isFull ? (
+        <button onClick={ListOfDays}>ADD IT</button>
+      ) : (
+        <button onClick={resetTable}>CLEAR</button>
+      )}
+      <button onClick={resetTable}>CLEAR</button>
       <h1> Weekly Data Table </h1>
+      <h2> Total Hours : {totalhrs} </h2>
       <table>
         <HourHeader />
         {days.map((day, idKey) => {
-          return <RowData dayOfwk={day} idKey={idKey} />;
+          return (
+            <RowData dayOfwk={day} idKey={idKey} hrFunc={weeklyWorkedHours} />
+          );
         })}
       </table>
     </CardData>
