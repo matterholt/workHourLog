@@ -66,9 +66,7 @@ function RowData(props) {
     punchOut: "",
     workingHrs: "0"
   });
-  function updateVisualShow() {
-    updateShow(!isShow);
-  }
+
   function workHourThisDay(e) {
     const inputName = e.target.name;
     updateDailyHr({
@@ -76,6 +74,7 @@ function RowData(props) {
       [inputName]: e.target.value
     });
   }
+
   function dailyWorkHrs() {
     updateShow(!isShow);
     const totalHrs = calculateDailyHours(dailyHour.punchIn, dailyHour.punchOut);
@@ -102,10 +101,10 @@ function RowData(props) {
       <td> {dailyHour.punchOut}</td>
       <td> {dailyHour.workingHrs} </td>
       <td className="modalContainer">
-        <button onClick={updateVisualShow}>Update</button>
+        <button onClick={() => updateShow(!isShow)}>Update</button>
         {isShow ? (
           <ModalUpdate
-            visualUpdate={updateVisualShow}
+            visualUpdate={() => updateShow(!isShow)}
             updateHrDay={workHourThisDay}
             totalDailyHrs={dailyWorkHrs}
             day={props.day}
@@ -126,7 +125,7 @@ function TableSimpleHr() {
   const [totalhrs, updateTotalHRs] = useState(0);
 
   // Change the the list.
-  function ListOfDays() {
+  function ListOfDays(num) {
     const daysOfweek = [
       "Monday",
       "Tuesday",
@@ -137,7 +136,7 @@ function TableSimpleHr() {
       "Sunday"
     ];
     let daysToRecord = [];
-    updateNumberOfDay(numberOfDay + 1);
+    updateNumberOfDay(numberOfDay + num);
     if (numberOfDay <= 5) {
       for (let i = 0; i < numberOfDay; i++) {
         daysToRecord.push(daysOfweek[i]);
@@ -177,7 +176,7 @@ function TableSimpleHr() {
   return (
     <CardData>
       {!isFull ? (
-        <button onClick={ListOfDays}>ADD IT</button>
+        <button onClick={() => ListOfDays(1)}>ADD IT</button>
       ) : (
         <button onClick={resetTable}>CLEAR</button>
       )}
