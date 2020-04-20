@@ -1,39 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Header from "./components/Header";
-import TableSimpleHr from "./components/TableSimpleHr";
 
 import styled from "@emotion/styled";
 import "./style/WkDay.css";
-const OverTable = styled.div`
-  height: 75%;
-  grid-column: 2;
-  grid-row: 2;
+
+const Rows = styled.li`
   display: flex;
-  flex-flow: column;
-  padding: 5px;
+  justify-content: space-around;
+  align-items: start;
+  border: solid aliceblue;
+  background-color: white;
+  width: 100%;
+`;
+const RoWData = styled.p`
+  background: #8690e1;
+  width: 100px;
+`;
+const UList = styled.ul`
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
 `;
 
+const WeeklyHours = (props) => {
+  const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
+  const weekLog = daysOfWk.map((day, dayKey) => {
+    return (
+      <Rows key={dayKey}>
+        <RoWData>{day}</RoWData>
+        <RoWData>{props.hours.start}</RoWData>
+        <RoWData>{props.hours.quit}</RoWData>
+        <button>Edit</button>
+      </Rows>
+    );
+  });
+  return <UList>{weekLog}</UList>;
+};
 // user Pref should be context,
 const App = () => {
-  const [hourLog, upDateHourLog] = useState([]);
-  const [userBaseValue, updateUserBaseValue] = useState({
-    username: "testiner",
-    startTime: "08:00",
-    endTime: "16:30",
-    lunchTime: "0.5",
+  const [defaultHours, updateDefaultHours] = useState({
+    start: "07:00",
+    quit: "16:00",
+    lunch: 0.5,
   });
-
-  const [isModalView, updateModalView] = useState({
-    modalTable: true, // blur out the any of the modals,
-  });
-
   return (
-    <div className="week">
+    <div>
       <Header />
-      <OverTable>
-        <TableSimpleHr modalDisp={isModalView.modalTable} />
-      </OverTable>
+      <WeeklyHours hours={defaultHours} />
     </div>
   );
 };
