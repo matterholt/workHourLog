@@ -4,7 +4,7 @@ import { Default } from "../data/temp_defaultHours";
 import CardData from "./CardData";
 import "../style/tableChart.css";
 
-import calculateDailyHours from "../hoursCal";
+import calculateDailyHours from "../logic/hoursCal";
 
 // Heading for the Hour log table
 function HourHeader() {
@@ -30,7 +30,7 @@ function ModalUpdate(props) {
             type="time"
             value={props.start}
             name="punchIn"
-            onChange={e => {
+            onChange={(e) => {
               props.updateHrDay(e);
             }}
           />{" "}
@@ -42,7 +42,7 @@ function ModalUpdate(props) {
             type="time"
             name="punchOut"
             value={props.quit}
-            onChange={e => {
+            onChange={(e) => {
               props.updateHrDay(e);
             }}
           />
@@ -64,14 +64,14 @@ function RowData(props) {
   const [dailyHour, updateDailyHr] = useState({
     punchIn: "",
     punchOut: "",
-    workingHrs: "0"
+    workingHrs: "0",
   });
 
   function workHourThisDay(e) {
     const inputName = e.target.name;
     updateDailyHr({
       ...dailyHour,
-      [inputName]: e.target.value
+      [inputName]: e.target.value,
     });
   }
 
@@ -85,7 +85,7 @@ function RowData(props) {
     updateDailyHr({
       ["punchIn"]: Default.start,
       ["punchOut"]: Default.quit,
-      ["workingHrs"]: totalHrs
+      ["workingHrs"]: totalHrs,
     });
   }, []);
   useEffect(() => {
@@ -133,7 +133,7 @@ function TableSimpleHr() {
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday"
+      "Sunday",
     ];
     let daysToRecord = [];
     updateNumberOfDay(numberOfDay + num);
@@ -157,7 +157,7 @@ function TableSimpleHr() {
     if (value != 0) {
       updateWeeklyHrs({
         ...weeklyHrs,
-        [name]: value
+        [name]: value,
       });
     }
   }

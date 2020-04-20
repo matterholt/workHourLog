@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import ModalAddHour from "./components/ModalAddHour";
-import ModalSettingUser from "./components/ModalSettingUser";
 import Header from "./components/Header";
-import SideBar from "./components/Nav";
-import CardWeeklyOverview from "./components/CardWeeklyOverview";
-import CardDailyHourChart from "./components/CardDailyHourChart";
 import TableSimpleHr from "./components/TableSimpleHr";
 
 import styled from "@emotion/styled";
@@ -26,49 +21,16 @@ const App = () => {
     username: "testiner",
     startTime: "08:00",
     endTime: "16:30",
-    lunchTime: "0.5"
+    lunchTime: "0.5",
   });
 
   const [isModalView, updateModalView] = useState({
-    dataTable: false,
-    sideBar: false,
-    settings: false,
-    addHours: false,
-    modalTable: false // blur out the any of the modals,
+    modalTable: true, // blur out the any of the modals,
   });
-
-  function updateUserSettings(e) {
-    const settingsName = e.target.name;
-    const settingsValue = e.target.value;
-    updateUserBaseValue({ ...userBaseValue, [settingsName]: settingsValue });
-  }
-
-  function visualModalToggle(e) {
-    const modalName = e.target.name;
-    const modalCurrentBool = isModalView[modalName];
-    updateModalView({ ...isModalView, [modalName]: !modalCurrentBool });
-
-    console.log(isModalView);
-  }
 
   return (
     <div className="week">
       <Header />
-      {isModalView.sideBar ? <SideBar visualModal={visualModalToggle} /> : null}
-
-      <span className="info">
-        <ModalSettingUser
-          modalView={isModalView.settings}
-          visualModal={visualModalToggle}
-          userPref={userBaseValue}
-          setSettings={updateUserSettings}
-        />
-        <ModalAddHour
-          modalView={isModalView.addHours}
-          visualModal={visualModalToggle}
-        />
-      </span>
-
       <OverTable>
         <TableSimpleHr modalDisp={isModalView.modalTable} />
       </OverTable>

@@ -22,29 +22,11 @@ There should be a default arrival time (the desired time user wishes to attend w
 
 ## Daily Successes
 
+[] have a default start time chart
+[] save data in local storage, maybe
+
 ## Application break down
 
-- [ X ] Create default settings, Default Punch In, Lunch hours, Name,
-- [ ] create a reactive table that has hours displayed()
-- [ ] Design component for time logger.
-- [ ] Total time worked at the top of page (data visual element)
+[] have a start button that counts down the hour for the week
 
 ## TODOs
-
-- [ ] Add transition to the modal, to allow better UX
-
-- [ ] Build a simple bar chart showing the weeks hours
-
-- [ ] Build style for the modal component
-
-- [ ] On the chart for the daily hours, have a button to edit the data
-
-- [ ] Style for the header,
-
-- [x] improve toggle buttons on the models, duplicated code, should use object to determine whether model is open or close
-
-## Extra features
-
-1. displays weather,
-2. Login function
-3. add details to the time, so define the hours worked on project
