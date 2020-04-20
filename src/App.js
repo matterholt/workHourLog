@@ -23,21 +23,29 @@ const UList = styled.ul`
   min-width: 100vw;
 `;
 
+const TimeInput = (props) => {
+  return <input value={props.time} />;
+};
+
 const WeeklyHours = (props) => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
   const weekLog = daysOfWk.map((day, dayKey) => {
     return (
       <Rows key={dayKey}>
         <RoWData>{day}</RoWData>
-        <RoWData>{props.hours.start}</RoWData>
-        <RoWData>{props.hours.quit}</RoWData>
+        <RoWData>
+          <TimeInput time={props.hours.start} />
+        </RoWData>
+        <RoWData>
+          <TimeInput time={props.hours.quit} />
+        </RoWData>
         <button>Edit</button>
       </Rows>
     );
   });
   return <UList>{weekLog}</UList>;
 };
-// user Pref should be context,
+
 const App = () => {
   const [defaultHours, updateDefaultHours] = useState({
     start: "07:00",
