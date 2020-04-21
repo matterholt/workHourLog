@@ -28,12 +28,12 @@ const UList = styled.ul`
   min-width: 100vw;
 `;
 const TimeInput = (props) => {
-  return <input value={props.time} />;
+  return <span type="time">{props.time}</span>;
 };
 
 const WeeklyHours = (props) => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
-  const { workingHrs, SetWorkingHrs } = useContext(DefaultHrContext);
+  const { workingHrs } = useContext(DefaultHrContext);
   const weekLog = daysOfWk.map((day, dayKey) => {
     return (
       <Rows key={dayKey}>
