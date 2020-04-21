@@ -26,7 +26,7 @@ const TimeInput = (props) => {
   return <span type="time">{props.time}</span>;
 };
 
-export const WeeklyHours = (props) => {
+export const WeeklyHours = () => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
   const { workingHrs } = useContext(DefaultHrContext);
   const weekLog = daysOfWk.map((day, dayKey) => {

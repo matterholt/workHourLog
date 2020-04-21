@@ -3,6 +3,16 @@ import React, { useState, useContext, useEffect } from "react";
 import ModelLayout from "../components/ModelLayout";
 import { DefaultHrContext } from "../context/DefaultHrContext";
 
+const ConfirmChoice = (props) => {
+  return (
+    <div>
+      <p>You have decide to change you setting</p>
+      <button onClick={props.agreeChange}>Agree</button>
+      <button onClick={props.closeModel}>Reject</button>
+    </div>
+  );
+};
+
 const DefaultModal = (props) => {
   const { workingHrs, SetWorkingHrs } = useContext(DefaultHrContext);
 
@@ -10,16 +20,43 @@ const DefaultModal = (props) => {
   const [newQuitTime, setNewQuitTime] = useState("");
   const [newLunchHrs, setLunchHrs] = useState("");
 
-  function onSubmit(e) {
-    e.preventDefault();
+  const [isConfirmModel, setConfirmModel] = useState(false);
+  const [confirmNewDefaultTime, setConfirmNewDefaultTime] = useState(false);
+
+  function closeModal() {
+    setConfirmModel(false);
+  }
+  function agreeChange() {
+    setConfirmNewDefaultTime(true);
+    setConfirmModel(false);
+    console.log("Agree to the changes");
+    updateGlobalState();
+  }
+
+  function confirmDefault() {
+    // useReducer to make it simple
+    setConfirmModel(true);
+    //closer. need to keep function open till confirm
+  }
+
+  function updateGlobalState() {
     SetWorkingHrs({
       ...workingHrs,
       start: newStartTime,
       quit: newQuitTime,
       lunch: newLunchHrs,
     });
-    props.updateShown();
   }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (confirmNewDefaultTime) {
+      updateGlobalState();
+    } else {
+      confirmDefault();
+    }
+  }
+
   useEffect(() => {
     setNewStartTime(workingHrs.start);
     setNewQuitTime(workingHrs.quit);
@@ -29,7 +66,11 @@ const DefaultModal = (props) => {
   return (
     <ModelLayout>
       <button onClick={props.updateShown}>close</button>
-      <form onSubmit={onSubmit}>
+      {isConfirmModel ? (
+        <ConfirmChoice closeModel={closeModal} agreeChange={agreeChange} />
+      ) : null}
+
+      <form onSubmit={handleSubmit}>
         <h2> Update the default times</h2>
         <label>Change Start Time</label>
         <input
