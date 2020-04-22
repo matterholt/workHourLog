@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-
 import { DefaultHrContext } from "../context/DefaultHrContext";
 
 import styled from "@emotion/styled";
 
 import TimeInputs from "../components/style/TimeInputs";
+
+const ChangeTime = (props) => {
+  return <TimeInputs type="time" value={props.time} />;
+};
 
 // styles for list table
 const Rows = styled.li`
@@ -31,11 +34,19 @@ export const WeeklyHours = () => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
   const { workingHrs } = useContext(DefaultHrContext);
   const weekLog = daysOfWk.map((day, dayKey) => {
+    function changeInput() {
+      console.log("worked");
+    }
     return (
       <Rows key={dayKey}>
         <RoWData>{day}</RoWData>
-        <TimeInputs value={workingHrs.start}></TimeInputs>
-        <TimeInputs value={workingHrs.quit}></TimeInputs>
+        <TimeInputs
+          readOnly={true}
+          type="time"
+          onClick={changeInput}
+          value={workingHrs.start}
+        />
+        <RoWData>{workingHrs.quit}</RoWData>
         <RoWData>8 hrs</RoWData>
       </Rows>
     );
