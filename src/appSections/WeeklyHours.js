@@ -4,6 +4,8 @@ import { DefaultHrContext } from "../context/DefaultHrContext";
 
 import styled from "@emotion/styled";
 
+import TimeInputs from "../components/style/TimeInputs";
+
 // styles for list table
 const Rows = styled.li`
   display: flex;
@@ -22,10 +24,9 @@ const UList = styled.ul`
   padding: 0;
   min-width: 100vw;
 `;
-const TimeInput = (props) => {
-  return <span type="time">{props.time}</span>;
-};
 
+// TODO:
+// CLICK ON INPUT THEN ABLE TO EDDIT TIME.
 export const WeeklyHours = () => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
   const { workingHrs } = useContext(DefaultHrContext);
@@ -33,12 +34,8 @@ export const WeeklyHours = () => {
     return (
       <Rows key={dayKey}>
         <RoWData>{day}</RoWData>
-        <RoWData>
-          <TimeInput time={workingHrs.start} />
-        </RoWData>
-        <RoWData>
-          <TimeInput time={workingHrs.quit} />
-        </RoWData>
+        <TimeInputs value={workingHrs.start}></TimeInputs>
+        <TimeInputs value={workingHrs.quit}></TimeInputs>
         <RoWData>8 hrs</RoWData>
       </Rows>
     );

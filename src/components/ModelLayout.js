@@ -2,12 +2,15 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const ModelContainer = styled.div`
-  background-color: gray;
-  color: white;
-  max-width: 670px;
-  padding: 25px;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ffffffd9;
   display: flex;
-  flex-flow: column;
   justify-content: center;
   align-items: center;
 `;

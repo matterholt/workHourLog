@@ -1,18 +1,36 @@
 import React, { useState, useContext, useEffect } from "react";
-
+import styled from "@emotion/styled";
 import ModelLayout from "../components/ModelLayout";
 import { DefaultHrContext } from "../context/DefaultHrContext";
 import { useIsModalOpen } from "../hooks/useIsModalOpen";
 
 const ConfirmChoice = (props) => {
   return (
-    <div>
-      <p>You have decide to change you setting</p>
-      <button onClick={props.agreeChange}>Agree</button>
-      <button onClick={props.closeModel}>Reject</button>
-    </div>
+    <ModelLayout>
+      <div
+        style={{
+          background: "red",
+          zIndex: "11",
+          width: "550px",
+          height: "150px",
+        }}
+      >
+        <p>You have decide to change you setting</p>
+        <button onClick={props.agreeChange}>Agree</button>
+        <button onClick={props.closeModel}>Reject</button>
+      </div>
+    </ModelLayout>
   );
 };
+
+const DefaultHrSection = styled.div`
+  background: #7c7c86;
+  padding: 2px;
+`;
+const HourDefaultForm = styled.form`
+  display: flex;
+  flex-flow: column;
+`;
 
 const DefaultModal = (props) => {
   const { workingHrs, SetWorkingHrs } = useContext(DefaultHrContext);
@@ -32,12 +50,14 @@ const DefaultModal = (props) => {
     setConfirmModel(false);
     console.log("Agree to the changes");
     updateGlobalState();
+    // close modal
+    props.updateShown();
   }
   function confirmDefault() {
     // useReducer to make it simple
     setConfirmModel(true);
-    //closer. need to keep function open till confirm
   }
+
   function updateGlobalState() {
     SetWorkingHrs({
       ...workingHrs,
@@ -45,12 +65,16 @@ const DefaultModal = (props) => {
       quit: newQuitTime,
       lunch: newLunchHrs,
     });
+    setConfirmNewDefaultTime(false);
+    closeModal();
   }
   function handleSubmit(event) {
+    // handles the form even
     event.preventDefault();
     if (confirmNewDefaultTime) {
       updateGlobalState();
     } else {
+      // seems messy and need to have a better structure
       confirmDefault();
     }
   }
@@ -64,50 +88,61 @@ const DefaultModal = (props) => {
 
   return (
     <ModelLayout>
-      <button onClick={props.updateShown}>close</button>
-      {isConfirmModel ? (
-        <ConfirmChoice closeModel={closeModal} agreeChange={agreeChange} />
-      ) : null}
-
-      <form onSubmit={handleSubmit}>
-        <h2> Update the default times</h2>
-        <label>Change Start Time</label>
-        <input
-          name="start"
-          type="time"
-          value={newStartTime}
-          onChange={(e) => setNewStartTime(e.target.value)}
-        />
-        <label>Change Quit Time</label>
-        <input
-          name="quit"
-          type="time"
-          value={newQuitTime}
-          onChange={(e) => setNewQuitTime(e.target.value)}
-        />
-        <label>Lunch Hour</label>
-        <input
-          name="lunch"
-          type="number"
-          value={newLunchHrs}
-          onChange={(e) => setLunchHrs(e.target.value)}
-        />
-        <button type="submit">OK</button>
-      </form>
+      <DefaultHrSection>
+        {isConfirmModel ? (
+          <ConfirmChoice closeModel={closeModal} agreeChange={agreeChange} />
+        ) : null}
+        <button onClick={props.updateShown}>close</button>
+        <HourDefaultForm onSubmit={handleSubmit}>
+          <fieldset disabled={isConfirmModel}>
+            <h2> Update the default times</h2>
+            <label>Change Start Time</label>
+            <input
+              name="start"
+              type="time"
+              value={newStartTime}
+              onChange={(e) => setNewStartTime(e.target.value)}
+            />
+            <label>Change Quit Time</label>
+            <input
+              name="quit"
+              type="time"
+              value={newQuitTime}
+              onChange={(e) => setNewQuitTime(e.target.value)}
+            />
+            <label>Lunch Hour</label>
+            <input
+              name="lunch"
+              type="number"
+              value={newLunchHrs}
+              onChange={(e) => setLunchHrs(e.target.value)}
+            />
+            <div>
+              <button type="submit">OK</button>
+              <button onClick={props.updateShown}>Cancel</button>
+            </div>
+          </fieldset>
+        </HourDefaultForm>
+      </DefaultHrSection>
     </ModelLayout>
   );
 };
+
+const SettingBar = styled.div`
+  height: 25px;
+  background-color: gray;
+`;
 
 export const UpdateDefaultTime = () => {
   const [isModalShown, setTrue, setFalse] = useIsModalOpen(false);
 
   return (
-    <div>
+    <SettingBar>
       {isModalShown ? (
         <DefaultModal updateShown={setFalse} />
       ) : (
         <button onClick={setTrue}>Update Defaults</button>
       )}
-    </div>
+    </SettingBar>
   );
 };
