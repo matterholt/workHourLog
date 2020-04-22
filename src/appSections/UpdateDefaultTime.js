@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 
 import ModelLayout from "../components/ModelLayout";
 import { DefaultHrContext } from "../context/DefaultHrContext";
+import { useIsModalOpen } from "../hooks/useIsModalOpen";
 
 const ConfirmChoice = (props) => {
   return (
@@ -32,13 +33,11 @@ const DefaultModal = (props) => {
     console.log("Agree to the changes");
     updateGlobalState();
   }
-
   function confirmDefault() {
     // useReducer to make it simple
     setConfirmModel(true);
     //closer. need to keep function open till confirm
   }
-
   function updateGlobalState() {
     SetWorkingHrs({
       ...workingHrs,
@@ -47,7 +46,6 @@ const DefaultModal = (props) => {
       lunch: newLunchHrs,
     });
   }
-
   function handleSubmit(event) {
     event.preventDefault();
     if (confirmNewDefaultTime) {
@@ -58,6 +56,7 @@ const DefaultModal = (props) => {
   }
 
   useEffect(() => {
+    // if built on larger app would fetch data from API
     setNewStartTime(workingHrs.start);
     setNewQuitTime(workingHrs.quit);
     setLunchHrs(workingHrs.lunch);
@@ -100,19 +99,14 @@ const DefaultModal = (props) => {
 };
 
 export const UpdateDefaultTime = () => {
-  const [isModalShown, setIsModalShown] = useState(false);
-
-  function isModelOpen() {
-    // custom hook !!  learn later!! TODO
-    setIsModalShown(!isModalShown);
-  }
+  const [isModalShown, setTrue, setFalse] = useIsModalOpen(false);
 
   return (
     <div>
       {isModalShown ? (
-        <DefaultModal updateShown={isModelOpen} />
+        <DefaultModal updateShown={setFalse} />
       ) : (
-        <button onClick={isModelOpen}>Update Defaults</button>
+        <button onClick={setTrue}>Update Defaults</button>
       )}
     </div>
   );
