@@ -4,6 +4,7 @@ import { DefaultHrContext } from "../context/DefaultHrContext";
 import styled from "@emotion/styled";
 
 import TimeInputs from "../components/style/TimeInputs";
+import ActionButton from "../components/style/ActionButton";
 
 const ChangeTime = (props) => {
   return <TimeInputs type="time" value={props.time} />;
@@ -28,29 +29,32 @@ const UList = styled.ul`
   min-width: 100vw;
 `;
 
+const DailyWorking = ({ day, dayKey }) => {
+  const { workingHrs } = useContext(DefaultHrContext);
+  function changeInput() {
+    console.log("worked");
+  }
+  return (
+    <Rows key={dayKey}>
+      <RoWData>{day}</RoWData>
+      <TimeInputs type="time" onClick={changeInput} value={workingHrs.start} />
+      <TimeInputs type="time" onClick={changeInput} value={workingHrs.quit} />
+      <RoWData>8 hrs</RoWData>
+      <ActionButton>Edit</ActionButton>
+    </Rows>
+  );
+};
+
 // TODO:
 // CLICK ON INPUT THEN ABLE TO EDDIT TIME.
 export const WeeklyHours = () => {
   const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
-  const { workingHrs } = useContext(DefaultHrContext);
-  const weekLog = daysOfWk.map((day, dayKey) => {
-    function changeInput() {
-      console.log("worked");
-    }
-    return (
-      <Rows key={dayKey}>
-        <RoWData>{day}</RoWData>
-        <TimeInputs
-          readOnly={true}
-          type="time"
-          onClick={changeInput}
-          value={workingHrs.start}
-        />
-        <RoWData>{workingHrs.quit}</RoWData>
-        <RoWData>8 hrs</RoWData>
-      </Rows>
-    );
-  });
 
-  return <UList>{weekLog}</UList>;
+  return (
+    <UList>
+      {daysOfWk.map((day, dayKey) => {
+        return <DailyWorking day={day} dayKey={dayKey} />;
+      })}
+    </UList>
+  );
 };

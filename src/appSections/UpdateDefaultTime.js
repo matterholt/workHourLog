@@ -137,12 +137,12 @@ export const UpdateDefaultTime = () => {
   const [isModalShown, setTrue, setFalse] = useIsModalOpen(false);
 
   return (
-    <SettingBar>
+    <>
       {isModalShown ? (
         <DefaultModal updateShown={setFalse} />
       ) : (
         <button onClick={setTrue}>Update Defaults</button>
       )}
-    </SettingBar>
+    </>
   );
 };

@@ -9,6 +9,7 @@ const ModelContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 20;
   background-color: #ffffffd9;
   display: flex;
   justify-content: center;

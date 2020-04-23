@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import Header from "./components/Header";
+import { TaskBar } from "./components/TaskBar";
 
-import { UpdateDefaultTime } from "./appSections/UpdateDefaultTime";
 import { WeeklyHours } from "./appSections/WeeklyHours";
 
 import { DefaultHrContext } from "./context/DefaultHrContext";
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <DefaultHrContext.Provider value={{ workingHrs, SetWorkingHrs }}>
       <Header />
-      <UpdateDefaultTime />
+      <TaskBar />
       <WeeklyHours />
     </DefaultHrContext.Provider>
   );
