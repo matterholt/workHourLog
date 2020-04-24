@@ -17,7 +17,7 @@ export const Form = styled.form`
   & li {
     margin-top: 1em;
     display: flex;
-    flex-flow: ${(props) => (props.row ? "row" : "column")};
+    flex-flow: column;
   }
 
   & label {
@@ -56,5 +56,13 @@ export const Form = styled.form`
   & p {
     margin: 1em 0 0 0;
     text-align: center;
+    color: red;
+  }
+  & button {
+    width: auto;
+    border: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
   }
 `;

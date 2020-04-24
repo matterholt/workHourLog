@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import styled from "@emotion/styled";
+
 import ModelLayout from "../components/ModelLayout";
 import { DefaultHrContext } from "../context/DefaultHrContext";
 import { useIsModalOpen } from "../hooks/useIsModalOpen";
 
 import { Form } from "../components/style/Form";
+import { ModalHeader } from "../components/style/ModalHeader";
+import { FormContainer } from "../components/style/FormContainer";
 
 const ConfirmChoice = (props) => {
   return (
@@ -24,11 +26,6 @@ const ConfirmChoice = (props) => {
     </ModelLayout>
   );
 };
-
-const DefaultHrSection = styled.div`
-  background: #7c7c86;
-  padding: 2px;
-`;
 
 const DefaultModal = (props) => {
   const { workingHrs, SetWorkingHrs } = useContext(DefaultHrContext);
@@ -86,40 +83,51 @@ const DefaultModal = (props) => {
 
   return (
     <ModelLayout>
-      <DefaultHrSection>
-        {isConfirmModel ? (
-          <ConfirmChoice closeModel={closeModal} agreeChange={agreeChange} />
-        ) : null}
-        <button onClick={props.updateShown}>close</button>
+      <FormContainer>
+        <ModalHeader>
+          <p>Time Defaults</p>
+          {isConfirmModel ? (
+            <ConfirmChoice closeModel={closeModal} agreeChange={agreeChange} />
+          ) : null}
+          <button onClick={props.updateShown}>close</button>
+        </ModalHeader>
         <Form onSubmit={handleSubmit}>
           <h2> Update the default times</h2>
-          <label>Change Start Time</label>
-          <input
-            name="start"
-            type="time"
-            value={newStartTime}
-            onChange={(e) => setNewStartTime(e.target.value)}
-          />
-          <label>Change Quit Time</label>
-          <input
-            name="quit"
-            type="time"
-            value={newQuitTime}
-            onChange={(e) => setNewQuitTime(e.target.value)}
-          />
-          <label>Lunch Hour</label>
-          <input
-            name="lunch"
-            type="number"
-            value={newLunchHrs}
-            onChange={(e) => setLunchHrs(e.target.value)}
-          />
-          <div>
-            <button type="submit">OK</button>
-            <button onClick={props.updateShown}>Cancel</button>
-          </div>
+          <ul>
+            <li>
+              <label>Change Start Time</label>
+              <input
+                name="start"
+                type="time"
+                value={newStartTime}
+                onChange={(e) => setNewStartTime(e.target.value)}
+              />
+            </li>
+            <li>
+              <label>Change Quit Time</label>
+              <input
+                name="quit"
+                type="time"
+                value={newQuitTime}
+                onChange={(e) => setNewQuitTime(e.target.value)}
+              />
+            </li>
+            <li>
+              <label>Lunch Hour</label>
+              <input
+                name="lunch"
+                type="number"
+                value={newLunchHrs}
+                onChange={(e) => setLunchHrs(e.target.value)}
+              />
+            </li>
+            <li>
+              <button type="submit">OK</button>
+              <button onClick={props.updateShown}>Cancel</button>
+            </li>
+          </ul>
         </Form>
-      </DefaultHrSection>
+      </FormContainer>
     </ModelLayout>
   );
 };
