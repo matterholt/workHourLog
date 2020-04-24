@@ -10,7 +10,7 @@ const ModelContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 20;
-  background-color: #ffffffd9;
+  background-color: #353333d9;
   display: flex;
   justify-content: center;
   align-items: center;

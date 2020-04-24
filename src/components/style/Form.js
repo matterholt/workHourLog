@@ -8,6 +8,12 @@ export const Form = styled.form`
   border-radius: inherit;
   background-color: white;
 
+  & fieldset {
+    padding: 1em;
+    display: flex;
+    flex-flow: column;
+  }
+
   & ul {
     list-style: none;
     padding: 0;
@@ -56,7 +62,6 @@ export const Form = styled.form`
   & p {
     margin: 1em 0 0 0;
     text-align: center;
-    color: red;
   }
   & button {
     width: auto;

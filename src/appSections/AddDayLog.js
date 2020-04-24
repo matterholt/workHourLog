@@ -1,8 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import styled from "@emotion/styled";
-import ModelLayout from "../components/ModelLayout";
 
+import ModelLayout from "../components/ModelLayout";
+import { ToggleSwitch } from "../components/ToggleSwitch";
+
+// Custom Hooks
 import { useIsModalOpen } from "../hooks/useIsModalOpen";
+
+// Nested tag, Styled Components
 import { Form } from "../components/style/Form";
 import { ModalHeader } from "../components/style/ModalHeader";
 import { FormContainer } from "../components/style/FormContainer";
@@ -24,18 +28,26 @@ const NewDayForm = () => {
           <input id="dateSelect" name="dateSelect" type="date" />
         </li>
         <li>
-          <label htmlFor="startTime">Start Time:</label>
-          <input id="startTime" name="startTime" type="time" />
-        </li>
-        <li>
-          <label htmlFor="quitTime">End Time:</label>
-          <input id="quitTime" name="quitTime" type="time" />
+          <ToggleSwitch />
+          <fieldset>
+            <legend>Hour Amount</legend>
+            <label htmlFor="taskHrs">Hours should take</label>
+            <input id="taskHrs" name="taskHrs" type="number" />
+          </fieldset>
+          <fieldset>
+            <legend>Destined time</legend>
+            <label htmlFor="startTime">Start Time:</label>
+            <input id="startTime" name="startTime" type="time" />
+
+            <label htmlFor="quitTime">End Time:</label>
+            <input id="quitTime" name="quitTime" type="time" />
+          </fieldset>
         </li>
         <li>
           <label htmlFor="taskNote">Description:</label>
           <textArea textarea id="taskNote" name="taskNote" />
         </li>
-        <li row>
+        <li>
           <button type="submit">Submit</button>
           <button type="reset">Cancel</button>
         </li>
