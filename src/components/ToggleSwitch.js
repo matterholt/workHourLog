@@ -2,51 +2,95 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
-const Toggle = styled.label`
+const Toggle = styled.div`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 75px;
+  vertical-align: middle;
+  text-align: left;
+  user-select: none;
+  }
+`;
 
-  & input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+const InnerSpan = styled.span`
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+    &:before{
+      content: "Yes";
+      text-transform: uppercase;
+      padding-left: 10px;
+      background-color: #f90;
+      color: #fff;
+  }
+  &:after{
+      content: "No";
+        text-transform: uppercase;
+        padding-right: 10px;
+        background-color: #ccc;
+        color: #fff;
+        text-align: right;
+  }
+  &:before, :after{
+      display: block;
+      float: left;
+      width: 50%;
+      height: 34px;
+      padding: 0;
+      line-height 34px;
+      font-size: 14px;
+      color: black;
+      font-weight: bold;
+      box-sizing: border-box;
   }
 
-  & span {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-  }
+`;
 
-  & span:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+const ToggleSpan = styled.span`
+  display: block;
+  width: 24px;
+  margin: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  border: 0 solid #ccc;
+  border-radius: 20px;
+  transition; all 0.3s ease-in 0s;
+  background: ${(props) => (props.disabled ? "#ccc" : "#fff")};
+  cursor: ${(props) => (props.disabled ? "not-allow" : "#default")};
+`;
+
+const SwitchCheckbox = styled.input`
+    display: none;
+
+    &:checked {
+      margin-left: 0;
+    }
+    &:check {
+      right: 0px;
+    }
   }
+`;
+
+const SwitchLabel = styled.label`
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0 solid #ccc;
+  border-radius: 20px;
+  margin: 0;
 `;
 
 export const ToggleSwitch = (props) => {
   return (
     <Toggle htmlFor="hrsTimeEntryToggle">
-      <input
-        id="hrsTimeEntryToggle"
-        name="hrsTimeEntryToggle"
-        type="checkbox"
-      />
-      <span></span>
+      <SwitchCheckbox type="checkbox" name={props.Name} id={props.Name} />
+      <SwitchLabel htmlFor={props.Name}>
+        <InnerSpan />
+        <ToggleSpan />
+      </SwitchLabel>
     </Toggle>
   );
 };

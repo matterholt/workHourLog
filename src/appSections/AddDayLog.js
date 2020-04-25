@@ -28,7 +28,7 @@ const NewDayForm = () => {
           <input id="dateSelect" name="dateSelect" type="date" />
         </li>
         <li>
-          <ToggleSwitch />
+          <ToggleSwitch Name="TimeToggle" />
           <fieldset>
             <legend>Hour Amount</legend>
             <label htmlFor="taskHrs">Hours should take</label>
