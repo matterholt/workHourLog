@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
+
 import { DefaultHrContext } from "../context/DefaultHrContext";
+//import { WeekHourLogContext } from "../context/WeekHourLogContext";
 
 import styled from "@emotion/styled";
 
 import TimeInputs from "../components/style/TimeInputs";
-import ActionButton from "../components/style/ActionButton";
 
-const ChangeTime = (props) => {
-  return <TimeInputs type="time" value={props.time} />;
-};
 // styles for list table
 const Rows = styled.li`
   display: flex;

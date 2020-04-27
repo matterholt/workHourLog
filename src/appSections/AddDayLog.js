@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 
 import ModelLayout from "../components/ModelLayout";
-import { ToggleSwitch } from "../components/ToggleSwitch";
 
 // Custom Hooks
 import { useIsModalOpen } from "../hooks/useIsModalOpen";
@@ -59,7 +58,7 @@ const AddTaskModal = (props) => {
 };
 
 export const AddDayLog = () => {
-  const [isModalShown, setTrue, setFalse] = useIsModalOpen(true);
+  const [isModalShown, setTrue, setFalse] = useIsModalOpen(false);
 
   return (
     <>
