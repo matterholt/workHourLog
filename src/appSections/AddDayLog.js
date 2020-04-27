@@ -28,25 +28,13 @@ const NewDayForm = () => {
           <input id="dateSelect" name="dateSelect" type="date" />
         </li>
         <li>
-          <ToggleSwitch Name="TimeToggle" />
-          <fieldset>
-            <legend>Hour Amount</legend>
-            <label htmlFor="taskHrs">Hours should take</label>
-            <input id="taskHrs" name="taskHrs" type="number" />
-          </fieldset>
-          <fieldset>
-            <legend>Destined time</legend>
-            <label htmlFor="startTime">Start Time:</label>
-            <input id="startTime" name="startTime" type="time" />
+          <label htmlFor="startTime">Start Time:</label>
+          <input id="startTime" name="startTime" type="time" />
 
-            <label htmlFor="quitTime">End Time:</label>
-            <input id="quitTime" name="quitTime" type="time" />
-          </fieldset>
+          <label htmlFor="quitTime">End Time:</label>
+          <input id="quitTime" name="quitTime" type="time" />
         </li>
-        <li>
-          <label htmlFor="taskNote">Description:</label>
-          <textArea textarea id="taskNote" name="taskNote" />
-        </li>
+
         <li>
           <button type="submit">Submit</button>
           <button type="reset">Cancel</button>

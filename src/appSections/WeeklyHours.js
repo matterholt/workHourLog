@@ -9,7 +9,6 @@ import ActionButton from "../components/style/ActionButton";
 const ChangeTime = (props) => {
   return <TimeInputs type="time" value={props.time} />;
 };
-
 // styles for list table
 const Rows = styled.li`
   display: flex;
@@ -19,10 +18,7 @@ const Rows = styled.li`
   background-color: white;
   width: 100%;
 `;
-const RoWData = styled.p`
-  background: #8690e1;
-  width: 100px;
-`;
+
 const UList = styled.ul`
   margin: 0;
   padding: 0;
@@ -31,16 +27,16 @@ const UList = styled.ul`
 
 const DailyWorking = ({ day, dayKey }) => {
   const { workingHrs } = useContext(DefaultHrContext);
+
   function changeInput() {
     console.log("worked");
   }
   return (
     <Rows key={dayKey}>
-      <RoWData>{day}</RoWData>
+      <p>{day}</p>
       <TimeInputs type="time" onClick={changeInput} value={workingHrs.start} />
       <TimeInputs type="time" onClick={changeInput} value={workingHrs.quit} />
-      <RoWData>8 hrs</RoWData>
-      <ActionButton>Edit</ActionButton>
+      <p>8 hrs</p>
     </Rows>
   );
 };
@@ -48,12 +44,19 @@ const DailyWorking = ({ day, dayKey }) => {
 // TODO:
 // CLICK ON INPUT THEN ABLE TO EDDIT TIME.
 export const WeeklyHours = () => {
-  const daysOfWk = ["Mon", "Tues", "Weds", "Thurs", "Fri"];
+  const daysOfWk = [
+    {
+      day: "Mon",
+      inTime: "7:00",
+      outTime: "16:30",
+      hrWorked: "8",
+    },
+  ];
 
   return (
     <UList>
-      {daysOfWk.map((day, dayKey) => {
-        return <DailyWorking day={day} dayKey={dayKey} />;
+      {daysOfWk.map((dayInput, dayKey) => {
+        return <DailyWorking day={dayInput.day} dayKey={dayKey} />;
       })}
     </UList>
   );

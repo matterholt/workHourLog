@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
+// components made for app
 import Header from "./components/Header";
 import { TaskBar } from "./components/TaskBar";
 
+// Main section for  application
 import { WeeklyHours } from "./appSections/WeeklyHours";
 
+// Context for default hours
 import { DefaultHrContext } from "./context/DefaultHrContext";
 
 const App = () => {
@@ -19,6 +22,7 @@ const App = () => {
     <DefaultHrContext.Provider value={{ workingHrs, SetWorkingHrs }}>
       <Header />
       <TaskBar />
+
       <WeeklyHours />
     </DefaultHrContext.Provider>
   );
