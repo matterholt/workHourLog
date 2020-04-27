@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { DefaultHrContext } from "../context/DefaultHrContext";
-//import { WeekHourLogContext } from "../context/WeekHourLogContext";
+import { WeekHourLogContext } from "../context/WeekHourLogContext";
 
 import styled from "@emotion/styled";
 
@@ -42,18 +42,11 @@ const DailyWorking = ({ day, dayKey }) => {
 // TODO:
 // CLICK ON INPUT THEN ABLE TO EDDIT TIME.
 export const WeeklyHours = () => {
-  const daysOfWk = [
-    {
-      day: "Mon",
-      inTime: "7:00",
-      outTime: "16:30",
-      hrWorked: "8",
-    },
-  ];
+  const { weekHrLog } = useContext(WeekHourLogContext);
 
   return (
     <UList>
-      {daysOfWk.map((dayInput, dayKey) => {
+      {weekHrLog.map((dayInput, dayKey) => {
         return <DailyWorking day={dayInput.day} dayKey={dayKey} />;
       })}
     </UList>

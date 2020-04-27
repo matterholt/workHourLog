@@ -23,7 +23,7 @@ const App = () => {
   useEffect(() => {
     console.log("weekly hours");
     console.log(weekHrLog);
-  }, []);
+  }, [weekHrLog]);
 
   return (
     <DefaultHrContext.Provider value={{ workingHrs, SetWorkingHrs }}>
