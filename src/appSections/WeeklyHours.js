@@ -23,18 +23,16 @@ const UList = styled.ul`
   min-width: 100vw;
 `;
 
-const DailyWorking = ({ day, dayKey }) => {
-  const { workingHrs } = useContext(DefaultHrContext);
-
+const DailyWorking = ({ dailyHrs, dayKey }) => {
   function changeInput() {
     console.log("worked");
   }
   return (
     <Rows key={dayKey}>
-      <p>{day}</p>
-      <TimeInputs type="time" onClick={changeInput} value={workingHrs.start} />
-      <TimeInputs type="time" onClick={changeInput} value={workingHrs.quit} />
-      <p>8 hrs</p>
+      <p>{dailyHrs.day}</p>
+      <TimeInputs onClick={changeInput}>{dailyHrs.start}</TimeInputs>
+      <TimeInputs onClick={changeInput}>{dailyHrs.quit} </TimeInputs>
+      <TimeInputs>{dailyHrs.hrsWork}</TimeInputs>
     </Rows>
   );
 };
@@ -47,7 +45,7 @@ export const WeeklyHours = () => {
   return (
     <UList>
       {weekHrLog.map((dayInput, dayKey) => {
-        return <DailyWorking day={dayInput.day} dayKey={dayKey} />;
+        return <DailyWorking dailyHrs={dayInput} dayKey={dayKey} />;
       })}
     </UList>
   );

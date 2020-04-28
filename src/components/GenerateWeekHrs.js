@@ -4,7 +4,7 @@
 import React, { useContext } from "react";
 import { DefaultHrContext } from "../context/DefaultHrContext";
 import { WeekHourLogContext } from "../context/WeekHourLogContext";
-
+import calculateDailyHours from "../logic/hoursCal";
 export const GernateWeekHr = () => {
   // global context for working hours
   // generate for only 5 days.
@@ -18,10 +18,12 @@ export const GernateWeekHr = () => {
     const dayHourLog = workWeek.map((day) => {
       const hrStart = workingHrs.start;
       const hrQuit = workingHrs.quit;
+      const HoursWorked = calculateDailyHours(hrStart, hrQuit);
       return {
         day: day,
         start: hrStart,
         quit: hrQuit,
+        hrsWork: HoursWorked,
       };
     });
     updateWeekHrLog(dayHourLog);
