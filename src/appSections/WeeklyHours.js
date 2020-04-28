@@ -29,7 +29,7 @@ const DailyWorking = ({ dailyHrs, dayKey }) => {
   }
   return (
     <Rows key={dayKey}>
-      <p>{dailyHrs.day}</p>
+      <TimeInputs>{dailyHrs.day}</TimeInputs>
       <TimeInputs onClick={changeInput}>{dailyHrs.start}</TimeInputs>
       <TimeInputs onClick={changeInput}>{dailyHrs.quit} </TimeInputs>
       <TimeInputs>{dailyHrs.hrsWork}</TimeInputs>
