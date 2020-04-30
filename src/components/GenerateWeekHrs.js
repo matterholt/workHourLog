@@ -5,7 +5,10 @@ import React, { useContext } from "react";
 import { DefaultHrContext } from "../context/DefaultHrContext";
 import { WeekHourLogContext } from "../context/WeekHourLogContext";
 import calculateDailyHours from "../logic/hoursCal";
-export const GernateWeekHr = () => {
+
+import { ActionButton } from "../components/style/ActionButton";
+
+export const GenerateWeekHr = () => {
   // global context for working hours
   // generate for only 5 days.
   // const workWeek = ["Monday", "Tuesday", "Wednesday", " Thursday", "Friday"];
@@ -29,5 +32,5 @@ export const GernateWeekHr = () => {
     updateWeekHrLog(dayHourLog);
   }
 
-  return <button onClick={generateHrs}> 5 Day Gen</button>;
+  return <ActionButton onClick={generateHrs}> 5 Day Gen</ActionButton>;
 };

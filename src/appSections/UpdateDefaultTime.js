@@ -8,6 +8,8 @@ import { Form } from "../components/style/Form";
 import { ModalHeader } from "../components/style/ModalHeader";
 import { FormContainer } from "../components/style/FormContainer";
 
+import { ActionButton } from "../components/style/ActionButton";
+
 const ConfirmChoice = (props) => {
   return (
     <ModelLayout>
@@ -140,7 +142,7 @@ export const UpdateDefaultTime = () => {
       {isModalShown ? (
         <DefaultModal updateShown={setFalse} />
       ) : (
-        <button onClick={setTrue}>Update Defaults</button>
+        <ActionButton onClick={setTrue}>Default Hrs</ActionButton>
       )}
     </>
   );

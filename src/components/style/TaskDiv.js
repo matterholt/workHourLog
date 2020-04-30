@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
 export const TaskDiv = styled.div`
-  height: 25px;
-  background-color: gray;
+  background-color: #e4e4e4;
+  margin-top: 1px;
 `;

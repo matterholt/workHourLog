@@ -9,6 +9,7 @@ import { useIsModalOpen } from "../hooks/useIsModalOpen";
 import { Form } from "../components/style/Form";
 import { ModalHeader } from "../components/style/ModalHeader";
 import { FormContainer } from "../components/style/FormContainer";
+import { ActionButton } from "../components/style/ActionButton";
 
 const NewDayForm = () => {
   function handSubmit(event) {
@@ -65,7 +66,7 @@ export const AddDayLog = () => {
       {isModalShown ? (
         <AddTaskModal updateShown={setFalse} />
       ) : (
-        <button onClick={setTrue}>Add Hour</button>
+        <ActionButton onClick={setTrue}>Add Hour</ActionButton>
       )}
     </>
   );
