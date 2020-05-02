@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css, keyframes } from "@emotion/core";
+import { keyframes } from "@emotion/core";
 import styled from "@emotion/styled";
 
 const bounce = keyframes`
