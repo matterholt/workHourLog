@@ -15,7 +15,7 @@ const UList = styled.ul`
 export const WeeklyHours = () => {
   const { weekHrLog, updateWeekHrLog } = useContext(WeekHourLogContext);
 
-  function handelHrUpdate(dayKey) {
+  function handleHrUpdate(dayKey) {
     const dayRefID = dayKey;
     console.log(weekHrLog[dayRefID]);
     updateWeekHrLog();
@@ -26,9 +26,9 @@ export const WeeklyHours = () => {
       {weekHrLog.map((dayInput, dayKey) => {
         return (
           <DailyHourWork
-            handelHrUpdate={handelHrUpdate}
+            handelHrUpdate={handleHrUpdate}
             dailyHrs={dayInput}
-            Key={dayKey}
+            key={dayKey}
             dayKey={dayKey}
           />
         );

@@ -28,20 +28,34 @@ const UnEditablHr = (props) => {
     </>
   );
 };
+
 const EditableHr = (props) => {
-  const [timeStart, updateTimeStart] = useState("");
-  const [timeEnd, updateTimeEnd] = useState("");
   const [hoursWorked, updateHoursWorked] = useState("");
+  const [clockedTime, updateClockTime] = useState({
+    punchIn: "",
+    punchOut: "",
+  });
 
   useEffect(() => {
-    updateTimeStart(props.dailyHrs.start);
-    updateTimeEnd(props.dailyHrs.quit);
+    updateClockTime({
+      punchIn: props.dailyHrs.start,
+      punchOut: props.dailyHrs.quit,
+    });
     updateHoursWorked(props.dailyHrs.hrsWork);
   }, []);
 
-  function handleChange() {
-    // make the punch time a object which can be update with  an on change
+  function handleChange(e) {
+    // what if we update the context here,
     //
+    const inputKey = e.target.name;
+    const inputValue = e.target.value;
+
+    updateClockTime({ ...clockedTime, [inputKey]: inputValue });
+
+    const { punchIn, punchOut } = clockedTime;
+
+    const workingHour = calculateDailyHours(punchIn, punchOut);
+    updateHoursWorked(workingHour);
   }
 
   return (
@@ -49,13 +63,15 @@ const EditableHr = (props) => {
       <TimeInputs>{props.dailyHrs.day}</TimeInputs>
       <input
         type="time"
-        onChange={(e) => updateTimeStart(e.target.value)}
-        value={timeStart}
+        name="punchIn"
+        onChange={(e) => handleChange(e)}
+        value={clockedTime.punchIn}
       />
       <input
         type="time"
-        onChange={(e) => updateTimeEnd(e.target.value)}
-        value={timeEnd}
+        name="punchOut"
+        onChange={(e) => handleChange(e)}
+        value={clockedTime.punchOut}
       />
       <TimeInputs>{hoursWorked}</TimeInputs>
     </>
@@ -63,11 +79,10 @@ const EditableHr = (props) => {
 };
 
 export const DailyHourWork = ({ dailyHrs, dayKey, handelHrUpdate }) => {
-  const [ableUpdateHrs, seAbleUpdateHrs] = useState(false);
+  const [ableUpdateHrs, setAbleUpdateHrs] = useState(false);
 
   function changeHrs() {
     // update the values here!
-
     console.log("worked");
     handelHrUpdate(dayKey);
   }
@@ -75,11 +90,11 @@ export const DailyHourWork = ({ dailyHrs, dayKey, handelHrUpdate }) => {
   return (
     <Rows key={dayKey}>
       {ableUpdateHrs ? (
-        <EditableHr dailyHrs={dailyHrs} />
+        <EditableHr dailyHrs={dailyHrs} contextHours={changeHrs} />
       ) : (
         <UnEditablHr dailyHrs={dailyHrs} />
       )}
-      <button onClick={() => seAbleUpdateHrs(!ableUpdateHrs)}>
+      <button onClick={() => setAbleUpdateHrs(!ableUpdateHrs)}>
         {ableUpdateHrs ? "OK" : "EDIT"}
       </button>
     </Rows>
