@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 
 import { WeekHourLogContext } from "../context/WeekHourLogContext";
 import { DailyHourWork } from "../components/DailyHourWork";
@@ -10,16 +10,17 @@ const UList = styled.ul`
   padding: 0;
   min-width: 100vw;
 `;
-// TODO:
-// CLICK ON INPUT THEN ABLE TO EDIT TIME.
+
 export const WeeklyHours = () => {
   const { weekHrLog, updateWeekHrLog } = useContext(WeekHourLogContext);
 
-  function handleHrUpdate(dayKey) {
-    const dayRefID = dayKey;
-    console.log(weekHrLog[dayRefID]);
-    updateWeekHrLog();
+  function handleHrUpdate(hours) {
+    console.log(hours);
+    updateWeekHrLog([...weekHrLog, hours]);
   }
+  useEffect(() => {
+    console.log(weekHrLog);
+  });
 
   return (
     <UList>
