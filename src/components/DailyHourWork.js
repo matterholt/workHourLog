@@ -16,6 +16,10 @@ const Rows = styled.li`
   background-color: white;
   width: 100%;
 `;
+const HourForm = styled.form`
+  display: flex;
+  background: lightgray;
+`;
 
 const UnEditablHr = (props) => {
   const quitTime = twelveHrCovert(props.dailyHrs.quit);
@@ -25,6 +29,7 @@ const UnEditablHr = (props) => {
       <TimeInputs>{props.dailyHrs.start}</TimeInputs>
       <TimeInputs>{quitTime} </TimeInputs>
       <TimeInputs>{props.dailyHrs.hrsWork}</TimeInputs>
+      <button onClick={props.handleToggle}>EDIT</button>
     </>
   );
 };
@@ -70,44 +75,50 @@ const EditableHr = (props) => {
       start: clockedTime.punchIn,
     };
     props.handelHrUpdate(changeHours);
+    props.handleToggle();
   }
 
   return (
-    <>
+    <HourForm onSubmit={saveToContext}>
       <TimeInputs>{props.dailyHrs.day}</TimeInputs>
-      <form onSubmit={saveToContext}>
-        <input
-          type="time"
-          name="punchIn"
-          onChange={(e) => handleChange(e)}
-          value={clockedTime.punchIn}
-        />
-        <input
-          type="time"
-          name="punchOut"
-          onChange={(e) => handleChange(e)}
-          value={clockedTime.punchOut}
-        />
-        <button type="submit">Submit</button>
-      </form>
+
+      <input
+        type="time"
+        name="punchIn"
+        onChange={(e) => handleChange(e)}
+        value={clockedTime.punchIn}
+      />
+      <input
+        type="time"
+        name="punchOut"
+        onChange={(e) => handleChange(e)}
+        value={clockedTime.punchOut}
+      />
+
       <TimeInputs>{hoursWorked}</TimeInputs>
-    </>
+      <button type="submit">OK</button>
+    </HourForm>
   );
 };
 
 export const DailyHourWork = ({ dailyHrs, dayKey, handelHrUpdate }) => {
   const [ableUpdateHrs, setAbleUpdateHrs] = useState(false);
 
+  const handleToggle = () => {
+    setAbleUpdateHrs(!ableUpdateHrs);
+  };
+
   return (
     <Rows key={dayKey}>
       {ableUpdateHrs ? (
-        <EditableHr dailyHrs={dailyHrs} handelHrUpdate={handelHrUpdate} />
+        <EditableHr
+          dailyHrs={dailyHrs}
+          handelHrUpdate={handelHrUpdate}
+          handleToggle={handleToggle}
+        />
       ) : (
-        <UnEditablHr dailyHrs={dailyHrs} />
+        <UnEditablHr dailyHrs={dailyHrs} handleToggle={handleToggle} />
       )}
-      <button onClick={() => setAbleUpdateHrs(!ableUpdateHrs)}>
-        {ableUpdateHrs ? "OK" : "EDIT"}
-      </button>
     </Rows>
   );
 };

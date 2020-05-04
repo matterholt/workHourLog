@@ -15,7 +15,13 @@ export const WeeklyHours = () => {
   const { weekHrLog, updateWeekHrLog } = useContext(WeekHourLogContext);
 
   function handleHrUpdate(hours) {
-    console.log(hours);
+    // how to change the object in an array?
+    /**
+     * need to replace the index or the day that need to change
+     *
+     * need t
+     */
+
     updateWeekHrLog([...weekHrLog, hours]);
   }
   useEffect(() => {
