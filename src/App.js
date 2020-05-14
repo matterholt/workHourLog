@@ -1,78 +1,38 @@
 import React, { useState, useEffect } from "react";
 
-import ModalAddHour from "./components/ModalAddHour";
-import ModalSettingUser from "./components/ModalSettingUser";
+// components made for app
 import Header from "./components/Header";
-import SideBar from "./components/Nav";
-import CardWeeklyOverview from "./components/CardWeeklyOverview";
-import CardDailyHourChart from "./components/CardDailyHourChart";
-import TableSimpleHr from "./components/TableSimpleHr";
+import { TaskBar } from "./components/TaskBar";
 
-import styled from "@emotion/styled";
-import "./style/WkDay.css";
-const OverTable = styled.div`
-  height: 75%;
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  flex-flow: column;
-  padding: 5px;
-`;
+// Main section for  application
+import { WeeklyHours } from "./appSections/WeeklyHours";
 
-// user Pref should be context,
+// Context for default hours
+import { DefaultHrContext } from "./context/DefaultHrContext";
+import { WeekHourLogContext } from "./context/WeekHourLogContext";
+
 const App = () => {
-  const [hourLog, upDateHourLog] = useState([]);
-  const [userBaseValue, updateUserBaseValue] = useState({
-    username: "testiner",
-    startTime: "08:00",
-    endTime: "16:30",
-    lunchTime: "0.5"
+  // convert to useReducer
+  const [workingHrs, SetWorkingHrs] = useState({
+    start: "07:00",
+    quit: "16:00",
+    lunch: 0.5,
   });
+  const [weekHrLog, updateWeekHrLog] = useState([]);
 
-  const [isModalView, updateModalView] = useState({
-    dataTable: false,
-    sideBar: false,
-    settings: false,
-    addHours: false,
-    modalTable: false // blur out the any of the modals,
-  });
-
-  function updateUserSettings(e) {
-    const settingsName = e.target.name;
-    const settingsValue = e.target.value;
-    updateUserBaseValue({ ...userBaseValue, [settingsName]: settingsValue });
-  }
-
-  function visualModalToggle(e) {
-    const modalName = e.target.name;
-    const modalCurrentBool = isModalView[modalName];
-    updateModalView({ ...isModalView, [modalName]: !modalCurrentBool });
-
-    console.log(isModalView);
-  }
+  useEffect(() => {
+    console.log("weekly hours");
+    console.log(weekHrLog);
+  }, [weekHrLog]);
 
   return (
-    <div className="week">
+    <DefaultHrContext.Provider value={{ workingHrs, SetWorkingHrs }}>
       <Header />
-      {isModalView.sideBar ? <SideBar visualModal={visualModalToggle} /> : null}
-
-      <span className="info">
-        <ModalSettingUser
-          modalView={isModalView.settings}
-          visualModal={visualModalToggle}
-          userPref={userBaseValue}
-          setSettings={updateUserSettings}
-        />
-        <ModalAddHour
-          modalView={isModalView.addHours}
-          visualModal={visualModalToggle}
-        />
-      </span>
-
-      <OverTable>
-        <TableSimpleHr modalDisp={isModalView.modalTable} />
-      </OverTable>
-    </div>
+      <WeekHourLogContext.Provider value={{ weekHrLog, updateWeekHrLog }}>
+        <TaskBar />
+        <WeeklyHours />
+      </WeekHourLogContext.Provider>
+    </DefaultHrContext.Provider>
   );
 };
 
