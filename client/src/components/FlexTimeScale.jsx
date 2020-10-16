@@ -16,7 +16,6 @@ const minRow = css`
   display: flex;
   justify-content: space-between;
   list-style: none;
-  background-color: #f0f0f0;
 `;
 const FlexTime = ({ section }) => {
   const { id, mins, round, percentHour } = section;
@@ -27,8 +26,8 @@ const FlexTime = ({ section }) => {
           <p key={`min${min}`} style={{ margin: "2px" }}>{min}</p>
         ))}
       </div>
-      <div style={{ background: "#fff4f4" }}>:{round}</div>
-      <div style={{ background: "#dedeff " }}>{percentHour} hr</div>
+      <div >:{round}</div>
+      <div>{percentHour} hr</div>
     </div>
   );
 };
