@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { weeklyStatus } from "../helpers/weeklyStatus";
+import { weeklyStatusDefault } from "../helpers/weeklyStatusDefault";
 import { calculateDailyHours } from "../helpers/calculateDailyHours";
 
-const WeeklyHours = ({ weekday }) => {
+import { useWeeklyHour } from "../context/weeklyHourContext";
+
+const WeeklyHours = ({ weekday, updateStatus }) => {
   const [clockIn, setClockIn] = useState("08:00");
   const [clockOut, setClockOut] = useState("16:30");
   const [dailyHours, setDailyHours] = useState("0");
@@ -20,6 +22,13 @@ const WeeklyHours = ({ weekday }) => {
     setDailyHours(totalHrs);
   }, [clockIn, clockOut, setDailyHours]);
 
+  function handleHrUpdate(e) {
+    setClockIn(e.target.value);
+    updateStatus({ id, day, dailyHours });
+  }
+
+  // useReducer update the
+
   return (
     <div>
       <h4>{day}</h4>
@@ -29,9 +38,7 @@ const WeeklyHours = ({ weekday }) => {
           id="clockIn"
           type="time"
           value={clockIn}
-          onChange={(e) => {
-            setClockIn(e.target.value);
-          }}
+          onChange={handleHrUpdate}
         />
       </label>
 
@@ -60,13 +67,36 @@ const WeeklyHours = ({ weekday }) => {
   );
 };
 
-const WeeklyStatusContainer = () => (
-  <div>
-    {weeklyStatus.map((dailyStatus) =>
-      dailyStatus.isActive ? (
-        <WeeklyHours key={dailyStatus.id} weekday={dailyStatus} />
-      ) : null
-    )}
-  </div>
-);
+const WeeklyStatusContainer = () => {
+  const { weeklyStatus, setWeeklyStatus } = useWeeklyHour();
+  const [currentDayStatus, setCurrentDayStatus] = useState([]);
+
+  useEffect(() => {
+    // needs to add item to the context
+    console.log(currentDayStatus);
+
+    // should add multiple values of the same day
+    // should have only the days that are active
+  }, [currentDayStatus]);
+
+  function updateStatus(updateItem) {
+    setCurrentDayStatus([...currentDayStatus, updateItem]);
+  }
+
+  return (
+    <div>
+      {weeklyStatusDefault.map((dailyStatus) =>
+        dailyStatus.isActive ? (
+          <WeeklyHours
+            key={dailyStatus.id}
+            weekday={dailyStatus}
+            updateStatus={updateStatus}
+          />
+        ) : (
+          <h1 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h1>
+        )
+      )}
+    </div>
+  );
+};
 export default WeeklyStatusContainer;
