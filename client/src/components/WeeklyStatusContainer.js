@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { weeklyStatusDefault } from "../helpers/weeklyStatusDefault";
-import { calculateDailyHours } from "../helpers/calculateDailyHours";
+import { useUpdateWeeklyHrs } from "../hooks/useUpdateWeeklyHrs";
 
-import { useWeeklyHour } from "../context/weeklyHourContext";
+import DailyHours from "./DailyHours";
 
-import WeeklyHours from "./WeeklyHours";
-
-const inputConainters = css`
+const inputContainer = css`
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -17,29 +15,16 @@ const inputConainters = css`
 `;
 
 const WeeklyStatusContainer = () => {
-  const { weeklyStatus, setWeeklyStatus } = useWeeklyHour();
-  const [currentDayStatus, setCurrentDayStatus] = useState([]);
-
-  useEffect(() => {
-    // needs to add item to the context
-    console.log(currentDayStatus);
-
-    // should add multiple values of the same day
-    // should have only the days that are active
-  }, [currentDayStatus]);
-
-  function updateStatus(updateItem) {
-    setCurrentDayStatus([...currentDayStatus, updateItem]);
-  }
+  const { currentDay, setCurrentDay } = useUpdateWeeklyHrs([]);
 
   return (
-    <div css={inputConainters}>
+    <div css={inputContainer}>
       {weeklyStatusDefault.map((dailyStatus) =>
         dailyStatus.isActive ? (
-          <WeeklyHours
+          <DailyHours
             key={dailyStatus.id}
             weekday={dailyStatus}
-            updateStatus={updateStatus}
+            updateStatus={setCurrentDay}
           />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>

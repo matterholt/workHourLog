@@ -5,7 +5,6 @@ const useTotalHrsWorked = (weeklyStatus) => {
 
   useEffect(() => {
     const dailyHrs = weeklyStatus.map((day) => day.hrs);
-    console.log(dailyHrs);
     const sumHours = dailyHrs.reduce((result, item) => {
       return result + item;
     }, 0);

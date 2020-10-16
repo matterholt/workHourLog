@@ -32,14 +32,13 @@ const TotalHours = () => {
   // const [currentHrsWorked, UpdateCurrentHrsWorked] = useTotalHrsWorked();
 
   useEffect(() => {
+    console.log(weeklyStatus);
     // change to a custom hook, all ready have a base setup
-    const dailyHrs = weeklyStatus.map((day) => day.hrs && day.isActive);
-
-    const sumHours = dailyHrs.reduce((result, item) => {
-      return result + item;
-    }, 0);
-
-    UpdateCurrentHrsWorked(sumHours);
+    // const justHrs = weeklyStatus.map((day) => Number(day.dailyHours));
+    // const sumHours = justHrs.reduce((result, item) => {
+    //   return result + item;
+    // }, 0);
+    // UpdateCurrentHrsWorked(sumHours);
   }, [weeklyStatus, currentHrsWorked]);
 
   return (

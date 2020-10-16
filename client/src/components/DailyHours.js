@@ -10,12 +10,16 @@ import {
   hourInput__day,
 } from "./style/weeklyHour.style";
 
-export default function WeeklyHours({ weekday, updateStatus }) {
+export default function DailyHours({ weekday, updateStatus }) {
   const [clockIn, setClockIn] = useState("08:00");
   const [clockOut, setClockOut] = useState("16:30");
   const [dailyHours, setDailyHours] = useState("0");
 
   const { id, day, isActive, hrs } = weekday;
+
+  // useEffect(() => {
+  //   updateStatus({ id, day, dailyHours, isActive });
+  // }, [updateStatus, id, day, dailyHours, isActive]);
 
   useEffect(() => {
     // update the hours worked when time is updated
@@ -25,12 +29,6 @@ export default function WeeklyHours({ weekday, updateStatus }) {
     setDailyHours(totalHrs);
   }, [clockIn, clockOut, setDailyHours]);
 
-  function handleHrUpdate(e) {
-    setClockIn(e.target.value);
-    updateStatus({ id, day, dailyHours });
-  }
-
-  // useReducer update the
   return (
     <div>
       <div css={hourInput__container}>
@@ -41,7 +39,9 @@ export default function WeeklyHours({ weekday, updateStatus }) {
             id="clockIn"
             type="time"
             value={clockIn}
-            onChange={handleHrUpdate}
+            onChange={(e) => {
+              setClockIn(e.target.value);
+            }}
           />
         </label>
 
