@@ -6,7 +6,7 @@ import "./App.css";
 import { WeeklyHourProvider, useWeeklyHour } from "./context/weeklyHourContext";
 
 import FlexTimeScale from "./components/FlexTimeScale";
-import WeeklyStatusContainer from "./components/WeeklyStatusContainer";
+import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
 import Header from "./components/Header";
 
 const Main = () => {
@@ -14,7 +14,7 @@ const Main = () => {
   return (
     <main>
       {isShown ? <FlexTimeScale /> : null}
-      <WeeklyStatusContainer />
+      <WeeklyLogsContainer />
     </main>
   );
 };
