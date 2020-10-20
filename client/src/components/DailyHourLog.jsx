@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useReducer } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -10,35 +10,38 @@ import {
   hourInput__day,
 } from "./style/weeklyHour.style";
 
+function calculateHours(state) {
+  const {dailyClockIn,dailyClockOut }=state
+  const totalHrs =  calculateDailyHours(dailyClockIn, dailyClockOut);
+      return totalHrs
+}
+
+function updateTimeLogReducer(state, action) {
+  switch (action.type) {
+    case 'punchIn':
+      return {...state, dailyClockIn:action.value};
+    case 'punchOut':
+      return {...state, dailyClockOut:action.value};
+    default: throw new Error('Unexpected action');
+  }
+}
+
 export default function DailyHourLog
-  ({ weekday, updateStatus, defaultHours }) {
-  
+  ({ weekday, logHoursOfDay, defaultHours }) {
   const { id, day, isActive } = weekday;
   const { clockIn, clockOut, hourWorked, lunch } = defaultHours
-  
-  const [dailyClockIn, setDailyClockIn] = useState(clockIn);
-  const [dailyClockOut, setDailyClockOut] = useState(clockOut);
+
+  const initialState = { dailyClockIn: clockIn, dailyClockOut: clockOut}
+  const [state, dispatch] = useReducer(updateTimeLogReducer, initialState)
   const [dailyHours, setDailyHours] = useState(hourWorked);
 
   useEffect(() => {
-  // issue on having the updateStatus in the effect dependance where is updates too much
-    // useCallback or useMemo ???
-     function savedata() {
-    console.log('update the miang')
-     updateStatus({id,dailyHours})
-    }
-    savedata()
-
+    setDailyHours(calculateHours(state))
+  }, [state, calculateHours])
+  
+    useEffect(() => {
+      logHoursOfDay({dailyHours,id})
   },[dailyHours,id])
-
-  useEffect(() => {
-    // update the hours worked when time is updated
-
-    const lunch = "30"; // future feature
-    const PTO = "0"; // future feature
-    const totalHrs =  calculateDailyHours(dailyClockIn, dailyClockOut);
-       setDailyHours(totalHrs);
-  }, [dailyClockIn, dailyClockOut, setDailyHours]);
 
   return (
     <div>
@@ -49,10 +52,8 @@ export default function DailyHourLog
           <input
             id="dailyClockIn"
             type="time"
-            value={dailyClockIn}
-            onChange={(e) => {
-              setDailyClockIn(e.target.value);
-            }}
+            value={state.dailyClockIn}
+            onChange={(e) => dispatch({ type: 'punchIn', value:e.target.value })}
           />
         </label>
 
@@ -61,10 +62,8 @@ export default function DailyHourLog
           <input
             id="dailyClockOut"
             type="time"
-            value={dailyClockOut}
-            onChange={(e) => {
-              setDailyClockOut(e.target.value);
-            }}
+            value={state.dailyClockOut}
+            onChange={(e) => dispatch({ type: 'punchOut', value:e.target.value })}
           />
         </label>
 

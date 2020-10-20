@@ -38,7 +38,7 @@ const WeeklyLogsContainer = () => {
             key={dailyStatus.id}
             defaultHours={defaultHours}
             weekday={dailyStatus}
-            updateStatus={addHourslogTo}
+            logHoursOfDay={addHourslogTo}
           />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>

@@ -13,6 +13,9 @@ const Main = () => {
   const [isShown, switchIsShown] = useState(false);
   return (
     <main>
+      <button onClick={() => switchIsShown(!isShown)}>
+        {isShown ? "Hide" : "Show"}
+      </button>
       {isShown ? <FlexTimeScale /> : null}
       <WeeklyLogsContainer />
     </main>
