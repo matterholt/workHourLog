@@ -8,15 +8,24 @@ import { WeeklyHourProvider, useWeeklyHour } from "./context/weeklyHourContext";
 import FlexTimeScale from "./components/FlexTimeScale";
 import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
 import Header from "./components/Header";
+import SetDefaults from "./components/SetDefaults";
 
+const ActionBar = css`
+  display: flex;
+`;
 const Main = () => {
   const [isShown, switchIsShown] = useState(false);
   return (
     <main>
-      <button onClick={() => switchIsShown(!isShown)}>
-        {isShown ? "Hide" : "Show"}
-      </button>
-      {isShown ? <FlexTimeScale /> : null}
+      <div css={ActionBar}>
+        <button onClick={() => switchIsShown(!isShown)}>
+          {isShown ? "Hide" : "Hour Scale"}
+        </button>
+
+        {isShown ? <FlexTimeScale /> : null}
+        <SetDefaults />
+      </div>
+
       <WeeklyLogsContainer />
     </main>
   );
