@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import {Modal}from './Modal'
 const setDefaultContainer = css`
   border: solid white 2px;
   margin: 10px;
@@ -9,38 +11,9 @@ const setDefaultContainer = css`
   flex-flow: column;
   box-shadow: 0px 0px 19px #48515b;
   border-radius: 5px;
+  background-color: #242f3c;
 `;
 
-const companyRecomendedTime = {
-  punchIn: "08:00",
-  punchOut: "16:30",
-  lunchTime: "12:00",
-  hrToEat: 0.5,
-};
-
-
-
-const useLocalStorage = (
-  key,
-  standardDefault = companyRecomendedTime,
-  { serialize = JSON.stringify, deserialize = JSON.parse } = {},
-) => {
-  const [defaultTimes, setDefaultTimes] = useState(
-    () =>{
-      const valueInLocalStorage = window.localStorage.getItem(key)
-      if (valueInLocalStorage){deserialize(valueInLocalStorage) }
-      return typeof standardDefault === "function"
-        ? standardDefault()
-        : standardDefault;
-  }
-  );
-
-  useEffect(() => {
-    window.localStorage.setItem(key, serialize(defaultTimes));
-  });
-
-  return [defaultTimes, setDefaultTimes];
-};
 
 
 function SetDefaults() {
@@ -60,7 +33,7 @@ const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
 
   // set the default hours user wishes to start and stop work
   return (
-    <div>
+    <Modal>
       <form css={setDefaultContainer} onSubmit={handleSubmit}>
         <h2>Set Defaults</h2>
         <label htmlFor="defaultTimeIn">Punch In Time</label>
@@ -98,7 +71,7 @@ const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
           value={defaultTimes.hrToEat}
           onChange={handleChange}
         />
-        <button type="submit">Save</button>
+        <button type="submit">Save / Close</button>
       </form>
 
       <div>
@@ -112,7 +85,7 @@ const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
           <li>The will be leaving work at {defaultTimes.punchOut}</li>
         </ul>
       </div>
-    </div>
+    </Modal>
   );
 }
 
