@@ -3,6 +3,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { flexScale } from "../helpers/flexTimeScale";
+import { Modal } from "./Modal";
 
 const base = css`
   display: grid;
@@ -17,7 +18,7 @@ const minRow = css`
   justify-content: space-between;
   list-style: none;
 `;
-const FlexTime = ({ section }) => {
+const FlexTime = ({ section, }) => {
   const { id, mins, round, percentHour } = section;
   return (
     <div css={base}>
@@ -32,12 +33,14 @@ const FlexTime = ({ section }) => {
   );
 };
 
-const FlexTimeScale = () => (
-  <div style={{ display: "flex", justifyContent:'center'}}>
-    {flexScale.map((timeRange) => (
-      <FlexTime key={timeRange.id} section={timeRange} />
-    ))}
-  </div>
-)
+const FlexTimeScale = ({ modalName }) => (
+  <Modal modalName={modalName}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      {flexScale.map((timeRange) => (
+        <FlexTime key={timeRange.id} section={timeRange} />
+      ))}
+    </div>
+  </Modal>
+);
 
 export default FlexTimeScale

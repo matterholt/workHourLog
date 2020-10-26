@@ -18,12 +18,8 @@ const Main = () => {
   return (
     <main>
       <div css={ActionBar}>
-        <button onClick={() => switchIsShown(!isShown)}>
-          {isShown ? "Hide" : "Hour Scale"}
-        </button>
-
-        {isShown ? <FlexTimeScale /> : null}
-        <SetDefaults />
+        <FlexTimeScale modalName="Flex Scale" />
+        <SetDefaults modalName="Hour Default" />
       </div>
 
       <WeeklyLogsContainer />

@@ -16,14 +16,13 @@ const setDefaultContainer = css`
 
 
 
-function SetDefaults() {
-const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
+function SetDefaults({ modalName }) {
+  const [defaultTimes, setDefaultTimes] = useLocalStorage("defaultHrs");
 
-  
   function handleChange(e) {
     // update state on form
-    const { name, value } = e.target
-    setDefaultTimes({ ...defaultTimes ,[name]:value});
+    const { name, value } = e.target;
+    setDefaultTimes({ ...defaultTimes, [name]: value });
   }
 
   function handleSubmit(e) {
@@ -33,7 +32,7 @@ const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
 
   // set the default hours user wishes to start and stop work
   return (
-    <Modal>
+    <Modal modalName={modalName}>
       <form css={setDefaultContainer} onSubmit={handleSubmit}>
         <h2>Set Defaults</h2>
         <label htmlFor="defaultTimeIn">Punch In Time</label>
@@ -71,7 +70,6 @@ const [defaultTimes, setDefaultTimes] = useLocalStorage('defaultHrs');
           value={defaultTimes.hrToEat}
           onChange={handleChange}
         />
-        <button type="submit">Save / Close</button>
       </form>
 
       <div>
