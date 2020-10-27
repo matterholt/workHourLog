@@ -12,9 +12,9 @@ function calHourPass(inTime, outTime, lunchTime = 0.5) {
   return todayHour.toFixed(1);
 }
 
-function calculateDailyHours(timeIn, timeLeave) {
-  const arriveTimeMins = convertToMinutes(timeIn);
-  const leaveTimeMins = convertToMinutes(timeLeave);
+function calculateDailyHours(dailyClockIn, dailyClockOut) {
+  const arriveTimeMins = convertToMinutes(dailyClockIn);
+  const leaveTimeMins = convertToMinutes(dailyClockOut);
 
   return calHourPass(arriveTimeMins, leaveTimeMins);
 }

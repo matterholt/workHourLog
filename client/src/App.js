@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React  from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import "./App.css";
@@ -14,14 +14,12 @@ const ActionBar = css`
   display: flex;
 `;
 const Main = () => {
-  const [isShown, switchIsShown] = useState(false);
   return (
     <main>
       <div css={ActionBar}>
         <FlexTimeScale modalName="Flex Scale" />
         <SetDefaults modalName="Hour Default" />
       </div>
-
       <WeeklyLogsContainer />
     </main>
   );
@@ -35,25 +33,13 @@ const totalHour_container = css`
 `;
 
 const TotalHours = () => {
-  const [currentHrsWorked, UpdateCurrentHrsWorked] = useState();
-  const { weeklyStatus, setWeeklyStatus } = useWeeklyHour();
-  // const [currentHrsWorked, UpdateCurrentHrsWorked] = useTotalHrsWorked();
 
-  useEffect(() => {
-    console.log(weeklyStatus);
-    // change to a custom hook, all ready have a base setup
-    // const justHrs = weeklyStatus.map((day) => Number(day.dailyHours));
-    // const sumHours = justHrs.reduce((result, item) => {
-    //   return result + item;
-    // }, 0);
-    // UpdateCurrentHrsWorked(sumHours);
-  }, [weeklyStatus, currentHrsWorked]);
 
   return (
     <div css={totalHour_container}>
       <h1 style={{ textAlign: "center" }}>
         Wkly Hrs
-        <br /> {currentHrsWorked}
+        <br /> {0}
       </h1>
     </div>
   );

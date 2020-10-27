@@ -1,10 +1,8 @@
 import React, { useState, useCallback } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-
-import { useUpdateWeeklyHrs } from "../hooks/useUpdateWeeklyHrs";
-
 import DailyHourLog from "./DailyHourLog";
+import { weeklyStatusDefault } from "../helpers/weeklyStatusDefault";
 
 const inputContainer = css`
   display: flex;
@@ -14,32 +12,29 @@ const inputContainer = css`
 `;
 
 const WeeklyLogsContainer = () => {
-  const [hoursLogged, updateHoursLogged] = useState([]);
-  const { currentDay, setCurrentDay } = useUpdateWeeklyHrs();
-  const [defaultHours, setDefaultHours] = useState({
-    clockIn: "08:00",
-    clockOut: "16:30",
-    hourWorked: 8,
-    lunch: 0.5,
-  });
+  const [activeDay, seActiveDay] = useState(() => weeklyStatusDefault);
 
-  const addHourslogTo = (data) => {
-    const dayId = data.id;
-    let notChangedHours = hoursLogged.filter((dayLog) => dayLog.id !== dayId);
-    updateHoursLogged([...notChangedHours, data]);
-  };
+  // const [dailyTimeLog, setDailyTimeLog] = useState({
+  //   dailyClockIn: "08:00",
+  //   dailyClockOut: "16:00",
+  //   dailyHoursWorked: "888",
+  // });
 
+  // useEffect(() => {
+  //   const totalHrs = calculateDailyHours(dailyTimeLog);
+  //   setDailyTimeLog({ ...dailyTimeLog, dailyHoursWorked: totalHrs });
+  // }, [dailyTimeLog, setDailyTimeLog]);
+
+  // function UpdateWkHrst(e) {
+  //   const { id, value } = e.target;
+  //   setDailyTimeLog({ ...dailyTimeLog, [id]: value });
+  // }
+  
   return (
     <div css={inputContainer}>
-      {JSON.stringify(hoursLogged)}
-      {currentDay.map((dailyStatus) =>
+      {activeDay.map((dailyStatus) =>
         dailyStatus.isActive ? (
-          <DailyHourLog
-            key={dailyStatus.id}
-            defaultHours={defaultHours}
-            weekday={dailyStatus}
-            logHoursOfDay={addHourslogTo}
-          />
+          <DailyHourLog key={dailyStatus.id} weekday={dailyStatus} />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>
         )
