@@ -2,13 +2,13 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { header } from './style/header.style'
-const Header = () => {
+import { topHeader } from './style/topHeader.style'
+const HeaderTop = () => {
   return (
-      <header css={header}>
+    <header css={topHeader}>
       <h1>Weekly Hour Log</h1>
     </header>
   );
 };
 
-export default Header
+export default HeaderTop;
