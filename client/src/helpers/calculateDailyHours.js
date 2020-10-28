@@ -1,4 +1,4 @@
-function convertToMinutes(time) {
+function timeConvertToMinutes(time) {
   const [hr, min] = time.split(":");
   const hrToMin = Number(hr) * 60;
   const totalMin = hrToMin + Number(min);
@@ -13,8 +13,8 @@ function calHourPass(inTime, outTime, lunchTime = 0.5) {
 }
 
 function calculateDailyHours(dailyClockIn, dailyClockOut) {
-  const arriveTimeMins = convertToMinutes(dailyClockIn);
-  const leaveTimeMins = convertToMinutes(dailyClockOut);
+  const arriveTimeMins = timeConvertToMinutes(dailyClockIn);
+  const leaveTimeMins = timeConvertToMinutes(dailyClockOut);
 
   return calHourPass(arriveTimeMins, leaveTimeMins);
 }
