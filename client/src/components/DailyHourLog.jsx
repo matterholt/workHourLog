@@ -7,6 +7,9 @@ import {
   calculateDailyHours,
 } from "../helpers/calculateDailyHours";
 
+
+import { convertNumberHrsToTime } from '../helpers/convertNumberHrsToTime'
+
 import {
   hourInput,
   hourInput__container,
@@ -23,8 +26,8 @@ export default function DailyHourLog
     hoursWorked: false
   });
   const [punchIn, setPunchIn] = useState( defaultHours.punchIn);
-  const [punchOut, setPunchOut] = useState(defaultHours.punchOut );
-  const [hourWorked, sethourWorked] = useState(8);
+  const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
+  const [hourWorked, sethourWorked] = useState('8.0');
 
   // Add a LOCKED to allow Hard Time sets
 
@@ -39,15 +42,15 @@ export default function DailyHourLog
         });
   }
 
-  
+
   function handlePunchIn(e) {
     // NEED TO IMPROVE CODE AND REMOVE FUNCTIONS OUT OF COMPONENT
     const { id, value } = e.target
     const [hr, min] = value.split(":");
 
     setIsActive("dailyClockOut", true);
-
-    const projectedPunchOut = `${Number(hr) + hourWorked}:30`; //hacky, 
+    const [totalHr, totaldec] = hourWorked.split(".");
+    const projectedPunchOut = `${Number(hr) + Number(totalHr)}:${min}`; //hacky,
     setPunchOut(projectedPunchOut);
     setPunchIn(value)
   }
@@ -61,26 +64,32 @@ export default function DailyHourLog
     sethourWorked(calculateDailyHours(punchIn, value));
   }
 
+
+
+
+
+
   function handleSetHoursWorked(e) {
     const { id, value } = e.target;
     // set the punch out time to is active to false
     setIsActive('dailyClockOut',true);
-    // update the value for the hours worked
     sethourWorked(value);
-    // change value of punch out time
-    const [hr, min] = punchIn.split(":");
+
+
+    // console.log(convertNumberHrsToTime(value))
     // probably should convert to min then return value in time.
-    const tempValue = 0 + value
-    const projectedPunchOut = `${Number(hr) + Number(tempValue)}:${min}`; //hacky, use a join??
-    setPunchOut(projectedPunchOut);
+    // const tempValue = 0 + value
+    // const projectedPunchOut = `${Number(hr) + Number(tempValue)}:${min}`; //hacky, use a join??
+    // setPunchOut(projectedPunchOut);
     //
   }
 
-// // help debug  
-//   useEffect(() => {
-//     console.log(punchOut);
-//     console.log(inputIsActive);
-//   }, [inputIsActive, punchOut]);
+// help debug  
+  useEffect(() => {
+    // console.log(hourWorked);
+    // console.log(punchOut);
+    // console.log(inputIsActive);
+  }, [inputIsActive, punchOut, hourWorked]);
   
 
   return (
@@ -118,6 +127,8 @@ export default function DailyHourLog
             readOnly={!inputIsActive.hoursWorked}
             id="hoursWorked"
             type="number"
+            min="0.0"
+            step=".1"
             value={hourWorked}
             onChange={handleSetHoursWorked}
             onClick={(e) => setIsActive(e.target.id)}
