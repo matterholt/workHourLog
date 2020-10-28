@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 
 const useLocalStorage = (
   key,
-  standardDefault = '',
+  standardDefault = '00:00',
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
   const [state, setState] = useState(() => {
     const valueInLocalStorage = window.localStorage.getItem(key);
-
-
     if (valueInLocalStorage) {
-      deserialize(valueInLocalStorage);
+      return deserialize(valueInLocalStorage);
     }
     return typeof standardDefault === "function"
       ? standardDefault()

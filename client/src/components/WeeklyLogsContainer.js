@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
 import { standardSettingForDay } from "../helpers/standardSettingForDay";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 
 const inputContainer = css`
@@ -15,19 +16,21 @@ const inputContainer = css`
 `;
 
 const WeeklyLogsContainer = () => {
-  const [activeDay, seActiveDay] = useState(() => standardSettingForDay);
-const [defaultTimes, ]= useState( JSON.parse(window.localStorage.getItem("defaultHrs")))
-  
+  const [activeDay, setActiveDay] = useState(() => standardSettingForDay);
+  const [userDefaultHrs] = useLocalStorage("defaultHrs");
+  useEffect(()=>{console.log(userDefaultHrs);})
+
   
   
   return (
     <div css={inputContainer}>
+
       {activeDay.map((dailyStatus) =>
         dailyStatus.isActive ? (
           <DailyHourLog
             key={dailyStatus.id}
             weekday={dailyStatus}
-             defaultHours={defaultTimes}
+            defaultHours={userDefaultHrs}
           />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>
