@@ -1,12 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {  useContext  } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
+import { companyRecommendedTime } from "../helpers/companyRecommendedTime";
 const WeeklyHourContext = React.createContext();
-
 function WeeklyHourProvider({ children }) {
-  const [weeklyStatus, setWeeklyStatus] = useState([]);
+  const [weeklyStatusDefault, setWeeklyStatusDefault] = useLocalStorage(
+    "defaultHrs",
+    companyRecommendedTime
+  );
 
   return (
-    <WeeklyHourContext.Provider value={{ weeklyStatus, setWeeklyStatus }}>
+    <WeeklyHourContext.Provider value={{ weeklyStatusDefault, setWeeklyStatusDefault }}>
       {children}
     </WeeklyHourContext.Provider>
   );

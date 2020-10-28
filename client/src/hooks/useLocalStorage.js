@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-
-const companyRecomendedTime = {
-  punchIn: "08:00",
-  punchOut: "16:30",
-  lunchTime: "12:00",
-  hrToEat: 0.5,
-};
-
 const useLocalStorage = (
   key,
-  standardDefault = companyRecomendedTime,
+  standardDefault = '',
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
-  const [defaultTimes, setDefaultTimes] = useState(() => {
+  const [state, setState] = useState(() => {
     const valueInLocalStorage = window.localStorage.getItem(key);
+
+
     if (valueInLocalStorage) {
       deserialize(valueInLocalStorage);
     }
@@ -24,10 +18,10 @@ const useLocalStorage = (
   });
 
   useEffect(() => {
-    window.localStorage.setItem(key, serialize(defaultTimes));
+    window.localStorage.setItem(key, serialize(state));
   });
 
-  return [defaultTimes, setDefaultTimes];
+  return [state, setState];
 };
 
 export { useLocalStorage};

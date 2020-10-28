@@ -1,9 +1,9 @@
-import React  from "react";
+import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import "./App.css";
 
-import { WeeklyHourProvider, useWeeklyHour } from "./context/weeklyHourContext";
+// import { WeeklyHourProvider } from "./context/weeklyHourContext";
 
 import FlexTimeScale from "./components/FlexTimeScale";
 import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
@@ -15,15 +15,16 @@ const ActionBar = css`
 `;
 const Main = () => {
   return (
-    <main>
-      <div css={ActionBar}>
-        <FlexTimeScale modalName="Flex Scale" />
-        <SetDefaults modalName="Hour Default" />
-      </div>
-      <WeeklyLogsContainer />
-    </main>
+      <main>
+        <div css={ActionBar}>
+          <FlexTimeScale modalName="Flex Scale" />
+          <SetDefaults modalName="Hour Default" />
+        </div>
+        <WeeklyLogsContainer />
+      </main>
   );
 };
+
 
 const totalHour_container = css`
   position: fixed;
@@ -47,11 +48,11 @@ const TotalHours = () => {
 
 function App() {
   return (
-    <WeeklyHourProvider>
+    <div>
       <TotalHours />
       <Header />
       <Main />
-    </WeeklyHourProvider>
+    </div>
   );
 }
 

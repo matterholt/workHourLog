@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import {Modal}from './Modal'
+import { companyRecommendedTime } from "../helpers/companyRecommendedTime";
+import { Modal } from './Modal'
+
+
 const setDefaultContainer = css`
   border: solid white 2px;
   margin: 10px;
@@ -14,10 +18,11 @@ const setDefaultContainer = css`
   background-color: #242f3c;
 `;
 
-
-
 function SetDefaults({ modalName }) {
-  const [defaultTimes, setDefaultTimes] = useLocalStorage("defaultHrs");
+  const [defaultTimes, setDefaultTimes] = useLocalStorage(
+    "defaultHrs",
+    companyRecommendedTime
+  );
 
   function handleChange(e) {
     // update state on form

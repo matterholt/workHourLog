@@ -6,6 +6,7 @@ import {
   calculateDailyHours,
 } from "../helpers/calculateDailyHours";
 
+
 import {
   hourInput,
   hourInput__container,
@@ -20,9 +21,10 @@ export default function DailyHourLog
     dailyClockOut: false,
     hoursWorked: false
   });
-  const [punchIn, setPunchIn] = useState('')
-  const [punchOut, setPunchOut] = useState('');
+  const [punchIn, setPunchIn] = useState(() => defaultHours.punchIn);
+  const [punchOut, setPunchOut] = useState(() => defaultHours.punchOut);
   const [hourWorked, sethourWorked] = useState(8);
+
   
   function handlePunchIn(e) {
     const { id, value } = e.target
@@ -36,25 +38,14 @@ export default function DailyHourLog
   function handlePunchOut(e) {
     // function needs to be cleaned up
     const { value } = e.target;
-    if (!inputIsActive.dailyClockIn) {
-      // If the the punch in value has not been active then will auto update time in.
-      const [hr, min] = value.split(":");
-      const projectedPunchOut = `0${Number(hr) - hourWorked}:00`;
-      setPunchIn(projectedPunchOut);
-      setPunchOut(value);
-    } else {
       setPunchOut(value);
       sethourWorked(calculateDailyHours(punchIn, value));
-    }
-    
 
   }
   useEffect(() => {
     console.log(inputIsActive);
   }, [inputIsActive]);
   
-
-
 
   return (
     <div>
