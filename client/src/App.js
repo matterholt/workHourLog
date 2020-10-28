@@ -15,13 +15,15 @@ const ActionBar = css`
 `;
 const Main = () => {
   return (
-      <main>
-        <div css={ActionBar}>
-          <FlexTimeScale modalName="Flex Scale" />
-          <SetDefaults modalName="Hour Default" />
-        </div>
-        <WeeklyLogsContainer />
-      </main>
+    <main>
+      <div css={ActionBar}>
+        <FlexTimeScale modalName="Flex Scale" />
+        <SetDefaults modalName="Hour Default" />
+        <button>Reset week</button>
+        <button>Save Reset</button>
+      </div>
+      <WeeklyLogsContainer />
+    </main>
   );
 };
 
