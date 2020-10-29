@@ -71,23 +71,36 @@ export default function DailyHourLog
 
   function handleSetHoursWorked(e) {
     const { id, value } = e.target;
-    // set the punch out time to is active to false
+    // set hours wish to work then will auto update the time that is able to leave
     setIsActive('dailyClockOut',true);
     sethourWorked(value);
 
-
-    // console.log(convertNumberHrsToTime(value))
     // probably should convert to min then return value in time.
-    // const tempValue = 0 + value
-    // const projectedPunchOut = `${Number(hr) + Number(tempValue)}:${min}`; //hacky, use a join??
-    // setPunchOut(projectedPunchOut);
-    //
+
+    const [stringHr, stringMin] = convertNumberHrsToTime(value);
+    /**
+     * so will have to get the percent of hour on the punch in min time. 
+     * then we can take the total hours work of the percent of time then
+     * add it the punch in minutes. plus the hours 
+     * 
+     */
+
+
+
+
+    const [punchInHr, punchInMin] = punchIn.split(":");
+     const projectedPunchOut = `${
+       Number(punchInHr) + Number(stringHr)
+     }:${punchInMin}`; //hacky, need to apply flex time scale
+    
+    setPunchOut(projectedPunchOut);
+    
   }
 
 // help debug  
   useEffect(() => {
     // console.log(hourWorked);
-    // console.log(punchOut);
+    console.log(punchOut);
     // console.log(inputIsActive);
   }, [inputIsActive, punchOut, hourWorked]);
   
