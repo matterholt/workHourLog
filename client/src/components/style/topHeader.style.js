@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const header = css`
+const topHeader = css`
   display: flex;
   justify-content: space-evenly;
 `;
-export { header };
+export { topHeader };

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { weeklyStatusDefault } from "../helpers/weeklyStatusDefault";
 
+
 function useUpdateWeeklyHrs() {
   // update the state here and with each change
   const [currentDay, setCurrentDay] = useState(weeklyStatusDefault);

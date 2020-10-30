@@ -1,4 +1,4 @@
-const weeklyStatusDefault = [
+const standardSettingForDay = [
   { id: 1, day: "Monday", isActive: true },
   { id: 2, day: "Tuesday", isActive: true },
   { id: 3, day: "Wednesday", isActive: true },
@@ -8,4 +8,4 @@ const weeklyStatusDefault = [
   { id: 7, day: "Sunday", isActive: false },
 ];
 
-export { weeklyStatusDefault };
+export { standardSettingForDay };

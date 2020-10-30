@@ -1,3 +1,4 @@
+
 import { calculateDailyHours } from "../helpers/calculateDailyHours";
 
 test("calculates correct hours worked for the day", () => {

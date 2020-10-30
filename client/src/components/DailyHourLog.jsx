@@ -1,47 +1,66 @@
-import React, { useState, useEffect,useReducer } from "react";
+import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { calculateDailyHours } from "../helpers/calculateDailyHours";
+
+import {
+  calculateDailyHours,
+} from "../helpers/calculateDailyHours";
+import { projectTimeLogged } from "../helpers/projectTimeLogged";
 
 import {
   hourInput,
   hourInput__container,
   hourInput__day,
+  activeInput,
 } from "./style/weeklyHour.style";
-
-function calculateHours(state) {
-  const {dailyClockIn,dailyClockOut }=state
-  const totalHrs =  calculateDailyHours(dailyClockIn, dailyClockOut);
-      return totalHrs
-}
-
-function updateTimeLogReducer(state, action) {
-  switch (action.type) {
-    case 'punchIn':
-      return {...state, dailyClockIn:action.value};
-    case 'punchOut':
-      return {...state, dailyClockOut:action.value};
-    default: throw new Error('Unexpected action');
-  }
-}
 
 export default function DailyHourLog
   ({ weekday, logHoursOfDay, defaultHours }) {
   const { id, day, isActive } = weekday;
-  const { clockIn, clockOut, hourWorked, lunch } = defaultHours
+  const [ inputIsActive, setIsInputActive]  = useState({
+    dailyClockIn: false,
+    dailyClockOut: false,
+    hoursWorked: false
+  });
+  const [punchIn, setPunchIn] = useState( defaultHours.punchIn);
+  const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
+  const [hourWorked, setHourWorked] = useState('8.0');
 
-  const initialState = { dailyClockIn: clockIn, dailyClockOut: clockOut}
-  const [state, dispatch] = useReducer(updateTimeLogReducer, initialState)
-  const [dailyHours, setDailyHours] = useState(hourWorked);
+  function setIsActive(elemID, value=null) {
 
-  useEffect(() => {
-    setDailyHours(calculateHours(state))
-  }, [state, calculateHours])
-  
-    useEffect(() => {
-      logHoursOfDay({dailyHours,id})
-  },[dailyHours,id])
+    let switchValue = value === null ? !inputIsActive.elemID : value;
+      setIsInputActive({
+          ...inputIsActive,
+          [elemID]: switchValue,
+        });
+  }
+
+  function handlePunchIn(e) {
+    const { value } = e.target
+    setPunchIn(value);
+    setIsActive("dailyClockIn", true);
+    setIsActive("hoursWorked", false);
+    const projectedPunchOutTime = projectTimeLogged(value, hourWorked);
+    setPunchOut(projectedPunchOutTime);
+  }
+
+  function handlePunchOut(e) {
+    const { value } = e.target;
+    setIsActive("dailyClockOut", true);
+    setIsActive("hoursWorked", false);
+    setPunchOut(value);
+    setHourWorked(calculateDailyHours(punchIn, value));
+  }
+
+  function handleSetHoursWorked(e) {
+// add react testing lib to control the active views.
+    setIsActive("dailyClockOut", false);
+    const {value } = e.target;
+    setHourWorked(value);
+    const projectedPunchOutTime = projectTimeLogged(punchIn, value);
+    setPunchOut(projectedPunchOutTime);
+  }
 
   return (
     <div>
@@ -50,31 +69,39 @@ export default function DailyHourLog
         <label htmlFor="dailyClockIn" css={hourInput}>
           Clocked In:
           <input
+            css={inputIsActive.dailyClockIn ? null : activeInput}
             id="dailyClockIn"
             type="time"
-            value={state.dailyClockIn}
-            onChange={(e) => dispatch({ type: 'punchIn', value:e.target.value })}
+            value={punchIn}
+            onChange={handlePunchIn}
+            onClick={(e) => setIsActive(e.target.id)}
           />
         </label>
 
         <label htmlFor="dailyClockOut" css={hourInput}>
           Clocked Out:
           <input
+            css={inputIsActive.dailyClockOut ? null : activeInput}
             id="dailyClockOut"
             type="time"
-            value={state.dailyClockOut}
-            onChange={(e) => dispatch({ type: 'punchOut', value:e.target.value })}
+            value={punchOut}
+            onChange={handlePunchOut}
+            onClick={(e) => setIsActive(e.target.id)}
           />
         </label>
 
         <label htmlFor="hoursWorked" css={hourInput}>
           Hours Worked:
           <input
-            style={{ width: "120px" }}
-            readOnly={true}
+            css={inputIsActive.hoursWorked ? null : activeInput}
+            readOnly={!inputIsActive.hoursWorked}
             id="hoursWorked"
-            type="text"
-            value={dailyHours}
+            type="number"
+            min="0.0"
+            step=".1"
+            value={hourWorked}
+            onChange={handleSetHoursWorked}
+            onClick={(e) => setIsActive(e.target.id)}
           />
         </label>
       </div>

@@ -1,4 +1,4 @@
-function convertToMinutes(time) {
+function timeConvertToMinutes(time) {
   const [hr, min] = time.split(":");
   const hrToMin = Number(hr) * 60;
   const totalMin = hrToMin + Number(min);
@@ -8,13 +8,12 @@ function convertToMinutes(time) {
 function calHourPass(inTime, outTime, lunchTime = 0.5) {
   let totalTime = outTime - inTime;
   let todayHour = totalTime / 60 - lunchTime;
-  // console.log(`Today's hour are ${todayHour.toFixed(1)}`);
   return todayHour.toFixed(1);
 }
 
-function calculateDailyHours(timeIn, timeLeave) {
-  const arriveTimeMins = convertToMinutes(timeIn);
-  const leaveTimeMins = convertToMinutes(timeLeave);
+function calculateDailyHours(dailyClockIn, dailyClockOut) {
+  const arriveTimeMins = timeConvertToMinutes(dailyClockIn);
+  const leaveTimeMins = timeConvertToMinutes(dailyClockOut);
 
   return calHourPass(arriveTimeMins, leaveTimeMins);
 }
