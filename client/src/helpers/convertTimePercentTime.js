@@ -1,10 +1,11 @@
-import { flexScale } from "./flexTimeScale";
+import { flexScale } from "./standardDefaults/flexTimeScale";
 /**
  * converts at logged time to a the flex scale percent value
  *
  * @param {sting} loggedTime
  */
 function convertTimePercentTime(loggedTime) {
+  
     const [loggedHr, loggedMin] = loggedTime.split(":");
      const HourPercentValue = flexScale.find((timeSection) =>
     timeSection.mins.find((min) => min === loggedMin)

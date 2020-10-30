@@ -1,23 +1,18 @@
-import { flexScale } from "./flexTimeScale";
+import { flexScale } from "./standardDefaults/flexTimeScale";
 
 
 
-function convertPercentHrToTime  (useHrPercent) {
-  const [hr, perHour] = useHrPercent.toFixed(1).split(".");
+function convertPercentHrToTime(useHrPercent) {
 
-  // searching through the flex time more of a global function
-  // have to take the perHour to get a decimal point, look into a different split
-
+  const [hrUnit, perHour] = useHrPercent.toFixed(1).split(".");
   const timeMinute = flexScale.find(
     (section) => section.percentHour === Number(perHour) / 10
   );
   const [firstPunchTime, ...rest] = timeMinute.mins;
+  const fixedHour = hrUnit.length === 1 ? `0${hrUnit}` : `${hrUnit}`;
+  const loggedTime = `${fixedHour}:${firstPunchTime}`;
 
-    
-    // there is a function i did to help with below
-  const test = `0${hr}:${firstPunchTime}`;
-
-  return test;
+  return loggedTime;
 }
 
 export { convertPercentHrToTime };
