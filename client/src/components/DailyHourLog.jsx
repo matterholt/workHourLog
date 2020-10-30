@@ -3,16 +3,10 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 
 
-
-// when done remove inputs here and place them in an index 
 import {
   calculateDailyHours,
 } from "../helpers/calculateDailyHours";
-import {getFlexTimeMinValue} from "../helpers/getFlexTimeMinValue"
-import { flexMinutePercentHr } from '../helpers/flexMinutePercentHr'
-
-
-import { convertNumberHrsToTime } from '../helpers/convertNumberHrsToTime'
+import { convertPercentHrToTime } from '../helpers/convertPercentHrToTime'
 import { convertTimePercentTime } from "../helpers/convertTimePercentTime";
 
 import {
@@ -72,28 +66,19 @@ export default function DailyHourLog
   function handleSetHoursWorked(e) {
     const { id, value } = e.target;
     // set hours wish to work then will auto update the time that is able to leave
-    setIsActive('dailyClockOut',true);
     sethourWorked(value);
 
-
-    // convert punch in value to percent value then add them to the punch 
     // convert punch in time to percent value
     const punchInPercentHr = convertTimePercentTime(punchIn);
+    // estimate punch out time base on hours worked
     const projectedPunchOutPercentHr = punchInPercentHr + Number(value);
-
     // the calculated value to convert to a punch out time
 
-    const projectedPunchOutTime = convertNumberHrsToTime(
+    const projectedPunchOutTime = convertPercentHrToTime(
       projectedPunchOutPercentHr
     );
-
-
-
-
-
-
-    setPunchOut("16:00");
-    
+    setIsActive("dailyClockOut", false);
+    setPunchOut(projectedPunchOutTime);
   }
 
 // help debug  

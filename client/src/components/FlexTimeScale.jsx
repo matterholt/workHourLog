@@ -2,7 +2,7 @@
 import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { flexScale } from "../helpers/flexTimeScale";
+import { flexScale } from "../helpers/standardDefaults/flexTimeScale";
 import { Modal } from "./Modal";
 
 const base = css`

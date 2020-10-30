@@ -3,7 +3,7 @@ import React from "react";
 import { css, jsx } from "@emotion/core";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { companyRecommendedTime } from "../helpers/companyRecommendedTime";
+import { companyRecommendedTime } from "../helpers/standardDefaults/companyRecommendedTime";
 import { Modal } from './Modal'
 
 
