@@ -9,6 +9,8 @@ import {
 import { convertPercentHrToTime } from '../helpers/convertPercentHrToTime'
 import { convertTimePercentTime } from "../helpers/convertTimePercentTime";
 
+import { projectTimeLogged } from "../helpers/projectTimeLogged";
+
 import {
   hourInput,
   hourInput__container,
@@ -42,27 +44,15 @@ export default function DailyHourLog
   }
 
   function handlePunchIn(e) {
-    // NEED TO IMPROVE CODE AND REMOVE FUNCTIONS OUT OF COMPONENT
     const { id, value } = e.target
-    const [hr, min] = value.split(":");
-
     setIsActive("dailyClockOut", true);
     setPunchIn(value);
-
-
-    const [totalHr, totaldec] = hourWorked.split(".");
-    const projectedPunchOut = `${Number(hr) + Number(totalHr)}:${min}`; //hacky,
-
-    setPunchOut(projectedPunchOut);
-    
-
-
+    const projectedPunchOutTime = projectTimeLogged(value, hourWorked);
+    setPunchOut(projectedPunchOutTime);
   }
 
   function handlePunchOut(e) {
     const { id, value } = e.target;
-    // function needs to be cleaned up
-    // NEED TO IMPROVE CODE AND REMOVE FUNCTIONS OUT OF COMPONENT
     setIsActive("hoursWorked", true);
     setPunchOut(value);
     sethourWorked(calculateDailyHours(punchIn, value));
@@ -71,21 +61,11 @@ export default function DailyHourLog
 
   function handleSetHoursWorked(e) {
     const { id, value } = e.target;
-    // set hours wish to work then will auto update the time that is able to leave
     sethourWorked(value);
-
-    //************Duplicated code to the punch in time************** */
-    // convert punch in time to percent value
-    const punchInPercentHr = convertTimePercentTime(punchIn);
-    // estimate punch out time base on hours worked
-    const projectedPunchOutPercentHr = punchInPercentHr + Number(value);
-    // the calculated value to convert to a punch out time
-    const projectedPunchOutTime = convertPercentHrToTime(
-      projectedPunchOutPercentHr
-    );
+    const projectedPunchOutTime = projectTimeLogged(punchIn, value);
     setIsActive("dailyClockOut", false);
     setPunchOut(projectedPunchOutTime);
-    //**************************************** */
+
   }
 
 // help debug  
