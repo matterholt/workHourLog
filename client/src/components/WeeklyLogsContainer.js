@@ -1,11 +1,11 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
 import { standardSettingForDay } from "../helpers/standardDefaults/standardSettingForDay";
 
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const inputContainer = css`
   display: flex;
@@ -20,7 +20,6 @@ const WeeklyLogsContainer = () => {
 
   return (
     <div css={inputContainer}>
-
       {activeDay.map((dailyStatus) =>
         dailyStatus.isActive ? (
           <DailyHourLog

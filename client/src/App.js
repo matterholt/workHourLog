@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState}from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import "./App.css";
@@ -8,25 +8,8 @@ import FlexTimeScale from "./components/FlexTimeScale";
 import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
 import Header from "./components/Header";
 import SetDefaults from "./components/SetDefaults";
+import WeeklyTotalHrs from "./components/WeeklyTotalHrs";
 
-
-const totalHour_container = css`
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 10px;
-`;
-
-const TotalHours = () => {
-  return (
-    <div css={totalHour_container}>
-      <h1 style={{ textAlign: "center" }}>
-        Wkly Hrs
-        <br /> {0}
-      </h1>
-    </div>
-  );
-};
 const ExtaFeatureAction = () => (
   <div>
   <button>Reset week</button>
@@ -39,18 +22,24 @@ const ActionBar = css`
 `;
 
 
-const ActionMenu = () => (
-        <div css={ActionBar}>
-        <FlexTimeScale modalName="Flex Scale" />
-        <SetDefaults modalName="Hour Default" />
-        <TotalHours/>
+const ActionMenu = () => {
+  const [isReady, setIsReady] = useState(false)
+    
+    return (
+      <div css={ActionBar}>
+        {isReady ? (
+          <div>
+            <FlexTimeScale modalName="Flex Scale" />
+            <SetDefaults modalName="Hour Default" />
+          </div>
+        ) : null}
+        <WeeklyTotalHrs />
       </div>
-  
-)
+    );}
 const Main = () => {
   return (
     <main>
-
+<ActionMenu/>
       <WeeklyLogsContainer />
     </main>
   );
