@@ -37,15 +37,20 @@ const ExtaFeatureAction = () => (
 const ActionBar = css`
   display: flex;
 `;
+
+
+const ActionMenu = () => (
+        <div css={ActionBar}>
+        <FlexTimeScale modalName="Flex Scale" />
+        <SetDefaults modalName="Hour Default" />
+        <TotalHours/>
+      </div>
+  
+)
 const Main = () => {
   return (
     <main>
-      <div css={ActionBar}>
-        <FlexTimeScale modalName="Flex Scale" />
-        <SetDefaults modalName="Hour Default" />
 
-        <TotalHours/>
-      </div>
       <WeeklyLogsContainer />
     </main>
   );

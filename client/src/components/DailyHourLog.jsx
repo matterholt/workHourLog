@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -6,9 +6,6 @@ import { css, jsx } from "@emotion/core";
 import {
   calculateDailyHours,
 } from "../helpers/calculateDailyHours";
-import { convertPercentHrToTime } from '../helpers/convertPercentHrToTime'
-import { convertTimePercentTime } from "../helpers/convertTimePercentTime";
-
 import { projectTimeLogged } from "../helpers/projectTimeLogged";
 
 import {
@@ -28,15 +25,11 @@ export default function DailyHourLog
   });
   const [punchIn, setPunchIn] = useState( defaultHours.punchIn);
   const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
-  const [hourWorked, sethourWorked] = useState('8.0');
+  const [hourWorked, setHourWorked] = useState('8.0');
 
-  // Add a LOCKED to allow Hard Time sets
+  function setIsActive(elemID, value=null) {
 
-
-  function setIsActive(elemID, value = null) {
-    // updates the active input values 
-    // can be a useHook function ??
-    let switchValue = value ? value : !inputIsActive.elemID;
+    let switchValue = value === null ? !inputIsActive.elemID : value;
       setIsInputActive({
           ...inputIsActive,
           [elemID]: switchValue,
@@ -44,37 +37,30 @@ export default function DailyHourLog
   }
 
   function handlePunchIn(e) {
-    const { id, value } = e.target
-    setIsActive("dailyClockOut", true);
+    const { value } = e.target
     setPunchIn(value);
+    setIsActive("dailyClockIn", true);
+    setIsActive("hoursWorked", false);
     const projectedPunchOutTime = projectTimeLogged(value, hourWorked);
     setPunchOut(projectedPunchOutTime);
   }
 
   function handlePunchOut(e) {
-    const { id, value } = e.target;
-    setIsActive("hoursWorked", true);
+    const { value } = e.target;
+    setIsActive("dailyClockOut", true);
+    setIsActive("hoursWorked", false);
     setPunchOut(value);
-    sethourWorked(calculateDailyHours(punchIn, value));
+    setHourWorked(calculateDailyHours(punchIn, value));
   }
-
 
   function handleSetHoursWorked(e) {
-    const { id, value } = e.target;
-    sethourWorked(value);
-    const projectedPunchOutTime = projectTimeLogged(punchIn, value);
+// add react testing lib to control the active views.
     setIsActive("dailyClockOut", false);
+    const {value } = e.target;
+    setHourWorked(value);
+    const projectedPunchOutTime = projectTimeLogged(punchIn, value);
     setPunchOut(projectedPunchOutTime);
-
   }
-
-// help debug  
-  useEffect(() => {
-    // console.log(hourWorked);
-    // console.log(punchOut);
-    // console.log(inputIsActive);
-  }, [inputIsActive, punchOut, hourWorked]);
-  
 
   return (
     <div>
