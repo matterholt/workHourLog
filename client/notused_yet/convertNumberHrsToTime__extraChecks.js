@@ -1,4 +1,4 @@
-import { convertNumberHrsToTime } from "../helpers/notused_yet/convertNumberHrsToTime";
+import { convertNumberHrsToTime } from "./convertNumberHrsToTime";
 
 test("Convert the hours work to a workable time input", () => {
   expect(convertNumberHrsToTime("8")).toStrictEqual(['08','0']);

@@ -1,4 +1,4 @@
-import { flexScale } from "../standardDefaults/flexTimeScale";
+import { flexScale } from "../src/helpers/standardDefaults/flexTimeScale";
 /**
  * Takes a minute from the user input the would send back a 
  * the percent of hour that the min clock in time falls into 
