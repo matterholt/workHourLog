@@ -27,6 +27,11 @@ const TotalHours = () => {
     </div>
   );
 };
+const ExtaFeatureAction = () => (
+  <div>
+  <button>Reset week</button>
+  <button>Save Reset</button>
+</div>)
 
 
 const ActionBar = css`
@@ -38,8 +43,7 @@ const Main = () => {
       <div css={ActionBar}>
         <FlexTimeScale modalName="Flex Scale" />
         <SetDefaults modalName="Hour Default" />
-        <button>Reset week</button>
-        <button>Save Reset</button>
+
         <TotalHours/>
       </div>
       <WeeklyLogsContainer />

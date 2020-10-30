@@ -1,5 +1,5 @@
 const flexScale = [
-  { id: 1, mins: ["00", "01"], round: "00", percentHour: 0.0 },
+  { id: 1, mins: ["00", "01",'02'], round: "00", percentHour: 0.0 },
   {
     id: 2,
     mins: ["03", "04", "05", "06", "07", "09"],
