@@ -1,4 +1,4 @@
-import { flexScale } from './flexTimeScale'
+import { flexScale } from "../standardDefaults/flexTimeScale";
 
 function getFlexTimeMinValue(percentValue) {
     const section = flexScale.find(
