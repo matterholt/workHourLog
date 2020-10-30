@@ -3,12 +3,17 @@ import React, { useState, useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 
 
+
+// when done remove inputs here and place them in an index 
 import {
   calculateDailyHours,
 } from "../helpers/calculateDailyHours";
+import {getFlexTimeMinValue} from "../helpers/getFlexTimeMinValue"
+import { flexMinutePercentHr } from '../helpers/flexMinutePercentHr'
 
 
 import { convertNumberHrsToTime } from '../helpers/convertNumberHrsToTime'
+import { convertTimePercentTime } from "../helpers/convertTimePercentTime";
 
 import {
   hourInput,
@@ -42,7 +47,6 @@ export default function DailyHourLog
         });
   }
 
-
   function handlePunchIn(e) {
     // NEED TO IMPROVE CODE AND REMOVE FUNCTIONS OUT OF COMPONENT
     const { id, value } = e.target
@@ -65,42 +69,37 @@ export default function DailyHourLog
   }
 
 
-
-
-
-
   function handleSetHoursWorked(e) {
     const { id, value } = e.target;
     // set hours wish to work then will auto update the time that is able to leave
     setIsActive('dailyClockOut',true);
     sethourWorked(value);
 
-    // probably should convert to min then return value in time.
 
-    const [stringHr, stringMin] = convertNumberHrsToTime(value);
-    /**
-     * so will have to get the percent of hour on the punch in min time. 
-     * then we can take the total hours work of the percent of time then
-     * add it the punch in minutes. plus the hours 
-     * 
-     */
+    // convert punch in value to percent value then add them to the punch 
+    // convert punch in time to percent value
+    const punchInPercentHr = convertTimePercentTime(punchIn);
+    const projectedPunchOutPercentHr = punchInPercentHr + Number(value);
+
+    // the calculated value to convert to a punch out time
+
+    const projectedPunchOutTime = convertNumberHrsToTime(
+      projectedPunchOutPercentHr
+    );
 
 
 
 
-    const [punchInHr, punchInMin] = punchIn.split(":");
-     const projectedPunchOut = `${
-       Number(punchInHr) + Number(stringHr)
-     }:${punchInMin}`; //hacky, need to apply flex time scale
-    
-    setPunchOut(projectedPunchOut);
+
+
+    setPunchOut("16:00");
     
   }
 
 // help debug  
   useEffect(() => {
     // console.log(hourWorked);
-    console.log(punchOut);
+    // console.log(punchOut);
     // console.log(inputIsActive);
   }, [inputIsActive, punchOut, hourWorked]);
   
