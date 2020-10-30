@@ -18,10 +18,7 @@ const inputContainer = css`
 const WeeklyLogsContainer = () => {
   const [activeDay, setActiveDay] = useState(() => standardSettingForDay);
   const [userDefaultHrs] = useLocalStorage("defaultHrs");
-  useEffect(()=>{console.log(userDefaultHrs);})
 
-  
-  
   return (
     <div css={inputContainer}>
 

@@ -47,10 +47,16 @@ export default function DailyHourLog
     const [hr, min] = value.split(":");
 
     setIsActive("dailyClockOut", true);
+    setPunchIn(value);
+
+
     const [totalHr, totaldec] = hourWorked.split(".");
     const projectedPunchOut = `${Number(hr) + Number(totalHr)}:${min}`; //hacky,
+
     setPunchOut(projectedPunchOut);
-    setPunchIn(value)
+    
+
+
   }
 
   function handlePunchOut(e) {
@@ -68,17 +74,18 @@ export default function DailyHourLog
     // set hours wish to work then will auto update the time that is able to leave
     sethourWorked(value);
 
+    //************Duplicated code to the punch in time************** */
     // convert punch in time to percent value
     const punchInPercentHr = convertTimePercentTime(punchIn);
     // estimate punch out time base on hours worked
     const projectedPunchOutPercentHr = punchInPercentHr + Number(value);
     // the calculated value to convert to a punch out time
-
     const projectedPunchOutTime = convertPercentHrToTime(
       projectedPunchOutPercentHr
     );
     setIsActive("dailyClockOut", false);
     setPunchOut(projectedPunchOutTime);
+    //**************************************** */
   }
 
 // help debug  
