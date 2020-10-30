@@ -9,7 +9,11 @@ import { flexScale } from "./flexTimeScale";
  * @param {sting} logMinute 
  */
 function flexMinutePercentHr(logMinute) {
-
+    // 
+    const HourPercentValue = flexScale.find((timeSection) =>
+      timeSection.mins.find((min) => min === logMinute)
+    );
+return HourPercentValue.percentHour;
 }
 
 export { flexMinutePercentHr };
