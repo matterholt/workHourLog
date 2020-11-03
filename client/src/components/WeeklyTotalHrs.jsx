@@ -11,7 +11,7 @@ const totalHour_container = css`
 
 export default function WeeklyTotalHrs({ weeklyTimeLog }) {
   const reducer = (accumulator, currentValue) =>
-    accumulator + currentValue.hours;
+    accumulator + currentValue.dailyHours;
   
   const hoursForWeek = weeklyTimeLog.reduce(reducer,0);
   

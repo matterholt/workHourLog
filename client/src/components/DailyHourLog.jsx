@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -30,6 +30,10 @@ export default function DailyHourLog({
   const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
   const [hourWorked, setHourWorked] = useState("8.0");
 
+  useEffect(() => {
+    updateWeeklyHours({ id, hourWorked });
+  }, [id, hourWorked]);
+
   function setIsActive(elemID, value = null) {
     let switchValue = value === null ? !inputIsActive.elemID : value;
     setIsInputActive({
@@ -53,7 +57,6 @@ export default function DailyHourLog({
     setIsActive("hoursWorked", false);
     setPunchOut(value);
     setHourWorked(calculateDailyHours(punchIn, value));
-    updateWeeklyHours({ id, hourWorked });
   }
 
   function handleSetHoursWorked(e) {
@@ -63,7 +66,6 @@ export default function DailyHourLog({
     setHourWorked(value);
     const projectedPunchOutTime = projectTimeLogged(punchIn, value);
     setPunchOut(projectedPunchOutTime);
-    updateWeeklyHours({ id, hourWorked });
   }
 
   return (

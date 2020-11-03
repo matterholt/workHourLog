@@ -1,4 +1,4 @@
-import React, { useState}from "react";
+import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import "./App.css";
@@ -42,16 +42,20 @@ const ActionMenu = ({ weeklyTimeLog }) => {
 
 const Main = () => {
   const [weeklyTimeLog, setWeeklyTimeLog] = useState([
-    { id: 1, hours: 8 },
-    { id: 2, hours: 8 },
-    { id: 3, hours: 8 },
-    { id: 4, hours: 8 },
-    { id: 5, hours: 8 },
+    { id: 1, dailyHours: 8 },
+    { id: 2, dailyHours: 8 },
+    { id: 3, dailyHours: 8 },
+    { id: 4, dailyHours: 8 },
+    { id: 5, dailyHours: 8 },
   ]);
+  useEffect(() => {
+    console.log(weeklyTimeLog);
+  }, [weeklyTimeLog]);
 
-  function updateWeeklyHours(dayLog) {
-    console.log(dayLog);
-    
+  function updateWeeklyHours({ id, hourWorked }) {
+    const modWeeklyTime = weeklyTimeLog.filter(x => x.id !== id);
+    const dailyHours = Number(hourWorked); 
+    setWeeklyTimeLog([...modWeeklyTime, { id, dailyHours }]);
   }
   return (
     <main>
