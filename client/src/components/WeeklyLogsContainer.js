@@ -14,7 +14,7 @@ const inputContainer = css`
   align-items: center;
 `;
 
-const WeeklyLogsContainer = () => {
+const WeeklyLogsContainer = ({ updateWeeklyHours }) => {
   const [activeDay, setActiveDay] = useState(() => standardSettingForDay);
   const [userDefaultHrs] = useLocalStorage("defaultHrs");
 
@@ -26,6 +26,7 @@ const WeeklyLogsContainer = () => {
             key={dailyStatus.id}
             weekday={dailyStatus}
             defaultHours={userDefaultHrs}
+            updateWeeklyHours={updateWeeklyHours}
           />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>

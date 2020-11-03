@@ -15,29 +15,31 @@ import {
   activeInput,
 } from "./style/weeklyHour.style";
 
-export default function DailyHourLog
-  ({ weekday, logHoursOfDay, defaultHours }) {
+export default function DailyHourLog({
+  weekday,
+  defaultHours,
+  updateWeeklyHours,
+}) {
   const { id, day, isActive } = weekday;
-  const [ inputIsActive, setIsInputActive]  = useState({
+  const [inputIsActive, setIsInputActive] = useState({
     dailyClockIn: false,
     dailyClockOut: false,
-    hoursWorked: false
+    hoursWorked: false,
   });
-  const [punchIn, setPunchIn] = useState( defaultHours.punchIn);
+  const [punchIn, setPunchIn] = useState(defaultHours.punchIn);
   const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
-  const [hourWorked, setHourWorked] = useState('8.0');
+  const [hourWorked, setHourWorked] = useState("8.0");
 
-  function setIsActive(elemID, value=null) {
-
+  function setIsActive(elemID, value = null) {
     let switchValue = value === null ? !inputIsActive.elemID : value;
-      setIsInputActive({
-          ...inputIsActive,
-          [elemID]: switchValue,
-        });
+    setIsInputActive({
+      ...inputIsActive,
+      [elemID]: switchValue,
+    });
   }
 
   function handlePunchIn(e) {
-    const { value } = e.target
+    const { value } = e.target;
     setPunchIn(value);
     setIsActive("dailyClockIn", true);
     setIsActive("hoursWorked", false);
@@ -51,15 +53,17 @@ export default function DailyHourLog
     setIsActive("hoursWorked", false);
     setPunchOut(value);
     setHourWorked(calculateDailyHours(punchIn, value));
+    updateWeeklyHours({ id, hourWorked });
   }
 
   function handleSetHoursWorked(e) {
-// add react testing lib to control the active views.
+    // add react testing lib to control the active views.
     setIsActive("dailyClockOut", false);
-    const {value } = e.target;
+    const { value } = e.target;
     setHourWorked(value);
     const projectedPunchOutTime = projectTimeLogged(punchIn, value);
     setPunchOut(projectedPunchOutTime);
+    updateWeeklyHours({ id, hourWorked });
   }
 
   return (

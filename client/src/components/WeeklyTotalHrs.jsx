@@ -9,12 +9,16 @@ const totalHour_container = css`
   margin: 10px;
 `;
 
-export default function WeeklyTotalHrs  ()  {
+export default function WeeklyTotalHrs({ weeklyTimeLog }) {
+  const reducer = (accumulator, currentValue) =>
+    accumulator + currentValue.hours;
+  
+  const hoursForWeek = weeklyTimeLog.reduce(reducer,0);
+  
   return (
     <div css={totalHour_container}>
-      <h1 style={{ textAlign: "center" }}>
-        Wkly Hrs
-        <br /> {0}
+      <h1> Hours
+        <br /> {hoursForWeek}
       </h1>
     </div>
   );

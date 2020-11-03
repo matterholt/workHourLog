@@ -22,25 +22,41 @@ const ActionBar = css`
 `;
 
 
-const ActionMenu = () => {
-  const [isReady, setIsReady] = useState(false)
+const ActionMenu = ({ weeklyTimeLog }) => {
+  const [isReady, setIsReady] = useState(false);
+
+  return (
+    <div css={ActionBar}>
+      {isReady ? (
+        <div>
+          <FlexTimeScale modalName="Flex Scale" />
+          <SetDefaults modalName="Hour Default" />
+        </div>
+      ) : null}
+      <WeeklyTotalHrs weeklyTimeLog={weeklyTimeLog} />
+    </div>
+  );
+};
     
-    return (
-      <div css={ActionBar}>
-        {isReady ? (
-          <div>
-            <FlexTimeScale modalName="Flex Scale" />
-            <SetDefaults modalName="Hour Default" />
-          </div>
-        ) : null}
-        <WeeklyTotalHrs />
-      </div>
-    );}
+
+
 const Main = () => {
+  const [weeklyTimeLog, setWeeklyTimeLog] = useState([
+    { id: 1, hours: 8 },
+    { id: 2, hours: 8 },
+    { id: 3, hours: 8 },
+    { id: 4, hours: 8 },
+    { id: 5, hours: 8 },
+  ]);
+
+  function updateWeeklyHours(dayLog) {
+    console.log(dayLog);
+    
+  }
   return (
     <main>
-<ActionMenu/>
-      <WeeklyLogsContainer />
+      <ActionMenu weeklyTimeLog={weeklyTimeLog} />
+      <WeeklyLogsContainer updateWeeklyHours={updateWeeklyHours} />
     </main>
   );
 };
