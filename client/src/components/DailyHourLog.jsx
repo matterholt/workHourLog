@@ -26,10 +26,11 @@ export default function DailyHourLog({
     dailyClockOut: false,
     hoursWorked: false,
   });
+
   const [punchIn, setPunchIn] = useState(defaultHours.punchIn);
   const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
-  const [hourWorked, setHourWorked] = useState("8.0");
-
+  
+  const [hourWorked, setHourWorked] = useState(defaultHours.hourWorked);
   useEffect(() => {
     updateWeeklyHours({ id, hourWorked });
   }, [id, hourWorked]);
@@ -45,23 +46,17 @@ export default function DailyHourLog({
   function handlePunchIn(e) {
     const { value } = e.target;
     setPunchIn(value);
-    setIsActive("dailyClockIn", true);
-    setIsActive("hoursWorked", false);
     const projectedPunchOutTime = projectTimeLogged(value, hourWorked);
     setPunchOut(projectedPunchOutTime);
   }
 
   function handlePunchOut(e) {
     const { value } = e.target;
-    setIsActive("dailyClockOut", true);
-    setIsActive("hoursWorked", false);
     setPunchOut(value);
     setHourWorked(calculateDailyHours(punchIn, value));
   }
 
   function handleSetHoursWorked(e) {
-    // add react testing lib to control the active views.
-    setIsActive("dailyClockOut", false);
     const { value } = e.target;
     setHourWorked(value);
     const projectedPunchOutTime = projectTimeLogged(punchIn, value);

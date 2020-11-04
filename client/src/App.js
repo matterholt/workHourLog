@@ -30,9 +30,9 @@ const ActionMenu = ({ weeklyTimeLog }) => {
       {isReady ? (
         <div>
           <FlexTimeScale modalName="Flex Scale" />
-          <SetDefaults modalName="Hour Default" />
         </div>
       ) : null}
+      <SetDefaults modalName="Hour Default" />
       <WeeklyTotalHrs weeklyTimeLog={weeklyTimeLog} />
     </div>
   );
@@ -48,15 +48,27 @@ const Main = () => {
     { id: 4, dailyHours: 8 },
     { id: 5, dailyHours: 8 },
   ]);
+  const [total,settotal] = useState()
+
   useEffect(() => {
     console.log(weeklyTimeLog);
-  }, [weeklyTimeLog]);
+    console.log(total);
+  }, [weeklyTimeLog, total]);
+
+  useEffect(() => {
+      const reducer = (accumulator, currentValue) =>
+        accumulator + currentValue.dailyHours;
+      const hoursForWeek = weeklyTimeLog.reduce(reducer, 0);
+    settotal(hoursForWeek);
+  },[weeklyTimeLog])
 
   function updateWeeklyHours({ id, hourWorked }) {
-    const modWeeklyTime = weeklyTimeLog.filter(x => x.id !== id);
-    const dailyHours = Number(hourWorked); 
+    const modWeeklyTime = weeklyTimeLog.filter((x) => x.id !== id);
+    const dailyHours = Number(hourWorked);
     setWeeklyTimeLog([...modWeeklyTime, { id, dailyHours }]);
+    console.log(weeklyTimeLog);
   }
+
   return (
     <main>
       <ActionMenu weeklyTimeLog={weeklyTimeLog} />

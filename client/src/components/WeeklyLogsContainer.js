@@ -17,6 +17,7 @@ const inputContainer = css`
 const WeeklyLogsContainer = ({ updateWeeklyHours }) => {
   const [activeDay, setActiveDay] = useState(() => standardSettingForDay);
   const [userDefaultHrs] = useLocalStorage("defaultHrs");
+  // update the hours calculated here???
 
   return (
     <div css={inputContainer}>
