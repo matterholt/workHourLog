@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import "./App.css";
@@ -8,25 +8,8 @@ import FlexTimeScale from "./components/FlexTimeScale";
 import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
 import Header from "./components/Header";
 import SetDefaults from "./components/SetDefaults";
+import WeeklyTotalHrs from "./components/WeeklyTotalHrs";
 
-
-const totalHour_container = css`
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 10px;
-`;
-
-const TotalHours = () => {
-  return (
-    <div css={totalHour_container}>
-      <h1 style={{ textAlign: "center" }}>
-        Wkly Hrs
-        <br /> {0}
-      </h1>
-    </div>
-  );
-};
 const ExtaFeatureAction = () => (
   <div>
   <button>Reset week</button>
@@ -39,19 +22,57 @@ const ActionBar = css`
 `;
 
 
-const ActionMenu = () => (
-        <div css={ActionBar}>
-        <FlexTimeScale modalName="Flex Scale" />
-        <SetDefaults modalName="Hour Default" />
-        <TotalHours/>
-      </div>
-  
-)
+const ActionMenu = ({ weeklyTimeLog }) => {
+  const [isReady, setIsReady] = useState(false);
+
+  return (
+    <div css={ActionBar}>
+      {isReady ? (
+        <div>
+          <FlexTimeScale modalName="Flex Scale" />
+        </div>
+      ) : null}
+      <SetDefaults modalName="Hour Default" />
+      <WeeklyTotalHrs weeklyTimeLog={weeklyTimeLog} />
+    </div>
+  );
+};
+    
+
+
 const Main = () => {
+  const [weeklyTimeLog, setWeeklyTimeLog] = useState([
+    { id: 1, dailyHours: 8 },
+    { id: 2, dailyHours: 8 },
+    { id: 3, dailyHours: 8 },
+    { id: 4, dailyHours: 8 },
+    { id: 5, dailyHours: 8 },
+  ]);
+  const [total,settotal] = useState()
+
+  useEffect(() => {
+    console.log(weeklyTimeLog);
+    console.log(total);
+  }, [weeklyTimeLog, total]);
+
+  useEffect(() => {
+      const reducer = (accumulator, currentValue) =>
+        accumulator + currentValue.dailyHours;
+      const hoursForWeek = weeklyTimeLog.reduce(reducer, 0);
+    settotal(hoursForWeek);
+  },[weeklyTimeLog])
+
+  function updateWeeklyHours({ id, hourWorked }) {
+    const modWeeklyTime = weeklyTimeLog.filter((x) => x.id !== id);
+    const dailyHours = Number(hourWorked);
+    setWeeklyTimeLog([...modWeeklyTime, { id, dailyHours }]);
+    console.log(weeklyTimeLog);
+  }
+
   return (
     <main>
-
-      <WeeklyLogsContainer />
+      <ActionMenu weeklyTimeLog={weeklyTimeLog} />
+      <WeeklyLogsContainer updateWeeklyHours={updateWeeklyHours} />
     </main>
   );
 };

@@ -1,11 +1,11 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
 import { standardSettingForDay } from "../helpers/standardDefaults/standardSettingForDay";
 
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const inputContainer = css`
   display: flex;
@@ -14,19 +14,20 @@ const inputContainer = css`
   align-items: center;
 `;
 
-const WeeklyLogsContainer = () => {
+const WeeklyLogsContainer = ({ updateWeeklyHours }) => {
   const [activeDay, setActiveDay] = useState(() => standardSettingForDay);
   const [userDefaultHrs] = useLocalStorage("defaultHrs");
+  // update the hours calculated here???
 
   return (
     <div css={inputContainer}>
-
       {activeDay.map((dailyStatus) =>
         dailyStatus.isActive ? (
           <DailyHourLog
             key={dailyStatus.id}
             weekday={dailyStatus}
             defaultHours={userDefaultHrs}
+            updateWeeklyHours={updateWeeklyHours}
           />
         ) : (
           <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>
