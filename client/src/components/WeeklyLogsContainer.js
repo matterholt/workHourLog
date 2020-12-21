@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-/** @jsx jsx */
+import  { useState } from "react";
+/** @jsxImportSource @emotion/core */
 import { css, jsx } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
@@ -12,6 +12,7 @@ const inputContainer = css`
   flex-flow: column;
   justify-content: center;
   align-items: center;
+
 `;
 
 const WeeklyLogsContainer = ({ updateWeeklyHours }) => {
@@ -21,18 +22,18 @@ const WeeklyLogsContainer = ({ updateWeeklyHours }) => {
 
   return (
     <div css={inputContainer}>
-      {activeDay.map((dailyStatus) =>
-        dailyStatus.isActive ? (
-          <DailyHourLog
-            key={dailyStatus.id}
-            weekday={dailyStatus}
-            defaultHours={userDefaultHrs}
-            updateWeeklyHours={updateWeeklyHours}
-          />
-        ) : (
-          <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>
-        )
-      )}
+      <ul>
+        {activeDay.map((dailyStatus) =>
+          dailyStatus.isActive ? (
+            <DailyHourLog
+              key={dailyStatus.id}
+              weekday={dailyStatus}
+            />
+          ) : (
+            <h4 key={dailyStatus.id}>Not Scheduled for {dailyStatus.day}</h4>
+          )
+        )}
+      </ul>
     </div>
   );
 };

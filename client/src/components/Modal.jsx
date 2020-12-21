@@ -1,5 +1,5 @@
-import React, { useState} from 'react'
-/** @jsx jsx */
+import {useState} from 'react'
+/** @jsxImportSource @emotion/core */
 import { css, jsx } from "@emotion/core";
 
 

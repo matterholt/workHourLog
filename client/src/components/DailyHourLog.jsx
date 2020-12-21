@@ -1,47 +1,28 @@
-import React, { useState, useEffect } from "react";
-/** @jsx jsx */
+import { useState } from 'react';
+/** @jsxImportSource @emotion/core */
 import { css, jsx } from "@emotion/core";
-
-
-import {
-  calculateDailyHours,
-} from "../helpers/calculateDailyHours";
+import { calculateDailyHours } from "../helpers/calculateDailyHours";
 import { projectTimeLogged } from "../helpers/projectTimeLogged";
 
-import {
-  hourInput,
-  hourInput__container,
-  hourInput__day,
-  activeInput,
-} from "./style/weeklyHour.style";
 
-export default function DailyHourLog({
-  weekday,
-  defaultHours,
-  updateWeeklyHours,
-}) {
-  const { id, day, isActive } = weekday;
-  const [inputIsActive, setIsInputActive] = useState({
-    dailyClockIn: false,
-    dailyClockOut: false,
-    hoursWorked: false,
-  });
+import UpdateTimeLog from "./UpdateTimeLog";
 
-  const [punchIn, setPunchIn] = useState(defaultHours.punchIn);
-  const [punchOut, setPunchOut] = useState(defaultHours.punchOut);
-  
-  const [hourWorked, setHourWorked] = useState(defaultHours.hourWorked);
-  useEffect(() => {
-    updateWeeklyHours({ id, hourWorked });
-  }, [id, hourWorked]);
-
-  function setIsActive(elemID, value = null) {
-    let switchValue = value === null ? !inputIsActive.elemID : value;
-    setIsInputActive({
-      ...inputIsActive,
-      [elemID]: switchValue,
-    });
+const dailyDisplay = css`
+  display: grid;
+  grid-template-columns: repeat(4, 150px);
+  list-style: none;
+  width: 550px;
+  cursor: pointer;
+  &:hover {
+    background-color: red;
   }
+`;
+
+export default function DailyHourLog({ weekday }) {
+    const [cellStatus, setCellStatus] = useState('viewer') //editable
+  const [punchIn, setPunchIn] = useState(weekday.punchIn);
+  const [punchOut, setPunchOut] = useState(weekday.punchOut);
+  const [hourWorked, setHourWorked] = useState(weekday.hoursWorked);
 
   function handlePunchIn(e) {
     const { value } = e.target;
@@ -56,56 +37,38 @@ export default function DailyHourLog({
     setHourWorked(calculateDailyHours(punchIn, value));
   }
 
-  function handleSetHoursWorked(e) {
-    const { value } = e.target;
-    setHourWorked(value);
-    const projectedPunchOutTime = projectTimeLogged(punchIn, value);
-    setPunchOut(projectedPunchOutTime);
-  }
+    if (weekday.isActive === false) {
+      return null;
+    }
 
-  return (
-    <div>
-      <div css={hourInput__container}>
-        <h4 css={hourInput__day}>{day}</h4>
-        <label htmlFor="dailyClockIn" css={hourInput}>
-          Clocked In:
-          <input
-            css={inputIsActive.dailyClockIn ? null : activeInput}
-            id="dailyClockIn"
-            type="time"
-            value={punchIn}
-            onChange={handlePunchIn}
-            onClick={(e) => setIsActive(e.target.id)}
-          />
-        </label>
 
-        <label htmlFor="dailyClockOut" css={hourInput}>
-          Clocked Out:
-          <input
-            css={inputIsActive.dailyClockOut ? null : activeInput}
-            id="dailyClockOut"
-            type="time"
-            value={punchOut}
-            onChange={handlePunchOut}
-            onClick={(e) => setIsActive(e.target.id)}
-          />
-        </label>
-
-        <label htmlFor="hoursWorked" css={hourInput}>
-          Hours Worked:
-          <input
-            css={inputIsActive.hoursWorked ? null : activeInput}
-            readOnly={!inputIsActive.hoursWorked}
-            id="hoursWorked"
-            type="number"
-            min="0.0"
-            step=".1"
-            value={hourWorked}
-            onChange={handleSetHoursWorked}
-            onClick={(e) => setIsActive(e.target.id)}
-          />
-        </label>
-      </div>
-    </div>
-  );
+    if (cellStatus === "editable") {
+        return (
+          <li css={dailyDisplay}>
+            <h3>{weekday.day}</h3>
+            <UpdateTimeLog
+              w
+              punchIn={punchIn}
+              handlePunchIn={handlePunchIn}
+              punchOut={punchOut}
+              handlePunchOut={handlePunchOut}
+              hourWorked={hourWorked}
+            />
+            <button onClick={() => setCellStatus("viewer")}>Save</button>
+          </li>
+        );
 }
+
+    if (cellStatus === "viewer"){
+      return (
+        <li css={dailyDisplay} onClick={() => setCellStatus("editable")}>
+          <h3>{weekday.day}</h3>
+          <p>{punchIn}</p>
+          <p>{punchOut}</p>
+          <p>{hourWorked}</p>
+        </li>
+      );
+    }
+}
+
+

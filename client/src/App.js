@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+/** @jsxImportSource @emotion/core */
+import { jsx, css } from '@emotion/core'
+
+import { useState, useEffect } from 'react'
+
 import "./App.css";
 
 

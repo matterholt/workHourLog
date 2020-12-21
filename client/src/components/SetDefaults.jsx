@@ -1,5 +1,4 @@
-import React from "react";
-/** @jsx jsx */
+/** @jsxImportSource @emotion/core */
 import { css, jsx } from "@emotion/core";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
