@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/core */
+import {useState }from 'react'
 import { css, jsx } from "@emotion/core";
 
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { companyRecommendedTime } from "../helpers/standardDefaults/companyRecommendedTime";
-import { Modal } from './Modal'
+import { companyRecommendedTime } from "../../helpers/standardDefaults/companyRecommendedTime";
+import { Modal } from '../General/Modal'
 
 
 const setDefaultContainer = css`
@@ -18,10 +18,7 @@ const setDefaultContainer = css`
 `;
 
 function SetDefaults({ modalName }) {
-  const [defaultTimes, setDefaultTimes] = useLocalStorage(
-    "defaultHrs",
-    companyRecommendedTime
-  );
+  const [defaultTimes, setDefaultTimes] = useState()
 
   function handleChange(e) {
     // update state on form
@@ -87,6 +84,9 @@ function SetDefaults({ modalName }) {
           <li>The will be leaving work at {defaultTimes.punchOut}</li>
         </ul>
       </div>
+    
+    
+    
     </Modal>
   );
 }

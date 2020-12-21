@@ -12,7 +12,7 @@ export default function UpdateTimeLog({
   handlePunchIn,
   punchOut,
   handlePunchOut,
-  hourWorked,
+  hoursWorked,
 }) {
   return (
     <>
@@ -35,7 +35,7 @@ export default function UpdateTimeLog({
           onChange={handlePunchOut}
         />
       </label>
-      <h2>{hourWorked}</h2>
+      <h2>{hoursWorked}</h2>
     </>
   );
 }
