@@ -1,5 +1,7 @@
+import {useState} from 'react'
 /** @jsxImportSource @emotion/core */
 import { css } from "@emotion/core";
+
 
 const totalHour_container = css`
   position: fixed;
@@ -8,12 +10,10 @@ const totalHour_container = css`
   margin: 10px;
 `;
 
-export default function WeeklyTotalHrs({ weeklyTimeLog }) {
-  const reducer = (accumulator, currentValue) =>
-    accumulator + currentValue.dailyHours;
-  
-  const hoursForWeek = weeklyTimeLog.reduce(reducer,0);
-  
+export default function WeeklyTotalHrs() {
+  const [hoursForWeek, setHoursForWeek] = useState()
+
+
   return (
     <div css={totalHour_container}>
       <h1> Hours

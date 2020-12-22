@@ -14,32 +14,26 @@ const inputContainer = css`
 `;
 
 const WeeklyLogsContainer = () => {
-  const [localStore, setLocalStore] = useState(() =>{
-    const keySaved = window.localStorage.getItem('hourlog');
-    if (keySaved) {
-      return JSON.parse(keySaved);
-    } else {
-      return standardSettingForDay;
-  }});
+  const [localStore, setLocalStore] = useState(standardSettingForDay );
 
-
- 
   function updateHourLogStorage(dayUpdate) {
     const copyLogLocal = localStore;
-    const dayIndex = localStore.findIndex(
+    const dayIndex = copyLogLocal.findIndex(
       (dayId) => dayId.id === dayUpdate.id
     );
     copyLogLocal.splice(dayIndex, 1, dayUpdate);
     
     setLocalStore(copyLogLocal);
-    window.localStorage.setItem("hourlog", JSON.stringify(localStore));
+  }
+
+  function resetWeek() {
+    console.log('reset it')
+    setLocalStore(standardSettingForDay);
   }
 
   return (
     <div css={inputContainer}>
-      <button onClick={() => window.localStorage.removeItem("hourlog")}>
-        Reset
-      </button>
+      <button onClick={resetWeek}>Reset</button>
       <ul>
         {localStore.map((dailyStatus) => (
           <DailyHourLog

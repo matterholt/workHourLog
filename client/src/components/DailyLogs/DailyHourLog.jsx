@@ -9,7 +9,7 @@ import UpdateTimeLog from "./UpdateTimeLog";
 
 const dailyDisplay = css`
   display: grid;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(3, 134px) repeat(2, 75px);
   list-style: none;
   width: 550px;
   cursor: pointer;
