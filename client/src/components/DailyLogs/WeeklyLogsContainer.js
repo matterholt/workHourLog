@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
 import { standardSettingForDay } from "../../helpers/standardDefaults/standardSettingForDay";
-
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const inputContainer = css`
   display: flex;
@@ -39,6 +37,9 @@ const WeeklyLogsContainer = () => {
 
   return (
     <div css={inputContainer}>
+      <button onClick={() => window.localStorage.removeItem("hourlog")}>
+        Reset
+      </button>
       <ul>
         {localStore.map((dailyStatus) => (
           <DailyHourLog

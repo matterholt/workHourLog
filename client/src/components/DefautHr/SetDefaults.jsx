@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/core */
 import {useState }from 'react'
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 
-import { companyRecommendedTime } from "../../helpers/standardDefaults/companyRecommendedTime";
 import { Modal } from '../General/Modal'
 
 

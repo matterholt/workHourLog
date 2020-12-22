@@ -1,5 +1,3 @@
-import { css, jsx } from "@emotion/core";
-
 import { topHeader } from './style/topHeader.style'
 
 const HeaderTop = () => {

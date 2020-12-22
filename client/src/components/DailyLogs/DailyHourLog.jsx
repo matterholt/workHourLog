@@ -1,6 +1,6 @@
 import { useState } from 'react';
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 import { calculateDailyHours } from "../../helpers/calculateDailyHours";
 import { projectTimeLogged } from "../../helpers/projectTimeLogged";
 

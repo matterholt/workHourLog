@@ -1,9 +1,6 @@
 
 import {
   hourInput,
-  hourInput__container,
-  hourInput__day,
-  activeInput,
 } from "./style/weeklyHour.style";
 
 
