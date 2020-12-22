@@ -5,12 +5,14 @@ import { useState, useEffect } from 'react'
 
 import "./App.css";
 
+import Header from "./components/General/Header";
 
-import FlexTimeScale from "./components/FlexTimeScale";
-import WeeklyLogsContainer from "./components/WeeklyLogsContainer";
-import Header from "./components/Header";
-import SetDefaults from "./components/SetDefaults";
-import WeeklyTotalHrs from "./components/WeeklyTotalHrs";
+
+import SetDefaults from "./components/DefautHr/SetDefaults";
+import FlexTimeScale from "./components/FlexScales/FlexTimeScale";
+
+import WeeklyLogsContainer from "./components/DailyLogs/WeeklyLogsContainer";
+import WeeklyTotalHrs from "./components/TotalHours/WeeklyTotalHrs";
 
 const ExtaFeatureAction = () => (
   <div>
@@ -43,38 +45,9 @@ const ActionMenu = ({ weeklyTimeLog }) => {
 
 
 const Main = () => {
-  const [weeklyTimeLog, setWeeklyTimeLog] = useState([
-    { id: 1, dailyHours: 8 },
-    { id: 2, dailyHours: 8 },
-    { id: 3, dailyHours: 8 },
-    { id: 4, dailyHours: 8 },
-    { id: 5, dailyHours: 8 },
-  ]);
-  const [total,settotal] = useState()
-
-  useEffect(() => {
-    console.log(weeklyTimeLog);
-    console.log(total);
-  }, [weeklyTimeLog, total]);
-
-  useEffect(() => {
-      const reducer = (accumulator, currentValue) =>
-        accumulator + currentValue.dailyHours;
-      const hoursForWeek = weeklyTimeLog.reduce(reducer, 0);
-    settotal(hoursForWeek);
-  },[weeklyTimeLog])
-
-  function updateWeeklyHours({ id, hourWorked }) {
-    const modWeeklyTime = weeklyTimeLog.filter((x) => x.id !== id);
-    const dailyHours = Number(hourWorked);
-    setWeeklyTimeLog([...modWeeklyTime, { id, dailyHours }]);
-    console.log(weeklyTimeLog);
-  }
-
   return (
     <main>
-      <ActionMenu weeklyTimeLog={weeklyTimeLog} />
-      <WeeklyLogsContainer updateWeeklyHours={updateWeeklyHours} />
+      < WeeklyLogsContainer/>
     </main>
   );
 };

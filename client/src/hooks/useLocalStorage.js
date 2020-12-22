@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { companyRecommendedTime } from '../helpers/standardDefaults/companyRecommendedTime'
-
+import{ useState, useEffect,useRef } from "react";
 const useLocalStorage = (
   key,
-  standardDefault = companyRecommendedTime,
+  standardDefault = '',
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) => {
+
+  
   const [state, setState] = useState(() => {
     const valueInLocalStorage = window.localStorage.getItem(key);
 
@@ -17,9 +17,21 @@ const useLocalStorage = (
       : standardDefault;
   });
 
+  
+  const refKey = useRef(key)
+
+
+  useEffect(() => {
+    const prevKey = refKey.current
+    if (prevKey !== key) {
+       window.localStorage.removeItem(key);
+    }
+    refKey.current= key
+  },[key])
+
   useEffect(() => {
     window.localStorage.setItem(key, serialize(state));
-  });
+  }, [key, serialize, state]);
 
   return [state, setState];
 };
