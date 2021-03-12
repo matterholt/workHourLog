@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/core */
 import { css } from "@emotion/core";
 import { useEffect, useState } from 'react';
-import {calculateDailyHours} from './helpers/calculateDailyHours'
+
 
 import "./App.css";
 import Header from "./components/General/Header";
 import WeeklyLogsContainer from "./components/DailyLogs/WeeklyLogsContainer";
-
+import TableRowData from "./components/DailyValueLogs/TableRowData"
 
 
 const table = css`
@@ -17,11 +17,7 @@ const tableHead = css`
   background-color: #6b7077;
   min-width: 150px;
 `;
-const tabledata = css`
-  background-color: #dbdbdb;
-  color: gray;
-  text-align:center;
-`;
+
 
 
 const TableHeader = () => (
@@ -34,94 +30,55 @@ const TableHeader = () => (
 );
 
 
-const defaultTime = {
-  punchIn: "08:00",
-  punchOut: "16:30",
-};
-
-const TableRowData = ({ dailyValues, updateWeeklyValues }) => {
-
-  const [timePunchIn, setTimePunchIn] = useState(
-    () => dailyValues.punchIn || defaultTime.punchIn
-  );
-    const [timePunchOut, setTimePunchOut] = useState(
-      () => dailyValues.punchIn || defaultTime.punchOut
-    );
-  const [dailyTotal, setDailyTotal] = useState(
-    () => dailyValues.totalHours || calculateDailyHours(timePunchIn, timePunchOut)
-  );
-
-  //calculate the hours worked
-  const updateHours = () => {
-    const totalHours = calculateDailyHours(timePunchIn, timePunchOut);
-    setDailyTotal(totalHours);
-    updateWeeklyValues({ ...dailyValues, totalHours: totalHours });
-
-  };
-
-  function updateTime(e) {
-    const { name, value } = e.target;
-    if(name=== "punchIn"){
-      setTimePunchIn(value);
-    }
-    if (name === "punchOut") {
-    setTimePunchOut(value)
-    }
-    updateWeeklyValues({ ...dailyValues, [name]: value });
-    updateHours();
-  }
-
-  return (
-    <tr>
-      <td css={tabledata}>{dailyValues.day}</td>
-      <td css={tabledata}>
-        <input
-          type="time"
-          value={timePunchIn}
-          name="punchIn"
-          onChange={(e) => updateTime(e)}
-        />
-      </td>
-      <td css={tabledata}>
-        <input
-          type="time"
-          name="punchOut"
-          value={timePunchOut}
-          onChange={(e) => updateTime(e)}
-        />
-      </td>
-      <td css={tabledata}>{dailyTotal}</td>
-    </tr>
-  );
-};
-
 
 const Main = () => {
 
-    const [dailyValues, setDailyValue] = useState({
+  const [weeklyValues, setWeeklyValues] = useState([
+    {
+      id: 100,
       day: "monday",
       punchIn: null,
       punchOut: null,
-      totalHours: 0
-    });
+      totalHours: 10,
+    },
+    {
+      id: 200,
+      day: "tuesday",
+      punchIn: null,
+      punchOut: null,
+      totalHours: 10,
+    },
+  ]);
   
   function updateWeeklyValues(newValues) {
-    setDailyValue(newValues );
+
+    // need to find the day that has been updated
+    // update that day's value 
+    // spread it back into the weekly values
+
+    setWeeklyValues(newValues);
   }
-  
-  
+
+  const reducer = (acc,current) => acc + current
+  const totalWeekHours = weeklyValues
+    .map((dayValue) => dayValue.totalHours)
+    .reduce(reducer);
+
   return (
     <main>
-      <h2>Weekly Hours : {dailyValues.totalHours}</h2>
+      <h2>Weekly Hours : {totalWeekHours}</h2>
       <table css={table}>
         <thead>
           <TableHeader />
         </thead>
         <tbody>
-          <TableRowData
-            dailyValues={dailyValues}
-            updateWeeklyValues={updateWeeklyValues}
-          />
+          {weeklyValues.map((dailyValue) => (
+            <TableRowData
+              key={dailyValue.id}
+              dailyValue={dailyValue}
+              updateWeeklyValues={updateWeeklyValues}
+            />
+          ))}
         </tbody>
       </table>
     </main>
