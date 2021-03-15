@@ -23,27 +23,27 @@ const activeDays = [
   {
     id: 100,
     day: "monday",
-    totalHours: 0,
+    totalHours: 8,
   },
   {
     id: 200,
     day: "tuesday",
-    totalHours: 0,
+    totalHours: 8,
   },
   {
     id: 300,
     day: "wednesday",
-    totalHours: 0,
+    totalHours: 8,
   },
   {
     id: 400,
     day: "thursday",
-    totalHours: 0,
+    totalHours: 8,
   },
   {
     id: 500,
     day: "friday",
-    totalHours: 0,
+    totalHours: 8,
   },
 ];
 
@@ -58,11 +58,21 @@ const TableHeader = () => (
 );
 
 
+function HoursForTheWeek({ weeklyHours }) {
+  const [totalWorkedHours, setTotalWorkedHours] = useState(() => {
+    const totalWeekHours = weeklyHours
+      .map((dayValue) => dayValue.dailyTotal)
+      .reduce(reducer);
+    return Number(totalWeekHours);
+  });
+  return <h2>Weekly Hours : {totalWorkedHours}</h2>;
+}
+
+
 const reducer = (acc, current) => acc + current;
 
 const Main = () => {
   const [weeklyHours, setWeeklyHours] = useState(() => {
-    
   return activeDays.map((dayValue) => {
     return {
       dayId: dayValue.id,
@@ -71,21 +81,19 @@ const Main = () => {
   });
   })
 
-  const [totalWorkedHours, setTotalWorkedHours] = useState(() => {
-      const totalWeekHours = weeklyHours
-        .map((dayValue) => dayValue.dailyTotal)
-        .reduce(reducer);
-    return Number(totalWeekHours);
-  })
+
 
   function updateWeeklyHours(newValue) {
-    const notChangeHours = weeklyHours.filter((day) => day.id !== newValue.id);
+    const notChangeHours = weeklyHours.filter(
+      (day) => day.dayId !== newValue.dayId
+    );
     setWeeklyHours([...notChangeHours, newValue]);
   }
 
   return (
     <main>
-      <h2>Weekly Hours : {totalWorkedHours}</h2>
+      <HoursForTheWeek weeklyHours={weeklyHours} />
+
       <table css={table}>
         <thead>
           <TableHeader />

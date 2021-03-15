@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/core */
 import { css } from "@emotion/core";
 import { useEffect, useState } from 'react';
+import { useItRenders } from "../../hooks/useItRenders";
 import { calculateDailyHours } from "../../helpers/calculateDailyHours";
 const tabledata = css`
   background-color: #dbdbdb;
@@ -14,6 +15,8 @@ const defaultTime = {
 };
 
 export default function TableRowData({ dayId, dayOfWeek, updateWeeklyValues }) {
+useItRenders(dayOfWeek);
+  
   const [timePunchIn, setTimePunchIn] = useState(
     defaultTime.punchIn
   );
@@ -22,16 +25,22 @@ export default function TableRowData({ dayId, dayOfWeek, updateWeeklyValues }) {
   );
   const [dailyTotal, setDailyTotal] = useState(0);
 
+
+
+
   function updateTime(e) {
-    
     const { name, value } = e.target;
-    if (name === "punchIn") {
-      setTimePunchIn(value);
-      
-    }
-    if (name === "punchOut") {
-      setTimePunchOut(value);
-    }
+     function clockTimeUpdate (){
+        if (name === "punchIn") {
+           setTimePunchIn(value);
+          
+        }
+        if (name === "punchOut") {
+          setTimePunchOut(value);
+          }
+     }
+    clockTimeUpdate()
+
   }
 
   useEffect(() => {
