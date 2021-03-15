@@ -13,40 +13,38 @@ const defaultTime = {
   punchOut: "16:30",
 };
 
-export default function TableRowData ({ dailyValue, updateWeeklyValues })  {
+export default function TableRowData({ dayId, dayOfWeek, updateWeeklyValues }) {
   const [timePunchIn, setTimePunchIn] = useState(
-    () => dailyValue.punchIn || defaultTime.punchIn
+    defaultTime.punchIn
   );
   const [timePunchOut, setTimePunchOut] = useState(
-    () => dailyValue.punchIn || defaultTime.punchOut
+    defaultTime.punchOut
   );
-  const [dailyTotal, setDailyTotal] = useState(
-    () =>
-      dailyValue.totalHours || calculateDailyHours(timePunchIn, timePunchOut)
-  );
-
-  //calculate the hours worked
-  const updateHours = () => {
-    const totalHours = calculateDailyHours(timePunchIn, timePunchOut);
-    setDailyTotal(totalHours);
-    updateWeeklyValues({ ...dailyValue, totalHours: totalHours });
-  };
+  const [dailyTotal, setDailyTotal] = useState(0);
 
   function updateTime(e) {
+    
     const { name, value } = e.target;
     if (name === "punchIn") {
       setTimePunchIn(value);
+      
     }
     if (name === "punchOut") {
       setTimePunchOut(value);
     }
-    updateWeeklyValues({ ...dailyValue, [name]: value });
-    updateHours();
   }
+
+  useEffect(() => {
+    const totalHours = calculateDailyHours(timePunchIn, timePunchOut);
+    setDailyTotal(Number(totalHours));
+  }, [timePunchIn, timePunchOut]);
+
+
+
 
   return (
     <tr>
-      <td css={tabledata}>{dailyValue.day}</td>
+      <td css={tabledata}>{dayOfWeek}</td>
       <td css={tabledata}>
         <input
           type="time"

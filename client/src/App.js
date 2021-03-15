@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/core */
 import { css } from "@emotion/core";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 
 import "./App.css";
@@ -19,6 +19,34 @@ const tableHead = css`
 `;
 
 
+const activeDays = [
+  {
+    id: 100,
+    day: "monday",
+    totalHours: 0,
+  },
+  {
+    id: 200,
+    day: "tuesday",
+    totalHours: 0,
+  },
+  {
+    id: 300,
+    day: "wednesday",
+    totalHours: 0,
+  },
+  {
+    id: 400,
+    day: "thursday",
+    totalHours: 0,
+  },
+  {
+    id: 500,
+    day: "friday",
+    totalHours: 0,
+  },
+];
+
 
 const TableHeader = () => (
   <tr>
@@ -30,53 +58,45 @@ const TableHeader = () => (
 );
 
 
+const reducer = (acc, current) => acc + current;
 
 const Main = () => {
+  const [weeklyHours, setWeeklyHours] = useState(() => {
+    
+  return activeDays.map((dayValue) => {
+    return {
+      dayId: dayValue.id,
+      dailyTotal: Number(dayValue.totalHours),
+    };
+  });
+  })
 
-  const [weeklyValues, setWeeklyValues] = useState([
-    {
-      id: 100,
-      day: "monday",
-      punchIn: null,
-      punchOut: null,
-      totalHours: 10,
-    },
-    {
-      id: 200,
-      day: "tuesday",
-      punchIn: null,
-      punchOut: null,
-      totalHours: 10,
-    },
-  ]);
-  
-  function updateWeeklyValues(newValues) {
+  const [totalWorkedHours, setTotalWorkedHours] = useState(() => {
+      const totalWeekHours = weeklyHours
+        .map((dayValue) => dayValue.dailyTotal)
+        .reduce(reducer);
+    return Number(totalWeekHours);
+  })
 
-    // need to find the day that has been updated
-    // update that day's value 
-    // spread it back into the weekly values
-
-    setWeeklyValues(newValues);
+  function updateWeeklyHours(newValue) {
+    const notChangeHours = weeklyHours.filter((day) => day.id !== newValue.id);
+    setWeeklyHours([...notChangeHours, newValue]);
   }
-
-  const reducer = (acc,current) => acc + current
-  const totalWeekHours = weeklyValues
-    .map((dayValue) => dayValue.totalHours)
-    .reduce(reducer);
 
   return (
     <main>
-      <h2>Weekly Hours : {totalWeekHours}</h2>
+      <h2>Weekly Hours : {totalWorkedHours}</h2>
       <table css={table}>
         <thead>
           <TableHeader />
         </thead>
         <tbody>
-          {weeklyValues.map((dailyValue) => (
+          {activeDays.map((dailyValue) => (
             <TableRowData
               key={dailyValue.id}
-              dailyValue={dailyValue}
-              updateWeeklyValues={updateWeeklyValues}
+              dayId={dailyValue.id}
+              dayOfWeek={dailyValue.day}
+              updateWeeklyValues={updateWeeklyHours}
             />
           ))}
         </tbody>
@@ -88,7 +108,6 @@ const Main = () => {
 function App() {
   return (
     <div>
-      <Header />
       <Main />
     </div>
   );
