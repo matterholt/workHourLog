@@ -19,7 +19,7 @@ const tableHead = css`
   min-width: 150px;
 `;
 
-
+// remove add some where else
 const activeDays = [
   {
     id: 100,
@@ -69,50 +69,57 @@ function HoursForTheWeek({ hoursWorkedWeek }) {
   return <h2>Weekly Hours : {hoursWorkedWeek}</h2>;
 }
 
+ ///////////////// helper function for calculating hours /////////////////
+const totalHourReducer = (acc, current) => acc + current;
+const hourForWeek = (hourList) => {
+  return hourList.map((x) => {
+    const { clockIn, clockOut } = x.timeLog;
+    const hours = calculateDailyHours(clockIn, clockOut);
+    return { id: x.id, hours };
+  });
+}
+  function updateList(copyData, id, newInput) {
+    // get the id of the change item
+    const data = copyData;
+    const dayId = data.map((x) => x.id).indexOf(id);
+    // remove item index and replace with new
+    data.splice(dayId, 1, newInput);
+    // send back new list with new input
+    return data;
+  }
+  /////////////////////helpers above //////////////////
 
-const reducer = (acc, current) => acc + current;
 
 const Main = () => {
   const [dailyTimeLog, setDailyTimeLog] = useState(() => activeDays);
   const [hoursWorkedDaily, setHoursWorkedDaily] = useState([])
-
-  // possibility to move to another component
   const [hoursWorkedWeek, setHoursWorkedWeek] = useState(0);
 
 
-
   function updateWeeklyHours(updateLogs) {
-    const copyData = dailyTimeLog;
-    const theDayLog = copyData.find((day) => day.id === updateLogs.dayId);
+    // updates the punch in and punch out times
+    const theDayLog = dailyTimeLog.find((day) => day.id === updateLogs.dayId);
     const updateTime = { ...theDayLog.timeLog, ...updateLogs.timeLog };
     const newTimeLogDay ={ ...theDayLog, timeLog: updateTime }
-    const dayId = copyData.map(x => x.id).indexOf(updateLogs.dayId);
-    copyData.splice(dayId, 1, newTimeLogDay);
-    setDailyTimeLog([...copyData]);
-    updateDailyHoursWorked();
+    const newData = updateList(dailyTimeLog, updateLogs.dayId, newTimeLogDay);
+    setDailyTimeLog([...newData]);
+    updateDailyHoursWorked(dailyTimeLog);
   }
 
-  function updateDailyHoursWorked() {
-    // remove the day that gets updated.
-    
-    const hoursWorked = dailyTimeLog.map((x) => {
-          const { clockIn, clockOut } = x.timeLog;
-          const hours = calculateDailyHours(clockIn, clockOut);
-          return { id:x.id, hours };
-    });
-    setHoursWorkedDaily([...hoursWorkedDaily, ...hoursWorked]);
+
+  function updateDailyHoursWorked(dailyTimeLog = []) {
+    // update the hours for each day
+    const hoursWorked = hourForWeek(dailyTimeLog);
+
+    setHoursWorkedDaily([ ...hoursWorked]);
     updateWeeklyHoursWorked(hoursWorked);
   }
 
-    function updateWeeklyHoursWorked(hourLogs=[]) {
+  function updateWeeklyHoursWorked(hourLogs = []) {
+      // updates the total hours for the week
       const hoursWorked = hourLogs.map((x) => x.hours);
-      setHoursWorkedWeek(hoursWorked.reduce(reducer));
+      setHoursWorkedWeek(hoursWorked.reduce(totalHourReducer));
     }
-
-
-
-    useEffect(() => console.log(hoursWorkedDaily));
-
 
   return (
     <main>
