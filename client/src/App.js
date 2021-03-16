@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/core */
 import { css } from "@emotion/core";
 import { useCallback, useEffect, useState } from 'react';
+import { calculateDailyHours } from "./helpers/calculateDailyHours";
 
 
 import "./App.css";
@@ -23,27 +24,32 @@ const activeDays = [
   {
     id: 100,
     day: "monday",
-    totalHours: 8,
+    timeLog: {clockIn:"08:00",clockOut:"16:30"},
+    active:true
   },
   {
     id: 200,
     day: "tuesday",
-    totalHours: 8,
+    timeLog: {clockIn:"08:00",clockOut:"16:30"},
+    active:true
   },
   {
     id: 300,
     day: "wednesday",
-    totalHours: 8,
+    timeLog: {clockIn:"08:00",clockOut:"16:30"},
+    active:true
   },
   {
     id: 400,
     day: "thursday",
-    totalHours: 8,
+    timeLog: {clockIn:"08:00",clockOut:"16:30"},
+    active:true
   },
   {
     id: 500,
     day: "friday",
-    totalHours: 8,
+    timeLog: {clockIn:"08:00",clockOut:"16:30"},
+    active:true
   },
 ];
 
@@ -58,57 +64,86 @@ const TableHeader = () => (
 );
 
 
-function HoursForTheWeek({ weeklyHours }) {
-  const [totalWorkedHours, setTotalWorkedHours] = useState(() => {
-    const totalWeekHours = weeklyHours
-      .map((dayValue) => dayValue.dailyTotal)
-      .reduce(reducer);
-    return Number(totalWeekHours);
-  });
-  return <h2>Weekly Hours : {totalWorkedHours}</h2>;
+function HoursForTheWeek({ hoursWorkedWeek }) {
+
+  return <h2>Weekly Hours : {hoursWorkedWeek}</h2>;
 }
 
 
 const reducer = (acc, current) => acc + current;
 
 const Main = () => {
-  const [weeklyHours, setWeeklyHours] = useState(() => {
-  return activeDays.map((dayValue) => {
-    return {
-      dayId: dayValue.id,
-      dailyTotal: Number(dayValue.totalHours),
-    };
-  });
-  })
+  const [dailyTimeLog, setDailyTimeLog] = useState(() => activeDays);
+  const [hoursWorkedDaily, setHoursWorkedDaily] = useState([])
+
+  // possibility to move to another component
+  const [hoursWorkedWeek, setHoursWorkedWeek] = useState(0);
 
 
 
-  function updateWeeklyHours(newValue) {
-    const notChangeHours = weeklyHours.filter(
-      (day) => day.dayId !== newValue.dayId
-    );
-    setWeeklyHours([...notChangeHours, newValue]);
+  function updateWeeklyHours(updateLogs) {
+    const copyData = dailyTimeLog;
+    const theDayLog = copyData.find((day) => day.id === updateLogs.dayId);
+    const updateTime = { ...theDayLog.timeLog, ...updateLogs.timeLog };
+    const newTimeLogDay ={ ...theDayLog, timeLog: updateTime }
+    const dayId = copyData.map(x => x.id).indexOf(updateLogs.dayId);
+    copyData.splice(dayId, 1, newTimeLogDay);
+    setDailyTimeLog([...copyData]);
+    updateDailyHoursWorked();
   }
+
+  function updateDailyHoursWorked() {
+    // remove the day that gets updated.
+    
+    const hoursWorked = dailyTimeLog.map((x) => {
+          const { clockIn, clockOut } = x.timeLog;
+          const hours = calculateDailyHours(clockIn, clockOut);
+          return { id:x.id, hours };
+    });
+    setHoursWorkedDaily([...hoursWorkedDaily, ...hoursWorked]);
+    updateWeeklyHoursWorked(hoursWorked);
+  }
+
+    function updateWeeklyHoursWorked(hourLogs=[]) {
+      const hoursWorked = hourLogs.map((x) => x.hours);
+      setHoursWorkedWeek(hoursWorked.reduce(reducer));
+    }
+
+
+
+    useEffect(() => console.log(hoursWorkedDaily));
+
 
   return (
     <main>
-      <HoursForTheWeek weeklyHours={weeklyHours} />
+      <HoursForTheWeek hoursWorkedWeek={hoursWorkedWeek} />
 
       <table css={table}>
         <thead>
           <TableHeader />
         </thead>
         <tbody>
-          {activeDays.map((dailyValue) => (
-            <TableRowData
-              key={dailyValue.id}
-              dayId={dailyValue.id}
-              dayOfWeek={dailyValue.day}
-              updateWeeklyValues={updateWeeklyHours}
-            />
+          {dailyTimeLog.map((dailyValue) => (
+            <>
+              <TableRowData
+                key={dailyValue.id}
+                dayId={dailyValue.id}
+                dayOfWeek={dailyValue.day}
+                timeLog={dailyValue.timeLog}
+                updateTimeLog={updateWeeklyHours}
+              />
+            </>
           ))}
         </tbody>
       </table>
+      <ul>
+        {hoursWorkedDaily.map((x) => (
+          <li>
+            <p>Day ID:{x.id}</p>
+            <p>Hours:{x.hours}</p>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 };
