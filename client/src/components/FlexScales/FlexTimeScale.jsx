@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 import { flexScale } from "../../helpers/standardDefaults/flexTimeScale";
 import { Modal } from "../General/Modal";
 
@@ -17,7 +17,7 @@ const minRow = css`
   list-style: none;
 `;
 const FlexTime = ({ section, }) => {
-  const { id, mins, round, percentHour } = section;
+  const { mins, round, percentHour } = section;
   return (
     <div css={base}>
       <div css={minRow}>

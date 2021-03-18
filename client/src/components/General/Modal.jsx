@@ -1,6 +1,6 @@
 import {useState} from 'react'
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 
 
 const itemModal = css`

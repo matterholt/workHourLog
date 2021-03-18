@@ -8,7 +8,7 @@ function timeConvertToMinutes(time) {
 function calHourPass(inTime, outTime, lunchTime = 0.5) {
   let totalTime = outTime - inTime;
   let todayHour = totalTime / 60 - lunchTime;
-  return todayHour.toFixed(1);
+  return Number(todayHour.toFixed(1));
 }
 
 function calculateDailyHours(dailyClockIn, dailyClockOut) {

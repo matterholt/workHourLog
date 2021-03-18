@@ -8,7 +8,7 @@ function convertPercentHrToTime(useHrPercent) {
   const timeMinute = flexScale.find(
     (section) => section.percentHour === Number(perHour) / 10
   );
-  const [firstPunchTime, ...rest] = timeMinute.mins;
+  const [firstPunchTime,] = timeMinute.mins;
   const fixedHour = hrUnit.length === 1 ? `0${hrUnit}` : `${hrUnit}`;
   const loggedTime = `${fixedHour}:${firstPunchTime}`;
 

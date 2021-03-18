@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 import DailyHourLog from "./DailyHourLog";
 
 import { standardSettingForDay } from "../../helpers/standardDefaults/standardSettingForDay";
-
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const inputContainer = css`
   display: flex;
@@ -16,35 +14,26 @@ const inputContainer = css`
 `;
 
 const WeeklyLogsContainer = () => {
-  const [localStore, setLocalStore] = useState(() =>{
-    const key = 'hourLog'
-    const valueInLocalStorage = window.localStorage.getItem(key);
-      console.log(valueInLocalStorage);
-    if (valueInLocalStorage) {
-      JSON.parse(valueInLocalStorage);
-    }else{
-    return standardSettingForDay;
-    }
-    
-    });
+  const [localStore, setLocalStore] = useState(standardSettingForDay );
 
-  // useEffect(() => {
-  //    window.localStorage.setItem("hourLog", JSON.stringify(localStore));
-  // }, [localStore]);
-  
-
- 
   function updateHourLogStorage(dayUpdate) {
     const copyLogLocal = localStore;
-    const dayIndex = localStore.findIndex(
+    const dayIndex = copyLogLocal.findIndex(
       (dayId) => dayId.id === dayUpdate.id
     );
     copyLogLocal.splice(dayIndex, 1, dayUpdate);
+    
     setLocalStore(copyLogLocal);
+  }
+
+  function resetWeek() {
+    console.log('reset it')
+    setLocalStore(standardSettingForDay);
   }
 
   return (
     <div css={inputContainer}>
+      <button onClick={resetWeek}>Reset</button>
       <ul>
         {localStore.map((dailyStatus) => (
           <DailyHourLog

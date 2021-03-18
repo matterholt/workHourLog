@@ -1,6 +1,6 @@
 import { useState } from 'react';
 /** @jsxImportSource @emotion/core */
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/core";
 import { calculateDailyHours } from "../../helpers/calculateDailyHours";
 import { projectTimeLogged } from "../../helpers/projectTimeLogged";
 
@@ -9,7 +9,7 @@ import UpdateTimeLog from "./UpdateTimeLog";
 
 const dailyDisplay = css`
   display: grid;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(3, 134px) repeat(2, 75px);
   list-style: none;
   width: 550px;
   cursor: pointer;
