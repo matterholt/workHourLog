@@ -5,10 +5,14 @@ import { useItRenders } from "../../hooks/useItRenders";
 
 const tabledata = css`
   background-color: #dbdbdb;
-  color: gray;
+  color: #252222;
   text-align: center;
+  font-weight:900;
 `;
-
+const hourLogH3 = css`
+  color: #252222;
+  font-weight: 900;
+`;
 
 
 export default function TableRowData({
@@ -28,7 +32,7 @@ export default function TableRowData({
   return (
     <tr>
       <td css={tabledata}>{dayOfWeek}</td>
-      <td css={tabledata}>
+      <td>
         <input
           type="time"
           value={timeLog.clockIn}
@@ -36,7 +40,7 @@ export default function TableRowData({
           onChange={(e) => updateTime(e, dayId)}
         />
       </td>
-      <td css={tabledata}>
+      <td>
         <input
           type="time"
           name="clockOut"
@@ -45,7 +49,7 @@ export default function TableRowData({
         />
       </td>
       <td css={tabledata}>
-        <h3>{dailyHours}</h3>
+        <h3 css={hourLogH3}>{dailyHours}</h3>
       </td>
     </tr>
   );
