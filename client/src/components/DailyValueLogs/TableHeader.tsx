@@ -1,5 +1,5 @@
-/** @jsxImportSource @emotion/core */
-import { css } from "@emotion/core";
+
+import { css, jsx } from '@emotion/react'
 
 const tableHead = css`
   background-color: #6b7077;
