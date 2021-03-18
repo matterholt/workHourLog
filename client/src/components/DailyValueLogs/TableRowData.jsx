@@ -11,14 +11,18 @@ const tabledata = css`
 
 
 
-export default function TableRowData({ dayId, dayOfWeek,timeLog, updateTimeLog }) {
+export default function TableRowData({
+  dayId,
+  dayOfWeek,
+  timeLog,
+  updateTimeLog,
+  dailyHours = 0,
+}) {
   useItRenders(dayOfWeek);
-  
 
   function updateTime(e, dayId) {
     const { name, value } = e.target;
-    updateTimeLog({ dayId, timeLog:{[name]: value }});
-    
+    updateTimeLog({ dayId, timeLog: { [name]: value } });
   }
 
   return (
@@ -39,6 +43,9 @@ export default function TableRowData({ dayId, dayOfWeek,timeLog, updateTimeLog }
           value={timeLog.clockOut}
           onChange={(e) => updateTime(e, dayId)}
         />
+      </td>
+      <td css={tabledata}>
+        <h3>{dailyHours}</h3>
       </td>
     </tr>
   );
