@@ -1,14 +1,13 @@
+import styled from '@emotion/styled'
 
-import { css, jsx } from '@emotion/react'
 
-
-const tableData = css`
+const TableData = styled.td`
   background-color: #dbdbdb;
   color: #252222;
   text-align: center;
   font-weight:900;
 `;
-const hourLogH3 = css`
+const TimeLog =styled.h3`
   color: #252222;
   font-weight: 900;
 `;
@@ -40,26 +39,26 @@ export default function TableRowData({
 
   return (
     <tr>
-      <td css={tableData}>{dayOfWeek}</td>
-      <td>
+      <TableData>{dayOfWeek}</TableData>
+      <TableData>
         <input
           type="time"
           value={timeLog.clockIn}
           name="clockIn"
           onChange={(e) => updateTime(e.target.name,e.target.value, dayId)}
         />
-      </td>
-      <td>
+      </TableData>
+      <TableData>
         <input
           type="time"
           name="clockOut"
           value={timeLog.clockOut}
           onChange={(e) => updateTime(e.target.name,e.target.value, dayId)}
         />
-      </td>
-      <td css={tableData}>
-        <h3 css={hourLogH3}>{dailyHours}</h3>
-      </td>
+      </TableData>
+      <TableData>
+        <TimeLog>{dailyHours}</TimeLog>
+      </TableData>
     </tr>
   );
 };

@@ -1,17 +1,20 @@
+import styled from '@emotion/styled'
 
-import { css, jsx } from '@emotion/react'
-
-const tableHead = css`
+const TableRow = styled.tr`
   background-color: #6b7077;
+`
+const HeaderTable = styled.th`
   min-width: 150px;
-`;
+
+`
 
 const TableHeader = () => (
-  <tr>
-    <th css={tableHead}>Day</th>
-    <th css={tableHead}>Punch In</th>
-    <th css={tableHead}>Punch Out</th>
-    <th css={tableHead}>Hours Worked</th>
-  </tr>
+  <TableRow>
+    <HeaderTable>Day</HeaderTable>
+    <HeaderTable>Punch In</HeaderTable>
+    <HeaderTable>Punch Out</HeaderTable>
+    <HeaderTable>Hours Worked</HeaderTable>
+  </TableRow>
 );
 export default TableHeader;
+

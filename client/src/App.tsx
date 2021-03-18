@@ -72,7 +72,6 @@ const Main = () => {
           {dailyTimeLog.map((dailyValue:DailyLogs) => {
             const dailyHours = hoursWorkedDaily.find((x:WeekHours) => x.id === dailyValue.id)
           return (
-            <div>
               <TableRowData
                 key={dailyValue.id}
                 dayId={dailyValue.id}
@@ -81,7 +80,7 @@ const Main = () => {
                 updateWeeklyHours={updateWeeklyHours}
                 dailyHours={dailyHours?.hours ?? 0}
               />
-            </div>
+       
           );}
           
           )
