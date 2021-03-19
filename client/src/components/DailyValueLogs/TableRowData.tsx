@@ -1,16 +1,15 @@
-import styled from '@emotion/styled'
 
 
-const TableData = styled.td`
-  background-color: #dbdbdb;
-  color: #252222;
-  text-align: center;
-  font-weight:900;
-`;
-const TimeLog =styled.h3`
-  color: #252222;
-  font-weight: 900;
-`;
+// const td = styled.td`
+//   background-color: #dbdbdb;
+//   color: #252222;
+//   text-align: center;
+//   font-weight:900;
+// `;
+// const TimeLog =styled.h3`
+//   color: #252222;
+//   font-weight: 900;
+// `;
 
 type TableRowProps = {
   dayId: number;
@@ -39,26 +38,26 @@ export default function TableRowData({
 
   return (
     <tr>
-      <TableData>{dayOfWeek}</TableData>
-      <TableData>
+      <td>{dayOfWeek}</td>
+      <td>
         <input
           type="time"
           value={timeLog.clockIn}
           name="clockIn"
           onChange={(e) => updateTime(e.target.name,e.target.value, dayId)}
         />
-      </TableData>
-      <TableData>
+      </td>
+      <td>
         <input
           type="time"
           name="clockOut"
           value={timeLog.clockOut}
           onChange={(e) => updateTime(e.target.name,e.target.value, dayId)}
         />
-      </TableData>
-      <TableData>
-        <TimeLog>{dailyHours}</TimeLog>
-      </TableData>
+      </td>
+      <td>
+        <h3>{dailyHours}</h3>
+      </td>
     </tr>
   );
 };
