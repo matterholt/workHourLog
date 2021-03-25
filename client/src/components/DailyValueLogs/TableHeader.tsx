@@ -1,15 +1,15 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 
-// const TableRow = styled.tr`
-//   background-color: #6b7077;
-// `
-// const HeaderTable = styled.th`
-//   min-width: 150px;
 
-// `
+const TableRow = css`
+  background-color: #6b7077;
+`
 
 const TableHeader = () => (
   <thead>
-  <tr>
+  <tr css={TableRow}>
     <th>Day</th>
     <th>Punch In</th>
     <th>Punch Out</th>

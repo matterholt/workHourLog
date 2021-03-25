@@ -1,15 +1,17 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 
-
-// const td = styled.td`
-//   background-color: #dbdbdb;
-//   color: #252222;
-//   text-align: center;
-//   font-weight:900;
-// `;
-// const TimeLog =styled.h3`
-//   color: #252222;
-//   font-weight: 900;
-// `;
+const td = css`
+  background-color: #dbdbdb;
+  color: #252222;
+  text-align: center;
+  font-weight:900;
+`;
+const TimeLog =css`
+  color: #252222;
+  font-weight: 900;
+`;
 
 type TableRowProps = {
   dayId: number;
@@ -38,7 +40,7 @@ export default function TableRowData({
 
   return (
     <tr>
-      <td>{dayOfWeek}</td>
+      <td css={td}>{dayOfWeek}</td>
       <td>
         <input
           type="time"
@@ -56,7 +58,16 @@ export default function TableRowData({
         />
       </td>
       <td>
-        <h3>{dailyHours}</h3>
+        <h3    
+        css={css`
+        text-align:center;
+      font-weight: 900;
+      font-size: 24px;
+      &:hover {
+        color: white;
+      }
+    `}
+  >{dailyHours}</h3>
       </td>
     </tr>
   );

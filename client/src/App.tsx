@@ -1,3 +1,6 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 
 import React, { useState } from 'react';
 import "./App.css";
@@ -5,17 +8,18 @@ import "./App.css";
 import Header from "./components/Header/Header"
 import WeeklyTimeLogTable from "./components/DailyValueLogs/WeeklyTimeLogTable"
 
-// const Layout = styled.div`
-// display:flex;
-// flex-flow:column;
-// `
 
 function App() {
     const [hoursWorkedWeek, setHoursWorkedWeek] = useState<number>(0);
   return (
-    <div>
+    <div css={css`
+    display:flex;
+    flex-flow:column;
+    align-items:center;
+    `
+    }>
       <Header hoursWorkedWeek={hoursWorkedWeek }/>
-      <WeeklyTimeLogTable />
+      <WeeklyTimeLogTable setHoursWorkedWeek={setHoursWorkedWeek}/>
     </div>
   );
 }
